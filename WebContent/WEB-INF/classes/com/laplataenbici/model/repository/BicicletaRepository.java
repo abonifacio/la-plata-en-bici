@@ -22,8 +22,8 @@ public class BicicletaRepository extends EntityRepository<Bicicleta> implements 
 		Bicicleta b = new Bicicleta();
 		b.setId(rs.getLong("id"));
 		b.setEstado(EstadoBicicleta.valueOf(rs.getString("estado")));
-		b.setFechaDevolucion(rs.getDate("fecha_devolucion"));
-		b.setFechaIngreso(rs.getDate("fecha_ingreso"));
+		//b.setFechaDevolucion(rs.getDate("fecha_devolucion"));
+		//b.setFechaIngreso(rs.getDate("fecha_ingreso"));
 		Long userId = rs.getLong("usuario_id");
 		//buscar usuario
 		return b;

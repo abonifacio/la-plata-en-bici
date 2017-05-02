@@ -21,9 +21,9 @@ public abstract class EntityRepository<T> implements IEntityRepository<T>{
 			@Override
 			protected PreparedStatement prepare(Connection db) throws SQLException {
 				// TODO Auto-generated method stub
-				PreparedStatement ps = db.prepareStatement("SELECT * FROM ? WHERE id = ?");
-				ps.setString(1, getTableName());
-				ps.setLong(2, id);
+				PreparedStatement ps = db.prepareStatement("SELECT * FROM "+getTableName()+" WHERE id = ?;");
+//				ps.setString(1, getTableName());
+				ps.setLong(1, id);
 				return ps;
 			}
 
@@ -48,7 +48,7 @@ public abstract class EntityRepository<T> implements IEntityRepository<T>{
 				// TODO Auto-generated method stub
 				int offset = (page.getPage()-1)*page.getCount();
 				int limit = offset+page.getCount();
-				PreparedStatement ps = db.prepareStatement("SELECT * FROM ? LIMIT ?,?");
+				PreparedStatement ps = db.prepareStatement("SELECT * FROM ? LIMIT ?,?;");
 				ps.setString(1, getTableName());
 				ps.setInt(2, offset);
 				ps.setInt(3, limit);

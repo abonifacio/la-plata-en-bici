@@ -36,20 +36,20 @@ public class InicioServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-//		RequestDispatcher dispatcher= request.getServletContext().getRequestDispatcher(AppConfig.HTML_PATH+"index.html");
-//		if (dispatcher!=null){ 
-//			dispatcher.forward(request, response);
-//		}
-		BicicletaRepository br = new BicicletaRepository();
-		Optional<Bicicleta> b = br.findOneById((long) 1);
-		PrintWriter pw = response.getWriter();
-		if(b.isPresent()){
-			pw.println(b.get().getEstado().getValue());
-			pw.println(b.get().getFechaIngreso());
-			pw.println(b.get().getId());
-		}else{
-			pw.println("vacio");
+		RequestDispatcher dispatcher= request.getServletContext().getRequestDispatcher(AppConfig.HTML_PATH+"index.html");
+		if (dispatcher!=null){ 
+			dispatcher.forward(request, response);
 		}
+//		BicicletaRepository br = new BicicletaRepository();
+//		Optional<Bicicleta> b = br.findOneById((long) 1);
+//		PrintWriter pw = response.getWriter();
+//		if(b.isPresent()){
+//			pw.println(b.get().getEstado().getValue());
+//			pw.println(b.get().getFechaIngreso());
+//			pw.println(b.get().getId());
+//		}else{
+//			pw.println("vacio");
+//		}
 		
 	}
 
