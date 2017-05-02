@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Estaciones - La Plata en Bici</title>
+    <!-- Font Awesome -->
+    <base href="/LaPlataEnBici/">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="assets/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--Navbar-->
+	<nav class="navbar navbar-toggleable-md navbar-dark bg-primary">
+	    <div class="container">
+		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		</button>
+		<a class="navbar-brand" href="inicio">
+		    <strong>LaPlataEnBici</strong>
+		</a>
+		<div class="collapse navbar-collapse" id="navbarNav1">
+		    <ul class="navbar-nav mr-auto">
+		        <li class="nav-item dropdown btn-group">
+		            <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Estaciones</a>
+		            <div class="dropdown-menu dropdown active" aria-labelledby="dropdownMenu1">
+		                <a href="estaciones" class="dropdown-item">Listado</a>
+		                <a href="estaciones/mapa" class="dropdown-item">Mapa</a>
+		            </div>
+		        </li>
+		        <li class="nav-item dropdown btn-group">
+		            <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bicicletas</a>
+		            <div class="dropdown-menu dropdown" aria-labelledby="dropdownMenu1">
+		                <a href="bicicletas/retirar" class="dropdown-item">Retirar</a>
+		                <a href="bicicletas/estacionar" class="dropdown-item">Estacionar</a>
+		            </div>
+		        </li>
+		    </ul>
+		    <ul >
+		    	<li class="nav-item dropdown btn-group">
+		            <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Perfil</a>
+		            <div class="dropdown-menu dropdown active" aria-labelledby="dropdownMenu1">
+		                <a href="perfil/editar" class="dropdown-item">Editar</a>
+		                <a href="logout" class="dropdown-item">Cerrar sesión</a>
+		            </div>
+		        </li>
+		    </ul>
+
+		</div>
+	    </div>
+	</nav>
+
+
+	<div class="container">
+		<div class="card card-block mt-3">
+			<form method="POST">
+
+					<div class="text-center">
+						<h3><i class="fa fa-lock"></i> Editar Perfil</h3>
+						<hr class="mt-2 mb-2">
+					</div>
+
+					<!--Body-->
+					<div class="md-form">
+						<i class="fa fa-id-card-o prefix"></i>
+						<input type="number" id="dni" name="dni" class="form-control" required="true">
+						<label for="dni">DNI</label>
+					</div>
+
+					<div class="md-form">
+						<i class="fa fa-user prefix"></i>
+						<input type="text" id="nombre" name="nombre" class="form-control" required="true">
+						<label for="nombre">Apellido y nombres</label>
+					</div>
+					
+					<div class="md-form">
+						<i class="fa fa-home prefix"></i>
+						<input type="text" id="domicilio" name="domicilio" class="form-control" required="true">
+						<label for="domicilio">Domicilio</label>
+					</div>
+
+					<div class="md-form">
+						<i class="fa fa-calendar prefix"></i>
+						<input type="date" id="fechaNac" name="fechaNac" class="form-control" required="true">
+						<label for="fechaNac" class="active">Fecha de nacimiento</label>
+					</div>
+
+					<fieldset class="form-group pl-5">
+						<input name="sexo" type="radio" id="masculino" value="M"  checked>
+						<label for="masculino">Masculino</label>
+					</fieldset>
+
+					<fieldset class="form-group pl-5">
+						<input name="sexo" type="radio" id="femenino" value="F" >
+						<label for="femenino">Femenino</label>
+					</fieldset>
+
+					<div class="text-center">
+						<button class="btn btn-deep-purple" type="submit">Editar</button>
+					</div>
+
+				</form>
+		</div>
+	</div>
+	
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="assets/js/jquery-3.1.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="assets/js/tether.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="assets/js/mdb.min.js"></script>
+</body>
+
+</html>

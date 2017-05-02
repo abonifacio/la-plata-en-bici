@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Login - La Plata en Bici</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="assets/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+
+	<div class="container py-4">
+		<!--Form without header-->
+		<div class="card">
+			<div class="card-block">
+				<!--Header-->
+				<form action="login" method="POST">
+
+					<div class="text-center">
+						<h3><i class="fa fa-lock"></i> Login</h3>
+						<hr class="mt-2 mb-2">
+					</div>
+
+					<!--Body-->
+					<div class="md-form">
+						<i class="fa fa-user prefix"></i>
+						<input type="text" id="user" name="user" class="form-control" required="true">
+						<label for="user">Usuario</label>
+					</div>
+
+					<div class="md-form">
+						<i class="fa fa-lock prefix"></i>
+						<input type="password" id="pass" name="pass" class="form-control" required="true">
+						<label for="pass">Contraseña</label>
+					</div>
+
+					<div class="text-center">
+						<button class="btn btn-deep-purple" type="submit">Login</button>
+					</div>
+
+				</form>
+			</div>
+
+			<div class="modal-footer">
+				<div class="options">
+					<p>¿No sos usuario? <a href="registro">Registrate</a></p>
+				</div>
+			</div>
+
+		</div>
+		<!--/Form without header-->
+	</div>
+	
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="assets/js/jquery-3.1.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="assets/js/tether.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="assets/js/mdb.min.js"></script>
+</body>
+
+</html>
