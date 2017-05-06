@@ -2,23 +2,20 @@ package com.laplataenbici.model.domain;
 
 import java.util.List;
 
+import com.laplataenbici.model.domain.tracking.TrackingEstacion;
 import com.laplataenbici.model.domain.utils.EstadoEstacion;
 
-public class Estacion {
+public class Estacion extends AbstractTrackable<TrackingEstacion> {
 	
-	private Long id;
 	private String nombre;
 	private Ubicacion ubicacion;
 	private List<Bicicleta> bicilcetas;
 	private Integer capacidad;
 	private EstadoEstacion estado;
 	private String direccion;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
+	
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -55,6 +52,7 @@ public class Estacion {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+	
 	
 	
 	

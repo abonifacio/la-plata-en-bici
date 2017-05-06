@@ -2,13 +2,13 @@ package com.laplataenbici.model.domain;
 
 import java.util.Date;
 
+import com.laplataenbici.model.domain.tracking.TrackingUsuario;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.domain.utils.Sexo;
 
-public class Usuario {
+public class Usuario extends AbstractTrackable<TrackingUsuario> {
 	
-	private Long id;
 	private Integer DNI;
 	private String nombre;
 	private String apellido;
@@ -22,13 +22,9 @@ public class Usuario {
 	private String username;
 	private String password;
 	private Rol rol;
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private Bicicleta bicicleta;
+
+
 	public Integer getDNI() {
 		return DNI;
 	}
@@ -107,6 +103,15 @@ public class Usuario {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
+	public Bicicleta getBicicleta() {
+		return bicicleta;
+	}
+	public void setBicicleta(Bicicleta bicicleta) {
+		this.bicicleta = bicicleta;
+	}
+
+	
+	
 	
 	
 	

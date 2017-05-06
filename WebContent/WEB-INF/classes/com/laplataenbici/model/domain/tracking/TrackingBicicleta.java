@@ -1,6 +1,8 @@
 package com.laplataenbici.model.domain.tracking;
 
-public class TrackingBicicleta extends Tracking<OperacionBicicleta>{
+import com.laplataenbici.model.domain.Bicicleta;
+
+public class TrackingBicicleta extends Tracking<Bicicleta,OperacionBicicleta>{
 	
 	
 }

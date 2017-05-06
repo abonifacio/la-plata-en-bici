@@ -2,15 +2,16 @@ package com.laplataenbici.model.domain.tracking;
 
 import java.util.Date;
 
+import com.laplataenbici.model.domain.AbstractEntity;
 import com.laplataenbici.model.domain.Usuario;
 
-public abstract class Tracking<T> {
+public abstract class Tracking<T,U> extends AbstractEntity{
 	
-	private Long id;
 	private Date fecha;
 	private Usuario modificadorPor;
 	private String mensaje;
 	private T operacion;
+	private U entity;
 
 	public Date getFecha() {
 		return fecha;
@@ -37,12 +38,14 @@ public abstract class Tracking<T> {
 	public void setOperacion(T operacion) {
 		this.operacion = operacion;
 	}
-	public Long getId() {
-		return id;
+	public U getEntity() {
+		return entity;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setEntity(U entity) {
+		this.entity = entity;
 	}
+	
+	
 	
 	
 }

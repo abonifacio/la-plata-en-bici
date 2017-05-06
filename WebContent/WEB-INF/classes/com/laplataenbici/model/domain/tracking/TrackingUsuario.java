@@ -1,5 +1,7 @@
 package com.laplataenbici.model.domain.tracking;
 
-public class TrackingUsuario extends Tracking<OperacionUsuario> {
+import com.laplataenbici.model.domain.Usuario;
+
+public class TrackingUsuario extends Tracking<Usuario,OperacionUsuario> {
 
 }

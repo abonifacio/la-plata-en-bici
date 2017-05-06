@@ -1,17 +1,12 @@
 package com.laplataenbici.model.domain;
 
-public class Localidad {
-	private Long id;
+import java.util.List;
+
+public class Localidad extends AbstractEntity {
 	private String nombre;
 	private Integer codigoPostal;
+	private List<Usuario> usuarios;
 	
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -24,6 +19,13 @@ public class Localidad {
 	public void setCodigoPostal(Integer codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
 	
 	
 }
