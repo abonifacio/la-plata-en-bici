@@ -2,18 +2,37 @@ package com.laplataenbici.model.domain;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import com.laplataenbici.model.domain.tracking.TrackingEstacion;
 import com.laplataenbici.model.domain.utils.EstadoEstacion;
 
+@Entity
+@Table
 public class Estacion extends AbstractTrackable<TrackingEstacion> {
 	
+	@Column
 	private String nombre;
-	private Ubicacion ubicacion;
-	private List<Bicicleta> bicilcetas;
-	private Integer capacidad;
-	private EstadoEstacion estado;
-	private String direccion;
 	
+	@OneToOne
+	private Ubicacion ubicacion;
+	
+//	@OneToMany(fetch=FetchType.LAZY,mappedBy="estacion")
+//	private List<Bicicleta> bicilcetas;
+	
+	@Column
+	private Integer capacidad;
+	
+	@Column
+	private EstadoEstacion estado;
+	
+	@Column
+	private String direccion;
 	
 
 	public String getNombre() {
@@ -28,12 +47,12 @@ public class Estacion extends AbstractTrackable<TrackingEstacion> {
 	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
 	}
-	public List<Bicicleta> getBicilcetas() {
-		return bicilcetas;
-	}
-	public void setBicilcetas(List<Bicicleta> bicilcetas) {
-		this.bicilcetas = bicilcetas;
-	}
+//	public List<Bicicleta> getBicilcetas() {
+//		return bicilcetas;
+//	}
+//	public void setBicilcetas(List<Bicicleta> bicilcetas) {
+//		this.bicilcetas = bicilcetas;
+//	}
 	public Integer getCapacidad() {
 		return capacidad;
 	}

@@ -2,27 +2,61 @@ package com.laplataenbici.model.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import com.laplataenbici.model.domain.tracking.TrackingUsuario;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.domain.utils.Sexo;
 
+@Entity
+@Table
 public class Usuario extends AbstractTrackable<TrackingUsuario> {
 	
+	@Column
 	private Integer DNI;
+	
+	@Column
 	private String nombre;
+	
+	@Column
 	private String apellido;
+	
+	@Column
 	private String calle;
+	
+	@Column
 	private String numero;
+	
+	@OneToOne
 	private Localidad localidad; 
+	
+	@Column
 	private Date fechaNacimiento;
+	
+	@Column
 	private EstadoUsuario estado;
+	
+	@Column
 	private Sexo sexo;
+	
+	@Column
 	private String email;
+	
+	@Column
 	private String username;
+	
+	@Column
 	private String password;
+	
+	@Column
 	private Rol rol;
-	private Bicicleta bicicleta;
+	
+//	@OneToOne
+//	private Bicicleta bicicleta;
 
 
 	public Integer getDNI() {
@@ -103,12 +137,12 @@ public class Usuario extends AbstractTrackable<TrackingUsuario> {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
-	public Bicicleta getBicicleta() {
-		return bicicleta;
-	}
-	public void setBicicleta(Bicicleta bicicleta) {
-		this.bicicleta = bicicleta;
-	}
+//	public Bicicleta getBicicleta() {
+//		return bicicleta;
+//	}
+//	public void setBicicleta(Bicicleta bicicleta) {
+//		this.bicicleta = bicicleta;
+//	}
 
 	
 	

@@ -3,7 +3,11 @@ package com.laplataenbici.model.domain.utils;
 public class Pageable {
 	private Integer page;
 	private Integer count;
-	
+
+	public Pageable(Integer page, Integer count){
+		this.page = page;
+		this.count = count;
+	}
 	
 	public Integer getPage() {
 		return page;

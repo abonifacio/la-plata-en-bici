@@ -1,21 +1,17 @@
 package com.laplataenbici.model.repository.interfaces;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Optional;
 
+import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
 
 public interface IEntityRepository<T> {
+			
+	public Optional<T> findOneById(Long id) throws DBException;
 	
-	public String getTableName();
+	public Page<T> findAll(Pageable page) throws DBException;
 	
-	public T mapFromRS(ResultSet rs) throws SQLException;
-	
-	public Optional<T> findOneById(Long id);
-	
-	public Page<T> findAll(Pageable page);
-	
+	public T save(T entity) throws DBException;
 	
 }

@@ -1,30 +1,33 @@
 package com.laplataenbici.model.domain.utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Page<T>{
-	private Integer size;
-	private Integer pages;
-	private Integer current;
+	private Integer pageSize; // tamano de pagina
+	private Integer pages; // total paginas
+	private Integer currentPage; // pagina actual
+	private Integer totalItems; // total resultados
 	private List<T> items;
 	
-	public Page(Object empty){
-		this.size = 0;
-		this.pages = 0;
-		this.current = 0;
-		this.items = new ArrayList<T>();
+	public Page(Pageable pageable,Integer totalItems){
+		this.pageSize = pageable.getCount();
+
+		if(totalItems % pageable.getCount()==0){
+			this.pages = totalItems/pageable.getCount();
+		}else{
+			this.pages = totalItems/pageable.getCount() + 1;
+		}
+		
+		this.currentPage = pageable.getPage();
+		this.items = null;
+		this.totalItems = totalItems;
 	}
 	
-	public Page() {
-		// TODO Auto-generated constructor stub
+	public Integer getPageSize() {
+		return pageSize;
 	}
-
-	public Integer getSize() {
-		return size;
-	}
-	public void setSize(Integer size) {
-		this.size = size;
+	public void setPageSize(Integer size) {
+		this.pageSize = size;
 	}
 	public Integer getPages() {
 		return pages;
@@ -32,11 +35,11 @@ public class Page<T>{
 	public void setPages(Integer pages) {
 		this.pages = pages;
 	}
-	public Integer getCurrent() {
-		return current;
+	public Integer getCurrentPage() {
+		return currentPage;
 	}
-	public void setCurrent(Integer current) {
-		this.current = current;
+	public void setCurrentPage(Integer current) {
+		this.currentPage = current;
 	}
 	public List<T> getItems() {
 		return items;
@@ -44,6 +47,16 @@ public class Page<T>{
 	public void setItems(List<T> items) {
 		this.items = items;
 	}
+
+	public Integer getTotalItems() {
+		return totalItems;
+	}
+
+	public void setTotalItems(Integer totalItems) {
+		this.totalItems = totalItems;
+	}
+	
+	
 
 	
 }

@@ -1,8 +1,21 @@
 package com.laplataenbici.model.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Ubicacion extends AbstractEntity {
+	
+	@Column
 	private Double longitud;
+	
+	@Column
 	private Double latitud;
+	
+	@OneToOne
 	private Estacion estacion;
 	
 	

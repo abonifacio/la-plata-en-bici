@@ -1,70 +1,64 @@
 package com.laplataenbici.model.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Table;
+
+import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
 import com.laplataenbici.model.repository.interfaces.IEntityRepository;
 import com.laplataenbici.model.repository.utils.FindAllHelper;
-import com.laplataenbici.model.repository.utils.FindOneHelper;
+import com.laplataenbici.model.repository.utils.TransactionWrapper;
 
 public abstract class EntityRepository<T> implements IEntityRepository<T>{
 
+	private final Class<T> entidad;
+	
+	
+
+	@SuppressWarnings("unchecked")
+	public EntityRepository(){
+		entidad = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+	}
+	
+	
 	@Override
-	public Optional<T> findOneById(Long id) {
-		FindOneHelper<T> fh = new FindOneHelper<T>(){
+	public Optional<T> findOneById(final Long id) throws DBException{
+		TransactionWrapper<T> tw = new TransactionWrapper<T>(){
 
 			@Override
-			protected PreparedStatement prepare(Connection db) throws SQLException {
-				// TODO Auto-generated method stub
-				PreparedStatement ps = db.prepareStatement("SELECT * FROM "+getTableName()+" WHERE id = ?;");
-//				ps.setString(1, getTableName());
-				ps.setLong(1, id);
-				return ps;
+			public T prepare(EntityManager em) {
+				return (T) em.find(entidad, id);
 			}
-
-			@Override
-			protected T map(ResultSet rs) throws SQLException {
-				// TODO Auto-generated method stub
-				return mapFromRS(rs);
-				
-			}
-			
 			
 		};
-		return fh.run();
+		return Optional.ofNullable(tw.go());
 	}
 
 	@Override
-	public Page<T> findAll(Pageable page) {
-		FindAllHelper<T> fh = new FindAllHelper<T>(){
+	public Page<T> findAll(Pageable pageable) throws DBException{
+		
+		String tbl = entidad.getAnnotation(Table.class).name();
+		FindAllHelper<T> fh = new FindAllHelper<>(pageable, tbl);
+		return fh.go();
+ 	}
+	
+	@Override
+	public T save(T entity) throws DBException{
+		TransactionWrapper<T> tw = new TransactionWrapper<T>() {
 
 			@Override
-			protected PreparedStatement prepare(Connection db) throws SQLException {
-				// TODO Auto-generated method stub
-				int offset = (page.getPage()-1)*page.getCount();
-				int limit = offset+page.getCount();
-				PreparedStatement ps = db.prepareStatement("SELECT * FROM ? LIMIT ?,?;");
-				ps.setString(1, getTableName());
-				ps.setInt(2, offset);
-				ps.setInt(3, limit);
-				return ps;
+			public T prepare(EntityManager em) {
+				em.persist(entity);
+				return entity;
 			}
-
-			@Override
-			protected T map(ResultSet rs) throws SQLException {
-				// TODO Auto-generated method stub
-				return mapFromRS(rs);
-				
-			}
-			
 			
 		};
-		return fh.run();
+		
+		return tw.go();
 	}
 
 }
