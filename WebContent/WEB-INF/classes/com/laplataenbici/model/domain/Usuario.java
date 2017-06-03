@@ -2,8 +2,13 @@ package com.laplataenbici.model.domain;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -13,7 +18,7 @@ import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.domain.utils.Sexo;
 
 @Entity
-@Table
+@Table(name="Usuario")
 public class Usuario extends AbstractTrackable<TrackingUsuario> {
 	
 	@Column
@@ -31,16 +36,19 @@ public class Usuario extends AbstractTrackable<TrackingUsuario> {
 	@Column
 	private String numero;
 	
-	@OneToOne
+	@ManyToOne(cascade=CascadeType.MERGE)
+	@JoinColumn(name="localidad_id")
 	private Localidad localidad; 
 	
-	@Column
+	@Column(name="fecha_nac")
 	private Date fechaNacimiento;
 	
 	@Column
+	@Enumerated(EnumType.STRING)
 	private EstadoUsuario estado;
 	
 	@Column
+	@Enumerated(EnumType.STRING)
 	private Sexo sexo;
 	
 	@Column
@@ -53,10 +61,11 @@ public class Usuario extends AbstractTrackable<TrackingUsuario> {
 	private String password;
 	
 	@Column
+	@Enumerated(EnumType.STRING)
 	private Rol rol;
 	
-//	@OneToOne
-//	private Bicicleta bicicleta;
+	@OneToOne(mappedBy="usuario")
+	private Bicicleta bicicleta;
 
 
 	public Integer getDNI() {
@@ -137,15 +146,18 @@ public class Usuario extends AbstractTrackable<TrackingUsuario> {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
-//	public Bicicleta getBicicleta() {
-//		return bicicleta;
-//	}
-//	public void setBicicleta(Bicicleta bicicleta) {
-//		this.bicicleta = bicicleta;
-//	}
+	public Bicicleta getBicicleta() {
+		return bicicleta;
+	}
+	public void setBicicleta(Bicicleta bicicleta) {
+		this.bicicleta = bicicleta;
+	}
 
 	
-	
+	@Override
+	public String toString(){
+		return "{ id: "+this.id+", nombre: "+this.nombre+", apellido: "+this.apellido+", estado: "+this.estado.getValue()+" }";
+	}
 	
 	
 	

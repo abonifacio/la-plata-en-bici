@@ -7,7 +7,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
 @MappedSuperclass
-public class AbstractTrackable<T> extends AbstractEntity{
+public abstract class AbstractTrackable<T> extends AbstractEntity{
 
 //	@OneToMany(fetch=FetchType.LAZY)
 //	protected List<T> tracking;

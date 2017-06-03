@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class UserFilter implements Filter {
 	
-	private static String[] ALLOWED_PATHS = {"/inicio","/login","/registro","/","/admin","/logout"};
+	private static String[] ALLOWED_PATHS = {"/inicio","/login","/registro","/","/admin","/logout","/tests"};
 	private static String ASSETS_PATH = "/assets";
 	private static String ADMIN_PATH ="/admin";
     /**

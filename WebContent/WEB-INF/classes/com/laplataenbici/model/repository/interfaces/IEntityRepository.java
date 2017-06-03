@@ -14,4 +14,6 @@ public interface IEntityRepository<T> {
 	
 	public T save(T entity) throws DBException;
 	
+	public Long delete(Long id) throws DBException;
+	
 }

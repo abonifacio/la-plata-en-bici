@@ -2,9 +2,13 @@ package com.laplataenbici.model.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -13,22 +17,24 @@ import com.laplataenbici.model.domain.tracking.TrackingEstacion;
 import com.laplataenbici.model.domain.utils.EstadoEstacion;
 
 @Entity
-@Table
+@Table(name="Estacion")
 public class Estacion extends AbstractTrackable<TrackingEstacion> {
 	
 	@Column
 	private String nombre;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="ubicacion_id")
 	private Ubicacion ubicacion;
 	
-//	@OneToMany(fetch=FetchType.LAZY,mappedBy="estacion")
-//	private List<Bicicleta> bicilcetas;
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="id")
+	private List<Bicicleta> bicilcetas;
 	
 	@Column
 	private Integer capacidad;
 	
 	@Column
+	@Enumerated(EnumType.STRING)
 	private EstadoEstacion estado;
 	
 	@Column
@@ -47,12 +53,12 @@ public class Estacion extends AbstractTrackable<TrackingEstacion> {
 	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
 	}
-//	public List<Bicicleta> getBicilcetas() {
-//		return bicilcetas;
-//	}
-//	public void setBicilcetas(List<Bicicleta> bicilcetas) {
-//		this.bicilcetas = bicilcetas;
-//	}
+	public List<Bicicleta> getBicilcetas() {
+		return bicilcetas;
+	}
+	public void setBicilcetas(List<Bicicleta> bicilcetas) {
+		this.bicilcetas = bicilcetas;
+	}
 	public Integer getCapacidad() {
 		return capacidad;
 	}
@@ -70,6 +76,11 @@ public class Estacion extends AbstractTrackable<TrackingEstacion> {
 	}
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
+	}
+	
+	@Override
+	public String toString(){
+		return "{ id: "+this.id+", nombre: "+this.nombre+", estado: "+this.estado.getValue()+" }";
 	}
 	
 	

@@ -2,16 +2,39 @@ package com.laplataenbici.model.domain.tracking;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+
 import com.laplataenbici.model.domain.AbstractEntity;
 import com.laplataenbici.model.domain.Usuario;
 
-public abstract class Tracking<T,U> extends AbstractEntity{
+@MappedSuperclass
+public abstract class Tracking<T,U extends Enum<U>> extends AbstractEntity{
 	
+	@Column
 	private Date fecha;
+	
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="usuario_id")
 	private Usuario modificadorPor;
+	
 	private String mensaje;
-	private T operacion;
-	private U entity;
+	
+	@Enumerated(EnumType.STRING)
+	private U operacion;
+	
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="entity_id")
+	private T entity;
+	
+	public Tracking(){
+		this.fecha = new Date();
+	}
 
 	public Date getFecha() {
 		return fecha;
@@ -32,17 +55,22 @@ public abstract class Tracking<T,U> extends AbstractEntity{
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
-	public T getOperacion() {
+	public U getOperacion() {
 		return operacion;
 	}
-	public void setOperacion(T operacion) {
+	public void setOperacion(U operacion) {
 		this.operacion = operacion;
 	}
-	public U getEntity() {
+	public T getEntity() {
 		return entity;
 	}
-	public void setEntity(U entity) {
+	public void setEntity(T entity) {
 		this.entity = entity;
+	}
+	
+	@Override
+	public String toString(){
+		return "{ id: "+this.id+", mensaje: "+this.mensaje+", operacion: "+this.operacion.toString()+" }";
 	}
 	
 	

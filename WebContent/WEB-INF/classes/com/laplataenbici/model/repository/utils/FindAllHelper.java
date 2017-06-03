@@ -4,11 +4,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.laplataenbici.model.domain.AbstractEntity;
 import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
 
-public class FindAllHelper<T>{
+public class FindAllHelper<T extends AbstractEntity>{
 
 	private Pageable request;
 	private String tabla;
@@ -19,17 +20,16 @@ public class FindAllHelper<T>{
 
 	
 	public Page<T> go() throws DBException {
-		Page<T> page = new Page<T>(request,this.count());
+		Page<T> page = new Page<T>(request,this.count().intValue());
 		page.setItems(this.results());
 		return page;
 	}
 		
-	private Integer count() throws DBException{
-		TransactionWrapper<Integer> tw = new TransactionWrapper<Integer>() {
+	private Long count() throws DBException{
+		TransactionWrapper<Long> tw = new TransactionWrapper<Long>() {
 			@Override
-			public Integer prepare(EntityManager em) {
-				return (Integer) em.createQuery("select count e.id from :tabla e")
-						.setParameter("tabla", tabla)
+			public Long prepare(EntityManager em) {
+				return (Long) em.createQuery("select count(e.id) from "+tabla+" e")
 				.getSingleResult();
 			}
 		};
@@ -42,7 +42,7 @@ public class FindAllHelper<T>{
 			@SuppressWarnings("unchecked")
 			@Override
 			public List<T> prepare(EntityManager em) {
-				return (List<T>) em.createQuery("from :tabla")
+				return (List<T>) em.createQuery("from "+tabla)
 						.setFirstResult(request.getPage()*request.getCount())
 						.setMaxResults(request.getCount()).getResultList();
 			}

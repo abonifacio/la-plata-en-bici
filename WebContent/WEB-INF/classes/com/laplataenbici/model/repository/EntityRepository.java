@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.Table;
 
+import com.laplataenbici.model.domain.AbstractEntity;
 import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
@@ -13,15 +14,16 @@ import com.laplataenbici.model.repository.interfaces.IEntityRepository;
 import com.laplataenbici.model.repository.utils.FindAllHelper;
 import com.laplataenbici.model.repository.utils.TransactionWrapper;
 
-public abstract class EntityRepository<T> implements IEntityRepository<T>{
+public abstract class EntityRepository<T extends AbstractEntity> implements IEntityRepository<T>{
 
 	private final Class<T> entidad;
-	
+	private final String tabla;
 	
 
 	@SuppressWarnings("unchecked")
 	public EntityRepository(){
 		entidad = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		tabla = entidad.getAnnotation(Table.class).name();
 	}
 	
 	
@@ -41,8 +43,7 @@ public abstract class EntityRepository<T> implements IEntityRepository<T>{
 	@Override
 	public Page<T> findAll(Pageable pageable) throws DBException{
 		
-		String tbl = entidad.getAnnotation(Table.class).name();
-		FindAllHelper<T> fh = new FindAllHelper<>(pageable, tbl);
+		FindAllHelper<T> fh = new FindAllHelper<>(pageable, tabla);
 		return fh.go();
  	}
 	
@@ -52,13 +53,39 @@ public abstract class EntityRepository<T> implements IEntityRepository<T>{
 
 			@Override
 			public T prepare(EntityManager em) {
-				em.persist(entity);
+				if(entity.getId()==null){
+					em.persist(entity);					
+				}else{
+					em.merge(entity);
+				}
 				return entity;
 			}
 			
 		};
 		
 		return tw.go();
+	}
+	
+	@Override
+	public Long delete(final Long id) throws DBException{
+		final Optional<T> entity = this.findOneById(id);
+		if(entity.isPresent()){
+			
+			TransactionWrapper<Long> tw = new TransactionWrapper<Long>(){
+				
+				@Override
+				public Long prepare(EntityManager em) {
+					em.createQuery("delete from "+tabla+" e where e.id = :id").setParameter("id", id).executeUpdate();
+					return id;
+				}
+				
+			};
+			
+			return tw.go();
+			
+		}else{
+			throw new DBException("No se encontron el id a borrar -> "+id);
+		}
 	}
 
 }

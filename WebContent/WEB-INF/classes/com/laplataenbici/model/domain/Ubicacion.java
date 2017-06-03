@@ -2,11 +2,10 @@ package com.laplataenbici.model.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name="Ubicacion")
 public class Ubicacion extends AbstractEntity {
 	
 	@Column
@@ -15,8 +14,15 @@ public class Ubicacion extends AbstractEntity {
 	@Column
 	private Double latitud;
 	
-	@OneToOne
-	private Estacion estacion;
+	
+	public Ubicacion(){
+		
+	}
+	
+	public Ubicacion(Double lon, Double lat){
+		this.longitud = lon;
+		this.latitud = lat;
+	}
 	
 	
 	public Double getLongitud() {
@@ -30,12 +36,6 @@ public class Ubicacion extends AbstractEntity {
 	}
 	public void setLatitud(Double latitud) {
 		this.latitud = latitud;
-	}
-	public Estacion getEstacion() {
-		return estacion;
-	}
-	public void setEstacion(Estacion estacion) {
-		this.estacion = estacion;
 	}
 	
 	
