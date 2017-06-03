@@ -1,0 +1,10 @@
+La BD está configurada para user = root y password = 1234
+
+1) Agregar los jars que faltan en WEB-CONTENT/WEB-INF/lib
+
+2) Correr el script schema.sql que crea las tablas y datos de ejemplo
+
+3) Levantar el server
+
+4) Ir a {server}/tests (Servlet = com.laplataenbici.controllers.TestsServlet)
+

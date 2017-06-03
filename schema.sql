@@ -1,4 +1,4 @@
--- CREATE DATABASE  LaPlataEnBici;
+CREATE DATABASE  LaPlataEnBici;
 
 
 

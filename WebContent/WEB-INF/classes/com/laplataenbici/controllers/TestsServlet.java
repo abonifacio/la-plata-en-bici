@@ -55,8 +55,6 @@ public class TestsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-	
-		// TEST LOCALIDAD
 		
 		PrintWriter pw = response.getWriter();
 		
