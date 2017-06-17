@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.laplataenbici.model.domain.tracking.TrackingBicicleta;
 import com.laplataenbici.model.domain.utils.EstadoBicicleta;
 
@@ -32,6 +33,7 @@ public class Bicicleta extends AbstractTrackable<TrackingBicicleta>{
 	
 	@OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)
 	@JoinColumn(name="usuario_id")
+	@JsonBackReference
 	private Usuario usuario;
 	
 	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)

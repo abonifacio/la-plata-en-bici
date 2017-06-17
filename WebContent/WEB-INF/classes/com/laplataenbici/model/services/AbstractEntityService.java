@@ -16,11 +16,13 @@ public abstract class AbstractEntityService <T extends AbstractEntity>{
 	
 	
 	
-	public T create(T entity) throws DBException{
+	public T create(T entity) throws LPBException{
 		return this.getRepo().save(entity);
 	}
 	
-	public T update(T entity) throws DBException{
+	public T update(T entity) throws LPBException{
+		this.get(entity.getId());
+		
 		return this.getRepo().save(entity);
 	}
 	

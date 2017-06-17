@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.laplataenbici.model.domain.tracking.TrackingUsuario;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Rol;
@@ -65,6 +66,7 @@ public class Usuario extends AbstractTrackable<TrackingUsuario> {
 	private Rol rol;
 	
 	@OneToOne(mappedBy="usuario")
+	@JsonManagedReference
 	private Bicicleta bicicleta;
 
 
