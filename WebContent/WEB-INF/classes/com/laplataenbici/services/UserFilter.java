@@ -49,7 +49,7 @@ public class UserFilter implements Filter {
 		String path = request.getRequestURI().substring(request.getContextPath().length());
 		
 		
-		if(pathIsAllowed(path) || isAsset(path) || isAdmin(path)){
+		if(pathIsAllowed(path) || isAsset(path) || isAdmin(path) || isApi(path)){
 			
 			chain.doFilter(request,response);
 			return;
@@ -88,6 +88,10 @@ public class UserFilter implements Filter {
 	
 	private boolean isAdmin(String path){
 		return path.contains(ADMIN_PATH);
+	}
+	
+	private boolean isApi(String path){
+		return path.contains("rest");
 	}
 
 	/**
