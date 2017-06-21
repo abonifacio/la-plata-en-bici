@@ -14,6 +14,10 @@ public class LPBResponse {
 		return Response.ok(o).build();
 	}
 	
+	public static Response ok(Object o,String message){
+		return Response.ok(o).header(MSG_HEADER, message).build();
+	}
+	
 	public static Response created(AbstractEntity o,UriInfo location, String message){
 		UriBuilder ub = location.getAbsolutePathBuilder();
 		ub.path(String.valueOf(o.getId()));

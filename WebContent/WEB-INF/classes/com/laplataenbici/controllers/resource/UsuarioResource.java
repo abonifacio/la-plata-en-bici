@@ -1,6 +1,7 @@
 package com.laplataenbici.controllers.resource;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -55,7 +56,14 @@ public class UsuarioResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(Usuario entity) throws LPBException{
-		return LPBResponse.ok(service.update(entity));
+		return LPBResponse.ok(service.update(entity),"Usuario actualizado");
+	}
+	
+	@DELETE
+	@Path("{id}")
+	public Response delete(@PathParam("id") Long id) throws LPBException{
+		service.delete(id);
+		return LPBResponse.ok(null, "Usuario borrado");
 	}
 	
 }

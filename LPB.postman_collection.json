@@ -1,0 +1,298 @@
+{
+	"variables": [],
+	"info": {
+		"name": "LPB",
+		"_postman_id": "69edeb85-54b7-1c95-b6f8-80eb29411d5b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01 Get usuarios pagina 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Devuelve ok\"] = responseCode.code === 200;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "http://localhost:8090/LaPlataEnBici/rest/usuario?size=2&page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"LaPlataEnBici",
+						"rest",
+						"usuario"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "2",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "page",
+							"value": "0",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nombre\":\"Julieta\",\"apellido\":\"Garcia\",\"calle\":\"64\",\"numero\":\"456\",\"localidad\": {\"id\": 1}}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "02 Get usuarios pagina 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Devuelve ok\"] = responseCode.code === 200;",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "http://localhost:8090/LaPlataEnBici/rest/usuario?size=2&page=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"LaPlataEnBici",
+						"rest",
+						"usuario"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "2",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "03 Get usuario by id ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Verificar id\"] = jsonData.id === 4;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/LaPlataEnBici/rest/usuario/4",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "04 Get usuario by id error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Devuelve bad request\"] = responseCode.code === 400;",
+							"",
+							"tests[\"Tiene LPB-Message\"] = postman.getResponseHeader(\"LPB-Message\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/LaPlataEnBici/rest/usuario/158",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "05 Create usuario error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Devuelve bad request\"] = responseCode.code === 400;",
+							"",
+							"tests[\"Tiene LPB-Message\"] = postman.getResponseHeader(\"LPB-Message\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/LaPlataEnBici/rest/usuario",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Prueba\",\n    \"apellido\": \"Que falla\",\n    \"calle\": \"474\",\n    \"numero\": \"984\",\n    \"fechaNacimiento\": 799988400000,\n    \"estado\": \"HABILITADO\",\n    \"sexo\": \"M\",\n    \"email\": \"augusto@bonifacio.com\",\n    \"username\": \"testrest\",\n    \"password\": \"secreta\",\n    \"rol\": \"USER\",\n    \"dni\": 386542\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "06 Create usuario ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Devuelve created\"] = responseCode.code === 201;",
+							"",
+							"tests[\"Tiene LPB-Message\"] = postman.getResponseHeader(\"LPB-Message\");",
+							"",
+							"tests[\"Tiene Location\"] = postman.getResponseHeader(\"Location\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/LaPlataEnBici/rest/usuario",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Prueba\",\n    \"apellido\": \"Que anda\",\n    \"calle\": \"474\",\n    \"numero\": \"984\",\n    \"fechaNacimiento\": 799988400000,\n    \"estado\": \"HABILITADO\",\n    \"sexo\": \"M\",\n    \"email\": \"augusto@bonifacio.com\",\n    \"username\": \"testrest\",\n    \"password\": \"secreta\",\n    \"rol\": \"USER\",\n    \"localidad\": {\n    \t\"id\": \"1\"\n    },\n    \"dni\": 386542\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "07 Update usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Devuelve ok\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Tiene LPB-Message\"] = postman.getResponseHeader(\"LPB-Message\");",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Verificar nombre\"] = jsonData.nombre === \"Prueba update\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/LaPlataEnBici/rest/usuario",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 5,\n    \"nombre\": \"Prueba update\",\n    \"apellido\": \"Que anda update\",\n    \"calle\": \"474\",\n    \"numero\": \"984\",\n    \"localidad\": {\n        \"id\": 1,\n        \"nombre\": \"City Bell\",\n        \"codigoPostal\": 1896\n    },\n    \"fechaNacimiento\": 799988400000,\n    \"estado\": \"HABILITADO\",\n    \"sexo\": \"M\",\n    \"email\": \"augusto@bonifacio.com\",\n    \"username\": \"testrest\",\n    \"password\": \"secreta\",\n    \"rol\": \"USER\",\n    \"bicicleta\": null,\n    \"dni\": 386542\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "08 Delete usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Devuelve ok\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Tiene LPB-Message\"] = postman.getResponseHeader(\"LPB-Message\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/LaPlataEnBici/rest/usuario/5",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

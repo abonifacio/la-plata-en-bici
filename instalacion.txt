@@ -6,5 +6,7 @@ La BD está configurada para user = root y password = 1234
 
 3) Levantar el server
 
-4) Ir a {server}/tests (Servlet = com.laplataenbici.controllers.TestsServlet)
+4) Correr los test de postman LPB.postman_collection.json
 
+Aclaración:
+Los errores en el uso de la api (ej: pasar un id inválido) se identifican por el codigo del response http y el header LPB-Message que tiene el mensaje detallado
