@@ -1,0 +1,28 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<md-toolbar color="primary">
+  
+
+  <a md-button routerLink="/estaciones/listado">Estaciones</a>
+  <a md-button routerLink="/bicicletas/listado">Bicicletas</a>
+  <a md-button routerLink="/usuarios/listado">Usuarios</a>
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="fill-remaining-space"></span>
+
+
+  <a md-button routerLink="registro">
+    <md-icon>account_circle</md-icon>
+  </a>
+
+</md-toolbar>
+
+<md-card class="container">
+  <md-card-header>
+    <md-card-title>{{title | async}}</md-card-title>
+    <md-card-subtitle>Subtitlo</md-card-subtitle>
+  </md-card-header>
+  <md-card-content>
+    <br>
+    <router-outlet></router-outlet>  
+  </md-card-content>
+</md-card>
