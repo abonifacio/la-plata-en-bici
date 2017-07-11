@@ -2,7 +2,6 @@ package com.laplataenbici.model.domain;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,12 +30,12 @@ public class Bicicleta extends AbstractTrackable<TrackingBicicleta>{
 	@Enumerated(EnumType.STRING)
 	private EstadoBicicleta estado;
 	
-	@OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="usuario_id")
 	@JsonBackReference
 	private Usuario usuario;
 	
-	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="estacion_id")
 	private Estacion estacion;
 	
