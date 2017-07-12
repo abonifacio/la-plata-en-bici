@@ -1,7 +1,8 @@
+import { Entity } from './entity';
 import { Localidad } from './localidad';
 
 
-export class User{
+export class Usuario extends Entity{
 
     DNI: Number;
     nombre: String;
@@ -13,6 +14,7 @@ export class User{
     estado: EstadoUsuario;
     sexo: Sexo;
     username: String;
+    password:String;
     rol: Rol;
     
 }

@@ -1,7 +1,12 @@
-export class Localidad{
+import { Entity } from './entity';
+export class Localidad extends Entity{
     
-    id:Number;
     nombre: String;
-    codigoPosta: Number;
+    codigoPostal: Number;
+
+    constructor(id:Number){
+        super();
+        this.id = id;
+    }
 
 }

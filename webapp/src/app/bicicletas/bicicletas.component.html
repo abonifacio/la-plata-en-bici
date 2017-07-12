@@ -1,0 +1,20 @@
+<nav md-tab-nav-bar layout="row">
+  <a md-tab-link routerLinkActive #rla="routerLinkActive" [active]="rla.isActive" routerLink="/bicicletas/listado">
+    Listado
+  </a>
+  <a md-tab-link routerLinkActive #rla2="routerLinkActive" [active]="rla2.isActive" routerLink="/bicicletas/retirar">
+    Retirar
+  </a>
+  <a md-tab-link routerLinkActive #rla3="routerLinkActive" [active]="rla3.isActive" routerLink="/bicicletas/estacionar">
+    Estacionar
+  </a>
+  <a md-tab-link routerLinkActive #rla4="routerLinkActive" [active]="rla4.isActive" routerLink="/bicicletas/denunciar">
+    Denunciar
+  </a>
+  <a md-tab-link routerLinkActive #rla5="routerLinkActive" [active]="rla5.isActive" routerLink="/bicicletas/alta">
+    Alta
+  </a>
+  
+</nav>
+
+<router-outlet></router-outlet>

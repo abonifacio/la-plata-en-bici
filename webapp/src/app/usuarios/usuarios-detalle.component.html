@@ -1,0 +1,28 @@
+<div *ngIf="user">
+
+<h3>Usuario</h3>
+{{user.username}}
+<br>
+<h3>Nombre y Apellido</h3>
+{{user.nombre}} {{user.apellido}}
+<br>
+<h3>  Domicilio</h3>
+{{user.calle}} N° {{user.numero}} - {{user.localidad.nombre}}
+<br>
+<h3>Fecha de nacimiento</h3>
+{{user.fechaNacimiento | date: 'dd/MM/yyyy'}}
+<br>
+<h3>Estado</h3>
+{{user.estado}}
+<br>
+<h3>Sexo</h3>
+{{user.sexo}}
+<br>
+<br>
+<hr>
+<br>
+<br>
+<a md-raised-button class="success" (click)="setEstado('HABILITADO')">Habilitar</a>
+<a md-raised-button class="warning" (click)="setEstado('SUSPENDIO')">Suspender</a>
+<a md-raised-button class="danger" (click)="setEstado('BANEADO')">Banear</a>
+</div>
