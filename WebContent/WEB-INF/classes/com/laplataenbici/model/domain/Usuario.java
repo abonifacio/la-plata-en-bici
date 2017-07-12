@@ -2,7 +2,6 @@ package com.laplataenbici.model.domain;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,7 +36,7 @@ public class Usuario extends AbstractTrackable<TrackingUsuario> {
 	@Column
 	private String numero;
 	
-	@ManyToOne(cascade=CascadeType.MERGE)
+	@ManyToOne()
 	@JoinColumn(name="localidad_id")
 	private Localidad localidad; 
 	

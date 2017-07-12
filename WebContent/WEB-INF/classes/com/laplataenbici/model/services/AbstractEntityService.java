@@ -8,11 +8,11 @@ import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
-import com.laplataenbici.model.repository.interfaces.IEntityRepository;
+import com.laplataenbici.model.repository.EntityRepository;
 
 public abstract class AbstractEntityService <T extends AbstractEntity>{
 	
-	protected abstract IEntityRepository<T> getRepo();
+	protected abstract EntityRepository<T> getRepo();
 	
 	
 	

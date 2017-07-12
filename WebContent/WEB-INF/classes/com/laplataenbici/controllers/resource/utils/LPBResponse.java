@@ -33,6 +33,10 @@ public class LPBResponse {
 		return Response.status(Response.Status.BAD_REQUEST).header(MSG_HEADER, message).build();
 	}
 	
+	public static Response fordibben(String message){
+		return Response.status(Response.Status.FORBIDDEN).header(MSG_HEADER, message).build();
+	}
+	
 	public static Response notFound(){
 		return Response.status(Response.Status.NOT_FOUND).build();
 	}

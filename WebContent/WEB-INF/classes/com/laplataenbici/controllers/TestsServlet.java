@@ -26,13 +26,13 @@ import com.laplataenbici.model.domain.utils.EstadoEstacion;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.domain.utils.Sexo;
-import com.laplataenbici.model.repository.BicicletaRepository;
-import com.laplataenbici.model.repository.EstacionRepository;
-import com.laplataenbici.model.repository.LocalidadRepository;
-import com.laplataenbici.model.repository.UsuarioRepository;
-import com.laplataenbici.model.repository.tracking.TrackingBicicletaRepository;
-import com.laplataenbici.model.repository.tracking.TrackingEstacionRepository;
-import com.laplataenbici.model.repository.tracking.TrackingUsuarioRepository;
+import com.laplataenbici.model.repository.impl.BicicletaRepositoryImpl;
+import com.laplataenbici.model.repository.impl.EstacionRepositoryImpl;
+import com.laplataenbici.model.repository.impl.LocalidadRepositoryImpl;
+import com.laplataenbici.model.repository.impl.UsuarioRepositoryImpl;
+import com.laplataenbici.model.repository.impl.tracking.TrackingBicicletaRepositoryImpl;
+import com.laplataenbici.model.repository.impl.tracking.TrackingEstacionRepositoryImpl;
+import com.laplataenbici.model.repository.impl.tracking.TrackingUsuarioRepositoryImpl;
 
 /**
  * Servlet implementation class TestsServlet
@@ -76,7 +76,7 @@ public class TestsServlet extends HttpServlet {
 		pw.println("----- Tests de localidades");
 		pw.println("--------------------------------------------------");
 		
-		TestsUtils<Localidad> test = new TestsUtils<Localidad>(pw,new LocalidadRepository()) {
+		TestsUtils<Localidad> test = new TestsUtils<Localidad>(pw,new LocalidadRepositoryImpl()) {
 			
 			@Override
 			protected Localidad modificarRegistro(Localidad entity) {
@@ -105,7 +105,7 @@ public class TestsServlet extends HttpServlet {
 		pw.println("----- Tests de estaciones");
 		pw.println("--------------------------------------------------");
 		
-		TestsUtils<Estacion> test = new TestsUtils<Estacion>(pw,new EstacionRepository()) {
+		TestsUtils<Estacion> test = new TestsUtils<Estacion>(pw,new EstacionRepositoryImpl()) {
 			
 			@Override
 			protected Estacion modificarRegistro(Estacion entity) {
@@ -136,7 +136,7 @@ public class TestsServlet extends HttpServlet {
 		pw.println("----- Tests de usuarios");
 		pw.println("--------------------------------------------------");
 		
-		TestsUtils<Usuario> test = new TestsUtils<Usuario>(pw,new UsuarioRepository()) {
+		TestsUtils<Usuario> test = new TestsUtils<Usuario>(pw,new UsuarioRepositoryImpl()) {
 			
 			@Override
 			protected Usuario modificarRegistro(Usuario entity) {
@@ -177,7 +177,7 @@ public class TestsServlet extends HttpServlet {
 		pw.println("----- Tests de Bicicletas");
 		pw.println("--------------------------------------------------");
 		
-		TestsUtils<Bicicleta> test = new TestsUtils<Bicicleta>(pw,new BicicletaRepository()) {
+		TestsUtils<Bicicleta> test = new TestsUtils<Bicicleta>(pw,new BicicletaRepositoryImpl()) {
 			
 			@Override
 			protected Bicicleta modificarRegistro(Bicicleta entity) {
@@ -209,7 +209,7 @@ public class TestsServlet extends HttpServlet {
 		pw.println("----- Tests de TrackingBicicletas");
 		pw.println("--------------------------------------------------");
 		
-		TestsUtils<TrackingBicicleta> test = new TestsUtils<TrackingBicicleta>(pw,new TrackingBicicletaRepository()) {
+		TestsUtils<TrackingBicicleta> test = new TestsUtils<TrackingBicicleta>(pw,new TrackingBicicletaRepositoryImpl()) {
 			
 			@Override
 			protected TrackingBicicleta modificarRegistro(TrackingBicicleta entity) {
@@ -249,7 +249,7 @@ public class TestsServlet extends HttpServlet {
 		pw.println("----- Tests de TrackingUsuarios");
 		pw.println("--------------------------------------------------");
 		
-		TestsUtils<TrackingUsuario> test = new TestsUtils<TrackingUsuario>(pw,new TrackingUsuarioRepository()) {
+		TestsUtils<TrackingUsuario> test = new TestsUtils<TrackingUsuario>(pw,new TrackingUsuarioRepositoryImpl()) {
 			
 			@Override
 			protected TrackingUsuario modificarRegistro(TrackingUsuario entity) {
@@ -286,7 +286,7 @@ public class TestsServlet extends HttpServlet {
 		pw.println("----- Tests de TrackingEstacions");
 		pw.println("--------------------------------------------------");
 		
-		TestsUtils<TrackingEstacion> test = new TestsUtils<TrackingEstacion>(pw,new TrackingEstacionRepository()) {
+		TestsUtils<TrackingEstacion> test = new TestsUtils<TrackingEstacion>(pw,new TrackingEstacionRepositoryImpl()) {
 			
 			@Override
 			protected TrackingEstacion modificarRegistro(TrackingEstacion entity) {

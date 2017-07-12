@@ -6,15 +6,15 @@ import java.util.Optional;
 import com.laplataenbici.model.domain.AbstractEntity;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
-import com.laplataenbici.model.repository.interfaces.IEntityRepository;
+import com.laplataenbici.model.repository.EntityRepository;
 
 public abstract class TestsUtils<T extends AbstractEntity> {
 
-	private final IEntityRepository<T> repo;
+	private final EntityRepository<T> repo;
 	private final PrintWriter pw;
 	private Long insId;
 	
-	public TestsUtils(PrintWriter pw,IEntityRepository<T> repo){
+	public TestsUtils(PrintWriter pw,EntityRepository<T> repo){
 		this.repo = repo;
 		this.pw = pw;
 	}

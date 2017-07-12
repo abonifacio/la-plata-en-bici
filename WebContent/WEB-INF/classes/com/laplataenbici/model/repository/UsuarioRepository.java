@@ -1,9 +1,11 @@
 package com.laplataenbici.model.repository;
 
+
+import java.util.Optional;
+
 import com.laplataenbici.model.domain.Usuario;
-import com.laplataenbici.model.repository.interfaces.IUsuarioRepository;
+import com.laplataenbici.model.domain.exceptions.DBException;
 
-public class UsuarioRepository extends EntityRepository<Usuario> implements IUsuarioRepository {
-
-
+public interface UsuarioRepository extends EntityRepository<Usuario>{
+	Optional<Usuario> findOneByUsernameAndPassword(String username,String password) throws DBException; 
 }

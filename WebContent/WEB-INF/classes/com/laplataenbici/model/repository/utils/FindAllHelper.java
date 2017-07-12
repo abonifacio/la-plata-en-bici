@@ -1,6 +1,7 @@
 package com.laplataenbici.model.repository.utils;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -11,11 +12,14 @@ import com.laplataenbici.model.domain.utils.Pageable;
 
 public class FindAllHelper<T extends AbstractEntity>{
 
-	private Pageable request;
-	private String tabla;
-	public FindAllHelper(Pageable request,String tabla){
+	private final Pageable request;
+	private final String tabla;
+	private final Map<String,Class<?>> allowedFields;
+	
+	public FindAllHelper(Pageable request,String tabla,Map<String,Class<?>> allowedFields){
 		this.request = request;
 		this.tabla = tabla;
+		this.allowedFields = allowedFields;
 	}
 
 	
@@ -42,7 +46,19 @@ public class FindAllHelper<T extends AbstractEntity>{
 			@SuppressWarnings("unchecked")
 			@Override
 			public List<T> prepare(EntityManager em) {
-				return (List<T>) em.createQuery("from "+tabla)
+				String query = "from "+tabla+" e";
+				if(allowedFields.containsKey(request.getSort())){
+					String direction = request.isAscending() ? "ASC ": "DESC";
+					query = query + " order by e."+request.getSort()+" "+direction;
+				}
+//				if(allowedFields.containsKey(request.getSearch())){
+//					if(allowedFields.get(request.getSearch()).equals(String.class)){
+//						query = query + " where "+request.getSearch()+" LIKE '%"+request.getSearchValue()+"%'";
+//					}else{
+//						query = query + " where "+request.getSearch()+" = "+request.getSearchValue()+"'";
+//					}
+//				}
+				return (List<T>) em.createQuery(query)
 						.setFirstResult(request.getPage()*request.getCount())
 						.setMaxResults(request.getCount()).getResultList();
 			}
