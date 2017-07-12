@@ -16,6 +16,7 @@ import com.laplataenbici.controllers.resource.utils.ApiConstants;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.Usuario;
 import com.laplataenbici.model.domain.exceptions.LPBException;
+import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Pageable;
 import com.laplataenbici.model.services.UsuarioService;
 
@@ -34,7 +35,7 @@ public class UsuarioResource {
 			@QueryParam("sort") @DefaultValue("id") String sort,
 			@QueryParam("ascending") @DefaultValue("false") Boolean ascending
 			) throws LPBException {
-		return LPBResponse.ok(service.findAll(new Pageable(page, size,sort,ascending)),"Usuarios retornados succesfullmente");
+		return LPBResponse.ok(service.findAll(new Pageable(page, size,sort,ascending)));
 	}
 	
 	@GET
@@ -47,6 +48,13 @@ public class UsuarioResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(Usuario entity) throws LPBException{
 		return LPBResponse.ok(service.update(entity),"Usuario actualizado");
+	}
+	
+	@PUT()
+	@Path("activar/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response activar(EstadoUsuario estado,@PathParam("id")Long id) throws LPBException{
+		return LPBResponse.ok(service.setActivo(id,estado),"Usuario " + estado.getValue().toLowerCase());
 	}
 	
 	@DELETE

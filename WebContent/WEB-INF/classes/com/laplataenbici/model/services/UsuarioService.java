@@ -6,6 +6,8 @@ import com.laplataenbici.model.domain.Usuario;
 import com.laplataenbici.model.domain.exceptions.BusinessException;
 import com.laplataenbici.model.domain.exceptions.FordibbenException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
+import com.laplataenbici.model.domain.utils.EstadoUsuario;
+import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.repository.EntityRepository;
 import com.laplataenbici.model.repository.UsuarioRepository;
 import com.laplataenbici.model.repository.impl.UsuarioRepositoryImpl;
@@ -24,6 +26,7 @@ public class UsuarioService extends AbstractEntityService<Usuario>{
 		if(entity.getLocalidad()==null || entity.getLocalidad().getId()==null){
 			throw new BusinessException("El usuario debe tener asociada una localidad");
 		}
+		entity.setRol(Rol.USER);
 		return super.create(entity);
 	}
 	
@@ -37,6 +40,12 @@ public class UsuarioService extends AbstractEntityService<Usuario>{
 			return tmp.get();
 		}
 		throw new FordibbenException("Combinación de usuario/contraseña incorrecta");
+	}
+	
+	public Usuario setActivo(Long id, EstadoUsuario estado) throws LPBException{
+		Usuario tmp = this.get(id);
+		tmp.setEstado(estado);
+		return super.update(tmp);
 	}
 	
 	
