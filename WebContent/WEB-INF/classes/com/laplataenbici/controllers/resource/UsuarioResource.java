@@ -12,12 +12,14 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.laplataenbici.config.Secured;
 import com.laplataenbici.controllers.resource.utils.ApiConstants;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.Usuario;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Pageable;
+import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.services.UsuarioService;
 
 @Path(ApiConstants.USUARIO_URI)
@@ -29,6 +31,7 @@ public class UsuarioResource {
 	
 
 	@GET
+	@Secured(Rol.ADMIN)
 	public Response getAll(
 			@QueryParam("page") @DefaultValue("0") Integer page,
 			@QueryParam("size") @DefaultValue("25") Integer size,
@@ -40,18 +43,21 @@ public class UsuarioResource {
 	
 	@GET
 	@Path("{id}")
+	@Secured(Rol.ADMIN)
 	public Response get(@PathParam("id") Long id) throws LPBException {
 		return LPBResponse.ok(service.get(id));
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Secured(Rol.ADMIN)
 	public Response update(Usuario entity) throws LPBException{
 		return LPBResponse.ok(service.update(entity),"Usuario actualizado");
 	}
 	
-	@PUT()
+	@PUT
 	@Path("activar/{id}")
+	@Secured(Rol.ADMIN)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response activar(EstadoUsuario estado,@PathParam("id")Long id) throws LPBException{
 		return LPBResponse.ok(service.setActivo(id,estado),"Usuario " + estado.getValue().toLowerCase());
@@ -59,6 +65,7 @@ public class UsuarioResource {
 	
 	@DELETE
 	@Path("{id}")
+	@Secured(Rol.ADMIN)
 	public Response delete(@PathParam("id") Long id) throws LPBException{
 		service.delete(id);
 		return LPBResponse.ok(null, "Usuario borrado");
