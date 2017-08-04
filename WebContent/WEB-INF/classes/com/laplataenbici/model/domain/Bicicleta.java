@@ -13,12 +13,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.laplataenbici.model.domain.tracking.TrackingBicicleta;
 import com.laplataenbici.model.domain.utils.EstadoBicicleta;
 
 @Entity
 @Table(name="Bicicleta")
-public class Bicicleta extends AbstractTrackable<TrackingBicicleta>{
+public class Bicicleta extends AbstractTrackable{
 	
 	@Column(name="fecha_ingreso")
 	private Date fechaIngreso;

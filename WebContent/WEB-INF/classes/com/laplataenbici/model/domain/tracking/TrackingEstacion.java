@@ -7,6 +7,6 @@ import com.laplataenbici.model.domain.Estacion;
 
 @Entity
 @Table(name="TrackingEstacion")
-public class TrackingEstacion extends Tracking<Estacion,OperacionEstacion> {
+public class TrackingEstacion extends AbstractTracking<Estacion> {
 
 }

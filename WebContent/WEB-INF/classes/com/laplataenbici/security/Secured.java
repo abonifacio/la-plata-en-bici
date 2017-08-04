@@ -1,4 +1,4 @@
-package com.laplataenbici.config;
+package com.laplataenbici.security;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

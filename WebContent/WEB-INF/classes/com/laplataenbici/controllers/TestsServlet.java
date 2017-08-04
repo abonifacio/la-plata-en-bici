@@ -15,9 +15,7 @@ import com.laplataenbici.model.domain.Estacion;
 import com.laplataenbici.model.domain.Localidad;
 import com.laplataenbici.model.domain.Ubicacion;
 import com.laplataenbici.model.domain.Usuario;
-import com.laplataenbici.model.domain.tracking.OperacionBicicleta;
-import com.laplataenbici.model.domain.tracking.OperacionEstacion;
-import com.laplataenbici.model.domain.tracking.OperacionUsuario;
+import com.laplataenbici.model.domain.tracking.OperacionTracking;
 import com.laplataenbici.model.domain.tracking.TrackingBicicleta;
 import com.laplataenbici.model.domain.tracking.TrackingEstacion;
 import com.laplataenbici.model.domain.tracking.TrackingUsuario;
@@ -225,7 +223,7 @@ public class TestsServlet extends HttpServlet {
 				bici.setId(1L);
 				tmp.setEntity(bici);
 				
-				tmp.setOperacion(OperacionBicicleta.RETIRO);
+				tmp.setOperacion(OperacionTracking.MODIFICACION);
 				tmp.setFecha(new Date());
 				
 				Usuario user = new Usuario();
@@ -266,7 +264,7 @@ public class TestsServlet extends HttpServlet {
 				tmp.setEntity(user);
 				tmp.setModificadorPor(user);
 				
-				tmp.setOperacion(OperacionUsuario.ALTA);
+				tmp.setOperacion(OperacionTracking.ALTA);
 				tmp.setFecha(new Date());
 				
 				return tmp;
@@ -302,7 +300,7 @@ public class TestsServlet extends HttpServlet {
 				estacion.setId(1L);
 				tmp.setEntity(estacion);
 				
-				tmp.setOperacion(OperacionEstacion.MODIFICACION);
+				tmp.setOperacion(OperacionTracking.MODIFICACION);
 				tmp.setFecha(new Date());
 				
 				Usuario user = new Usuario();

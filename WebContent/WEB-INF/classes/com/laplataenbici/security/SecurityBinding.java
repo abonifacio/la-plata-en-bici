@@ -1,4 +1,4 @@
-package com.laplataenbici.config;
+package com.laplataenbici.security;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

@@ -38,7 +38,7 @@ public abstract class AbstractEntityService <T extends AbstractEntity>{
 		return this.getRepo().findAll(pageable);
 	}
 	
-	public void delete(Long id) throws DBException{
+	public void delete(Long id) throws LPBException{
 		this.getRepo().delete(id);
 	}
 

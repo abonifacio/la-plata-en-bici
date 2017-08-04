@@ -12,7 +12,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.laplataenbici.config.Secured;
 import com.laplataenbici.controllers.resource.utils.ApiConstants;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.Usuario;
@@ -21,6 +20,7 @@ import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Pageable;
 import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.services.UsuarioService;
+import com.laplataenbici.security.Secured;
 
 @Path(ApiConstants.USUARIO_URI)
 @Produces(MediaType.APPLICATION_JSON)

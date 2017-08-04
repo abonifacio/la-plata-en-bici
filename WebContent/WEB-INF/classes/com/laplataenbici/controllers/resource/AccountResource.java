@@ -14,15 +14,14 @@ import javax.ws.rs.core.UriInfo;
 import com.laplataenbici.controllers.resource.utils.ApiConstants;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.Usuario;
-import com.laplataenbici.model.domain.exceptions.FordibbenException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.services.UsuarioService;
+import com.laplataenbici.security.SecurityUtils;
 
 @Path(ApiConstants.ACCOUNT_URI)
 @Produces(MediaType.APPLICATION_JSON)
 public class AccountResource {
 
-	private static final String SESSION_ID = "user_id";
 	private final UsuarioService service = new UsuarioService();
 	
 	@POST
@@ -33,15 +32,13 @@ public class AccountResource {
 	
 	@GET
 	public Response getCurrentUser(@Context HttpServletRequest request) throws LPBException {
-		Long id = (Long) request.getSession().getAttribute(SESSION_ID);
-		if(id==null) throw new FordibbenException("Usuario no logeado");
-		return LPBResponse.ok(service.get(id));
+		return LPBResponse.ok(SecurityUtils.getCurrentUser());
 	}
 	
 	@PUT
 	public Response login(Usuario entity,@Context HttpServletRequest request) throws LPBException{
 		Usuario tmp = service.login(entity);
-		request.getSession().setAttribute(SESSION_ID, tmp.getId());
+		SecurityUtils.setCurrentUser(request,tmp);
 		return LPBResponse.ok(tmp);
 	}
 }
