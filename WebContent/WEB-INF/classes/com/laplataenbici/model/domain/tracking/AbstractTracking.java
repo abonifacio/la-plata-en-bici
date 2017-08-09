@@ -11,10 +11,11 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
 import com.laplataenbici.model.domain.AbstractEntity;
+import com.laplataenbici.model.domain.AbstractTrackable;
 import com.laplataenbici.model.domain.Usuario;
 
 @MappedSuperclass
-public abstract class Tracking<T,U extends Enum<U>> extends AbstractEntity{
+public abstract class AbstractTracking<T extends AbstractTrackable> extends AbstractEntity{
 	
 	@Column
 	private Date fecha;
@@ -26,13 +27,13 @@ public abstract class Tracking<T,U extends Enum<U>> extends AbstractEntity{
 	private String mensaje;
 	
 	@Enumerated(EnumType.STRING)
-	private U operacion;
+	private OperacionTracking operacion;
 	
 	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="entity_id")
 	private T entity;
 	
-	public Tracking(){
+	public AbstractTracking(){
 		this.fecha = new Date();
 	}
 
@@ -55,10 +56,10 @@ public abstract class Tracking<T,U extends Enum<U>> extends AbstractEntity{
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
-	public U getOperacion() {
+	public OperacionTracking getOperacion() {
 		return operacion;
 	}
-	public void setOperacion(U operacion) {
+	public void setOperacion(OperacionTracking operacion) {
 		this.operacion = operacion;
 	}
 	public T getEntity() {

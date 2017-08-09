@@ -13,12 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.laplataenbici.model.domain.tracking.TrackingEstacion;
 import com.laplataenbici.model.domain.utils.EstadoEstacion;
 
 @Entity
 @Table(name="Estacion")
-public class Estacion extends AbstractTrackable<TrackingEstacion> {
+public class Estacion extends AbstractTrackable {
 	
 	@Column
 	private String nombre;

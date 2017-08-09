@@ -12,14 +12,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.laplataenbici.model.domain.tracking.TrackingUsuario;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.domain.utils.Sexo;
 
 @Entity
 @Table(name="Usuario")
-public class Usuario extends AbstractTrackable<TrackingUsuario> {
+public class Usuario extends AbstractTrackable {
 	
 	@Column
 	private Integer DNI;

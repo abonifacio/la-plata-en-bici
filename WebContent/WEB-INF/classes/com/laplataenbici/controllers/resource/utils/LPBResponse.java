@@ -37,6 +37,10 @@ public class LPBResponse {
 		return Response.status(Response.Status.FORBIDDEN).header(MSG_HEADER, message).build();
 	}
 	
+	public static Response unauthorized(){
+		return Response.status(Response.Status.UNAUTHORIZED).header(MSG_HEADER, "El usuario no está logeado").build();
+	}
+	
 	public static Response notFound(){
 		return Response.status(Response.Status.NOT_FOUND).build();
 	}

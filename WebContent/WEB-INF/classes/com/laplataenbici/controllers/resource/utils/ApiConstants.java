@@ -15,5 +15,7 @@ public class ApiConstants {
 	
 	public static final String LOCALIDAD_URI = "/localidades";
 	
+	public static final String TRACKING_URI = "/tracking";
+	
 	
 }
