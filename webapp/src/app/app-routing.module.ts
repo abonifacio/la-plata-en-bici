@@ -7,13 +7,14 @@ import {RegistroComponent} from './registro/registro.component';
 import {BicicletasComponent} from './bicicletas/bicicletas.component';
 import {BicicletasListadoComponent} from './bicicletas/bicicletas-listado.component';
 import {BicicletasAltaComponent } from './bicicletas/bicicletas-alta.component';
-import {BicicletasDenunciarComponent } from './bicicletas/bicicletas-denunciar.component';
 import {BicicletasEstacionarComponent } from './bicicletas/bicicletas-estacionar.component';
-import {BicicletasRetirarComponent } from './bicicletas/bicicletas-retirar.component';
+import { BicicletasRetirarComponent } from './bicicletas/bicicletas-retirar.component';
 import {UsuariosComponent } from './usuarios/usuarios.component';
 import {UsuariosDetalleComponent } from './usuarios/usuarios-detalle.component';
 import {UsuariosListadoComponent } from './usuarios/usuarios-listado.component';
 import {HomeComponent } from './home/home.component';
+import {EstacionesDetalleComponent} from './estaciones/estaciones-detalle.component';
+import {BicicletasDetalleComponent} from './bicicletas/bicicletas-detalle.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
       {
         path:'mapa',
         component: EstacionesMapaComponent,
+      },
+      {
+        path: 'detalle/:id',
+        data: {title: 'Detalle de estacion'},
+        component: EstacionesDetalleComponent
       }
     ],
   },
@@ -45,16 +51,17 @@ const routes: Routes = [
         component: BicicletasRetirarComponent
       },
       {
-        path: 'denunciar',
-        component: BicicletasDenunciarComponent
-      },
-      {
         path: 'estacionar',
         component: BicicletasEstacionarComponent
       },
       {
         path: 'alta',
         component: BicicletasAltaComponent
+      },
+      {
+        path: 'detalle/:id',
+        data: {title: 'Detalle de bicicleta'},
+        component: BicicletasDetalleComponent
       }
     ]
   },

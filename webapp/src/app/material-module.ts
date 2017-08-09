@@ -4,7 +4,7 @@ import {
   MdButtonModule, MdToolbarModule,MdIconModule,MdTabsModule,
   MdCardModule,MdInputModule,MdRadioModule,MdGridListModule,
   MdTableModule,MdSortModule,MdPaginatorModule,MdProgressSpinnerModule,
-  MdSnackBarModule,MdDatepickerModule,MdNativeDateModule,MdSelectModule
+  MdSnackBarModule,MdDatepickerModule,MdNativeDateModule,MdSelectModule,MdProgressBarModule
 } from '@angular/material';
 import {CdkTableModule} from '@angular/cdk';
 @NgModule({
@@ -13,14 +13,14 @@ import {CdkTableModule} from '@angular/cdk';
     MdCardModule,MdInputModule,MdRadioModule,MdGridListModule,
     MdTableModule,CdkTableModule,MdSortModule,MdPaginatorModule,
     MdProgressSpinnerModule,MdSnackBarModule,MdDatepickerModule,
-    MdNativeDateModule,MdSelectModule
+    MdNativeDateModule,MdSelectModule,MdProgressBarModule
   ],
   exports: [
     MdButtonModule, MdToolbarModule,MdIconModule,MdTabsModule,
     MdCardModule,MdInputModule,MdRadioModule,MdGridListModule,
     MdTableModule,CdkTableModule,MdSortModule,MdPaginatorModule,
     MdProgressSpinnerModule,MdSnackBarModule,MdDatepickerModule,
-    MdNativeDateModule,MdSelectModule
+    MdNativeDateModule,MdSelectModule,MdProgressBarModule
   ]
 })
 export class AppMaterialModule { }

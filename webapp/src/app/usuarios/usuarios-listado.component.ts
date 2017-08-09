@@ -11,21 +11,17 @@ import { Column } from '../entities/common';
 })
 export class UsuariosListadoComponent implements OnInit {
 
-  columns: Column[];
+  vColumns: String[];
 
   constructor(private service : UsuarioService, private router: Router) {
-    this.columns = [
-      new Column('id','ID'),
-      new Column('nombre','Nombre'),
-      new Column('apellido','Apellido'),
-      new Column('username','Usuario')
-    ];
+    this.vColumns = ['id','nombre','apellido','username'];
 
   }
 
-  irDetalle(id:Number){
-    console.log(id);
-    this.router.navigateByUrl('/usuarios/detalle/'+id);
+  irDetalle(entity:Usuario){
+    console.log(entity);
+    this.service.cache(entity);
+    this.router.navigateByUrl('/usuarios/detalle/'+entity.id);
   }
 
   ngOnInit() {

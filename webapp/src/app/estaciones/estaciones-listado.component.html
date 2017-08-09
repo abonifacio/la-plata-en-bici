@@ -1,0 +1,52 @@
+<md-table [dataSource]="tabla.dataSource" mdSort (mdSortChange)="tabla.sortData($event)">
+
+    <ng-container cdkColumnDef="id">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> ID </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            {{row.id}}
+        </md-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="nombre">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> nombre </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            {{row.nombre}}
+        </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="direccion">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> direccion </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            {{row.direccion}}
+        </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="estado">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> estado </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            {{row.estado}}
+        </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="capacidad">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> capacidad </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            {{row.capacidad}}
+        </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="ocupacion">
+        <md-header-cell *cdkHeaderCellDef> Ocupacion </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            <md-progress-bar style="width:80%;" [color]="calcOcupacion(row)>70? 'warn':'primary'" [value]="calcOcupacion(row)"></md-progress-bar>
+        </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="ver">
+        <md-header-cell *cdkHeaderCellDef > Ver </md-header-cell>
+            <md-cell *cdkCellDef="let row"> <md-icon class="pointer" (click)="irDetalle(row)">remove_red_eye</md-icon> </md-cell>
+        </ng-container>
+
+    <md-header-row *cdkHeaderRowDef="vColumns"></md-header-row>
+    <md-row *cdkRowDef="let row; columns: vColumns;"></md-row>
+</md-table>
+<app-paginator [tabla]="tabla"></app-paginator>

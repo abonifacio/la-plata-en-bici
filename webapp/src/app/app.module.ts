@@ -1,3 +1,6 @@
+import { TablaService } from './components/tabla/tabla.service';
+import { BicicletaService } from './bicicletas/bicicletas.service';
+import { EstacionService } from './estaciones/estacion.service';
 import { Localidad } from './entities/localidad';
 import { AppHttp,HttpRequestSubscriber } from './services/app-http.service';
 import { httpFactory } from './services/http-factory';
@@ -9,6 +12,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
+import { DatePipe } from '@angular/common';
 import {AppMaterialModule } from './material-module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,7 +26,6 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuariosListadoComponent } from './usuarios/usuarios-listado.component';
 import { BicicletasRetirarComponent } from './bicicletas/bicicletas-retirar.component';
 import { BicicletasEstacionarComponent } from './bicicletas/bicicletas-estacionar.component';
-import { BicicletasDenunciarComponent } from './bicicletas/bicicletas-denunciar.component';
 import { BicicletasAltaComponent } from './bicicletas/bicicletas-alta.component';
 import { UsuariosDetalleComponent } from './usuarios/usuarios-detalle.component';
 import { TablaComponent } from './components/tabla/tabla.component';
@@ -31,6 +34,10 @@ import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HasAuthorityDirective } from './directives/has-authority.directive';
+import { EstacionesDetalleComponent } from './estaciones/estaciones-detalle.component';
+import { BicicletasDetalleComponent } from './bicicletas/bicicletas-detalle.component';
+import { PaginatorComponent } from './components/tabla/paginator.component';
 
 @NgModule({
   declarations: [
@@ -45,14 +52,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     UsuariosListadoComponent,
     BicicletasRetirarComponent,
     BicicletasEstacionarComponent,
-    BicicletasDenunciarComponent,
     BicicletasAltaComponent,
     UsuariosDetalleComponent,
     TablaComponent,
     LoadingComponent,
     AlertComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    HasAuthorityDirective,
+    EstacionesDetalleComponent,
+    BicicletasDetalleComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,
@@ -70,9 +80,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         useFactory: httpFactory,
         deps: [XHRBackend, RequestOptions,HttpRequestSubscriber]
     },
+    DatePipe,
+    TablaService,
     AccountService,
     LocalidadService,
-    UsuarioService
+    UsuarioService,
+    BicicletaService,
+    EstacionService
   ],
   bootstrap: [AppComponent]
 })

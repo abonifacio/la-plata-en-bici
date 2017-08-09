@@ -14,6 +14,18 @@ export class Pageable{
 }
 
 export class Column{
-    constructor(public name:string,public label:string){
+    name:string;
+    label:string;
+    type:string;
+    parse:Function;
+    sort:string;
+    constructor(obj:any){
+        if(obj){
+        this.name = obj.name;
+        this.label = obj.label;
+        this.type = obj.type || 'text';
+        this.parse = obj.parse || ( (row)=> row[this.name] || '');
+        this.sort = obj.sort===undefined? this.name : obj.sort;
+        }
     }
 }
