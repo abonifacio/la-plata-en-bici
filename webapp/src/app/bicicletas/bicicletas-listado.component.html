@@ -1,3 +1,31 @@
-<p>
-  bicicletas-listado works!
-</p>
+<md-table [dataSource]="tabla.dataSource" mdSort (mdSortChange)="sortData($event)">
+
+  <ng-container cdkColumnDef="id">
+    <ng-container>
+      <md-header-cell *cdkHeaderCellDef md-sort-header> ID </md-header-cell>
+    </ng-container>
+    <md-cell *cdkCellDef="let row">
+        {{row.id}}
+    </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="id">
+    <ng-container>
+      <md-header-cell *cdkHeaderCellDef> ocupacion </md-header-cell>
+    </ng-container>
+    <md-cell *cdkCellDef="let row">
+        <md-progress-bar style="width:80%;" [color]="row.ocupacion>70? 'warn':'primary'" [value]="row.ocupacion"></md-progress-bar>
+    </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="ver">
+    <md-header-cell *cdkHeaderCellDef > Ver </md-header-cell>
+    <md-cell *cdkCellDef="let row"> <md-icon class="pointer" (click)="irDetalle(row)">remove_red_eye</md-icon> </md-cell>
+  </ng-container>
+
+  <md-header-row *cdkHeaderRowDef="vColumns"></md-header-row>
+  <md-row *cdkRowDef="let row; columns: vColumns;"></md-row>
+    
+</md-table>
+
+<app-paginator [tabla]=""></app-paginator>

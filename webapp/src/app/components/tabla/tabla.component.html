@@ -1,13 +1,23 @@
-<md-table #table [dataSource]="dataSource" mdSort (mdSortChange)="sortData($event)">
+<md-table [dataSource]="tabla.dataSource" mdSort (mdSortChange)="sortData($event)">
 
   <ng-container cdkColumnDef="{{col.name}}" *ngFor="let col of columns">
-    <md-header-cell *cdkHeaderCellDef md-sort-header> {{col.label}} </md-header-cell>
-    <md-cell *cdkCellDef="let row"> {{row[col.name]}} </md-cell>
+
+    <ng-container *ngIf="col.sort">
+      <md-header-cell *cdkHeaderCellDef md-sort-header="{{col.sort}}"> {{col.label}} </md-header-cell>
+    </ng-container>
+    <ng-container *ngIf="!col.sort">
+      <md-header-cell *cdkHeaderCellDef> {{col.label}} </md-header-cell>
+    </ng-container>
+    <md-cell *cdkCellDef="let row">
+        <md-progress-bar style="width:80%;" [color]="col.parse(row)>70? 'warn':'primary'" [value]="col.parse(row)" *ngIf="col.type=='bar'"></md-progress-bar>
+        <!--<a md-button routerLink="{{render(col,row).url}}" *ngIf="render(col,row).type=='link'">{{ render(col,row).text }}</a>-->
+        <span *ngIf="col.type=='text'">{{col.parse(row) || '-'}}</span>
+    </md-cell>
   </ng-container>
 
   <ng-container cdkColumnDef="ver">
     <md-header-cell *cdkHeaderCellDef > Ver </md-header-cell>
-    <md-cell *cdkCellDef="let row"> <md-icon class="pointer" (click)="emitVer(row.id)">remove_red_eye</md-icon> </md-cell>
+    <md-cell *cdkCellDef="let row"> <md-icon class="pointer" (click)="emitVer(row)">remove_red_eye</md-icon> </md-cell>
   </ng-container>
 
   <md-header-row *cdkHeaderRowDef="columnsSimple"></md-header-row>
@@ -15,11 +25,4 @@
     
 </md-table>
 
-<md-paginator #paginator
-                [length]="dataSource.totalItems()"
-                [pageIndex]="dataSource.currentPage()"
-                [pageSize]="25"
-                [pageSizeOptions]="[5, 10, 25, 100]"
-                (page)="pageChange($event)"
-                >
-  </md-paginator>
+<app-paginator [tabla]=""></app-paginator>

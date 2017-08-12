@@ -1,3 +1,4 @@
+import { CachedResourceLoader } from '@angular/platform-browser-dynamic/src/resource_loader/resource_loader_cache';
 import { Entity } from '../entities/entity';
 import { isEntityName, isEntityNameExpression } from 'tsutils';
 import { AppHttp } from '../services/app-http.service';
@@ -5,6 +6,8 @@ import { Observable } from 'rxjs/Rx';
 import { Page, Pageable } from '../entities/common';
 
 export class CrudService<T extends Entity> {
+
+    private cached:T = undefined;
 
     constructor(protected http: AppHttp,protected URI:string) {
 
@@ -22,6 +25,9 @@ export class CrudService<T extends Entity> {
     }
 
     get(id:number):Observable<T>{
+        if(this.cached && this.cached.id==id){
+            return Observable.of(this.cached);
+        }
         return this.http.get(this.URI+'/'+id);
     }
 
@@ -39,6 +45,10 @@ export class CrudService<T extends Entity> {
         }else{
             return this.create(entity);
         }
+    }
+
+    cache(entity:T){
+        this.cached = entity;
     }
 
     delete(id:number):Observable<T>{

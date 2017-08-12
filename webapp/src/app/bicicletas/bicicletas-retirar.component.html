@@ -1,3 +1,15 @@
-<p>
-  bicicletas-retirar works!
-</p>
+<div class="form-container">
+  <form method="POST" (ngSubmit)="doRetirar()" #RegF="ngForm">
+      <div fxLayout="row" class="row" fxLayoutGap="50px" fxLayoutAlign="space-between center" >
+          <md-select placeholder="Estacion" [(ngModel)]="selected" name="food">
+            <md-option *ngFor="let est of estaciones" [value]="est.id">
+              <b>{{est.nombre}}</b> - {{est.direccion}}
+            </md-option>
+          </md-select>
+      </div>
+      <div fxLayout="row" class="row" fxLayoutGap="50px" fxLayoutAlign="center center">
+        <button [disabled]="RegF.invalid" md-raised-button type="submit" [color]="'primary'" >Registrarse</button>
+      </div>
+  </form>
+
+</div>

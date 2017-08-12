@@ -1,0 +1,8 @@
+<md-paginator #paginator
+                [length]="tabla.dataSource.totalItems()"
+                [pageIndex]="tabla.dataSource.currentPage()"
+                [pageSize]="25"
+                [pageSizeOptions]="[2, 5, 10, 25, 100]"
+                (page)="tabla.pageChange($event)"
+                >
+  </md-paginator>

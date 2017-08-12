@@ -1,33 +1,22 @@
-import { DomSanitizer } from '@angular/platform-browser';
+import { Observable } from 'rxjs/Rx';
+import { Page, Pageable } from '../../entities/common';
 import { CrudService } from '../../services/crud.service';
-import { Component, OnInit,Input,EventEmitter,Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { DataSource } from '@angular/cdk';
 import { Sort,PageEvent } from '@angular/material';
-import { Observable } from 'rxjs/Rx';
-import { Page, Pageable,Column } from '../../entities/common';
 
-@Component({
-  selector: 'app-tabla',
-  templateUrl: './tabla.component.html',
-  styleUrls: ['./tabla.component.less']
-})
+@Injectable()
+export class TablaService {
 
-
-export class TablaComponent implements OnInit {
-  
-  @Input() service:CrudService<any>;
-  @Input() columns:Column[];
-  @Output() verMas:EventEmitter<Number> = new EventEmitter();
+  service:CrudService<any>;
   private dataSource:TableDataSource;
-  private pageable: Pageable = new Pageable;
-  columnsSimple: string[];
+  private pageable: Pageable = new Pageable();
+  constructor() {
 
-  constructor(private sanitizer:DomSanitizer) { 
   }
 
-  ngOnInit() {
-    this.columnsSimple = this.columns.map((c)=>c.name);
-    this.columnsSimple.push('ver');
+  setService(service:CrudService<any>){
+    this.service = service;
     this.refreshTable();
   }
 
@@ -41,10 +30,6 @@ export class TablaComponent implements OnInit {
       this.pageable.ascending = sort.direction=='asc';
     }
     this.refreshTable();
-  }
-
-  emitVer(entity:any){
-    this.verMas.emit(entity);
   }
 
   render(col,row){
