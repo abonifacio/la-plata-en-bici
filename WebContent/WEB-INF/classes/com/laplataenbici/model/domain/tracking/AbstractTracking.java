@@ -1,61 +1,70 @@
 package com.laplataenbici.model.domain.tracking;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.laplataenbici.model.domain.AbstractEntity;
 import com.laplataenbici.model.domain.AbstractTrackable;
 import com.laplataenbici.model.domain.Usuario;
+import com.laplataenbici.model.domain.utils.DateUtils;
 
 @MappedSuperclass
 public abstract class AbstractTracking<T extends AbstractTrackable> extends AbstractEntity{
 	
 	@Column
-	private Date fecha;
+	private Timestamp fecha;
 	
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne
 	@JoinColumn(name="usuario_id")
-	private Usuario modificadorPor;
+	private Usuario modificadoPor;
 	
-	private String mensaje;
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	private List<TrackingItem> items;
 	
 	@Enumerated(EnumType.STRING)
 	private OperacionTracking operacion;
 	
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne
 	@JoinColumn(name="entity_id")
 	private T entity;
 	
 	public AbstractTracking(){
-		this.fecha = new Date();
+		this.fecha = DateUtils.now();
 	}
 
-	public Date getFecha() {
+	public Timestamp getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(Timestamp fecha) {
 		this.fecha = fecha;
 	}
-	public Usuario getModificadorPor() {
-		return modificadorPor;
-	}
-	public void setModificadorPor(Usuario modificadorPor) {
-		this.modificadorPor = modificadorPor;
-	}
 	
-	public String getMensaje() {
-		return mensaje;
+	public Usuario getModificadoPor() {
+		return modificadoPor;
 	}
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
+
+	public void setModificadoPor(Usuario modificadoPor) {
+		this.modificadoPor = modificadoPor;
 	}
+
+	public List<TrackingItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<TrackingItem> items) {
+		this.items = items;
+	}
+
 	public OperacionTracking getOperacion() {
 		return operacion;
 	}
@@ -71,10 +80,13 @@ public abstract class AbstractTracking<T extends AbstractTrackable> extends Abst
 	
 	@Override
 	public String toString(){
-		return "{ id: "+this.id+", mensaje: "+this.mensaje+", operacion: "+this.operacion.toString()+" }";
+		return "{ id: "+this.id+", operacion: "+this.operacion.toString()+" }";
 	}
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof AbstractTracking && super.equals(obj);
+	}
 	
 	
 }

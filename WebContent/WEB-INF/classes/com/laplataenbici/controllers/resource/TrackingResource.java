@@ -1,7 +1,5 @@
 package com.laplataenbici.controllers.resource;
 
-import java.util.Date;
-
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,74 +9,79 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.laplataenbici.controllers.resource.utils.ApiConstants;
+import com.laplataenbici.controllers.resource.utils.AppConstants.QUERY;
+import com.laplataenbici.controllers.resource.utils.AppConstants.URI;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
+import com.laplataenbici.model.domain.AbstractEntity;
+import com.laplataenbici.model.domain.Bicicleta;
+import com.laplataenbici.model.domain.Estacion;
 import com.laplataenbici.model.domain.Usuario;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.tracking.AbstractTracking;
 import com.laplataenbici.model.domain.tracking.OperacionTracking;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
-import com.laplataenbici.model.services.UsuarioService;
+import com.laplataenbici.model.repository.utils.query.TrackingQuery;
 import com.laplataenbici.model.services.tracking.AbstractTrackingService;
 import com.laplataenbici.model.services.tracking.TrackingBicicletaService;
 import com.laplataenbici.model.services.tracking.TrackingEstacionService;
 import com.laplataenbici.model.services.tracking.TrackingUsuarioService;
 
-@Path(ApiConstants.TRACKING_URI)
+@Path(URI.TRACKING)
 @Produces(MediaType.APPLICATION_JSON)
 public class TrackingResource {
 	
 	private TrackingUsuarioService usuarios = new TrackingUsuarioService();
-	private UsuarioService usuario = new UsuarioService();
 	private TrackingBicicletaService bicicletas = new TrackingBicicletaService();
 	private TrackingEstacionService estaciones = new TrackingEstacionService();
 	
-	@GET()
+	@GET
 	@Path("/{tracking}")
 	public Response getAllUsuarios(
-			@PathParam("tracking")TipoTracking tipo,
-			@QueryParam("page") @DefaultValue("0") Integer page,
-			@QueryParam("size") @DefaultValue("25") Integer size,
-			@QueryParam("sort") @DefaultValue("id") String sort,
-			@QueryParam("ascending") @DefaultValue("false") Boolean ascending,
-			@QueryParam("fecha") Date fecha,
+			@PathParam("tracking")String tipo,
+			@QueryParam(QUERY.PAGE) @DefaultValue("0") Integer page,
+			@QueryParam(QUERY.COUNT) @DefaultValue("25") Integer size,
+			@QueryParam(QUERY.SORT) @DefaultValue("id") String sort,
+			@QueryParam(QUERY.ASC) @DefaultValue("false") Boolean ascending,
+			@QueryParam("desde") Long desde,
+			@QueryParam("hasta") Long hasta,
 			@QueryParam("usuario") Long user,
+			@QueryParam("entidad") Long entidad,
 			@QueryParam("operacion") OperacionTracking operacion) throws LPBException {
 		
 		Pageable pageable = new Pageable(page, size,sort,ascending);
 		
-		Page<? extends AbstractTracking<?>> res;
+		TrackingQuery<AbstractEntity> query = new TrackingQuery<AbstractEntity>(operacion, desde, hasta, user, getEntidad(tipo,entidad));
 		
-		if(fecha!=null){
-			res = getService(tipo).findByFecha(fecha, pageable);
-		}else if(operacion!=null){
-			res = getService(tipo).findByOperacion(operacion, pageable);
-		}else if(user!=null){
-			Usuario u = usuario.get(user);
-			res = getService(tipo).findByUsuario(u, pageable);
-		}else{
-			res = getService(tipo).findAll(pageable);
-		}
+		 Page<? extends AbstractTracking<?>> res = getService(tipo).findByQuery(query, pageable);
 		
 		return LPBResponse.ok(res);
 	}
 	
-	private AbstractTrackingService<?> getService(TipoTracking tipo){
+	private AbstractTrackingService<?> getService(String tipo){
 		switch(tipo){
-		case USUARIO:
-			return usuarios;
-		case BICICLETA:
-			return bicicletas;
-		case ESTACION:
-			return estaciones;
-		default:
-			return null;
+			case "Usuario":
+				return usuarios;
+			case "Bicicleta":
+				return bicicletas;
+			case "Estacion":
+				return estaciones;
+			default:
+				return null;
 		}
 	}
 	
-	enum TipoTracking{
-		USUARIO,BICICLETA,ESTACION;
+	private AbstractEntity getEntidad(String tipo,Long id){
+		if(id==null) return null;
+		switch(tipo){
+		case "Usuario":
+			return new Usuario(id);
+		case "Bicicleta":
+			return new Bicicleta(id);
+		case "Estacion":
+			return new Estacion(id);
+		default:
+			return null;
 	}
-
+	}
 }

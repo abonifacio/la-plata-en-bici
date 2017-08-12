@@ -9,5 +9,8 @@ import com.laplataenbici.model.domain.Bicicleta;
 @Table(name="TrackingBicicleta")
 public class TrackingBicicleta extends AbstractTracking<Bicicleta>{
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof TrackingBicicleta && super.equals(obj);
+	}
 }

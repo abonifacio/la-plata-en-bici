@@ -2,7 +2,6 @@ package com.laplataenbici.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +18,7 @@ import com.laplataenbici.model.domain.tracking.OperacionTracking;
 import com.laplataenbici.model.domain.tracking.TrackingBicicleta;
 import com.laplataenbici.model.domain.tracking.TrackingEstacion;
 import com.laplataenbici.model.domain.tracking.TrackingUsuario;
+import com.laplataenbici.model.domain.utils.DateUtils;
 import com.laplataenbici.model.domain.utils.EstadoBicicleta;
 import com.laplataenbici.model.domain.utils.EstadoEstacion;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
@@ -154,7 +154,7 @@ public class TestsServlet extends HttpServlet {
 				Localidad loc = new Localidad();
 				loc.setId(3L);
 				tmp.setLocalidad(loc);
-				tmp.setFechaNacimiento(new Date());
+				tmp.setFechaNacimiento(DateUtils.now());
 				tmp.setRol(Rol.USER);
 				tmp.setSexo(Sexo.M);
 				tmp.setUsername("cgomez");
@@ -187,7 +187,7 @@ public class TestsServlet extends HttpServlet {
 			protected Bicicleta nuevoRegistro() {
 				Bicicleta tmp = new Bicicleta();
 				tmp.setEstado(EstadoBicicleta.APTA);
-				tmp.setFechaIngreso(new Date());
+				tmp.setFechaIngreso(DateUtils.now());
 				Estacion est = new Estacion();
 				est.setId(1L);
 				tmp.setEstacion(est);
@@ -211,7 +211,6 @@ public class TestsServlet extends HttpServlet {
 			
 			@Override
 			protected TrackingBicicleta modificarRegistro(TrackingBicicleta entity) {
-				entity.setMensaje("El usuario retiró la bici");
 				return entity;
 			}
 
@@ -224,7 +223,7 @@ public class TestsServlet extends HttpServlet {
 				tmp.setEntity(bici);
 				
 				tmp.setOperacion(OperacionTracking.MODIFICACION);
-				tmp.setFecha(new Date());
+				tmp.setFecha(DateUtils.now());
 				
 				Usuario user = new Usuario();
 				user.setId(1L);
@@ -251,7 +250,6 @@ public class TestsServlet extends HttpServlet {
 			
 			@Override
 			protected TrackingUsuario modificarRegistro(TrackingUsuario entity) {
-				entity.setMensaje("El usuario se dió de alta");
 				return entity;
 			}
 
@@ -265,7 +263,7 @@ public class TestsServlet extends HttpServlet {
 				tmp.setModificadorPor(user);
 				
 				tmp.setOperacion(OperacionTracking.ALTA);
-				tmp.setFecha(new Date());
+				tmp.setFecha(DateUtils.now());
 				
 				return tmp;
 			}
@@ -288,7 +286,6 @@ public class TestsServlet extends HttpServlet {
 			
 			@Override
 			protected TrackingEstacion modificarRegistro(TrackingEstacion entity) {
-				entity.setMensaje("La estacion paso de operativa a cerrada");
 				return entity;
 			}
 
@@ -301,7 +298,7 @@ public class TestsServlet extends HttpServlet {
 				tmp.setEntity(estacion);
 				
 				tmp.setOperacion(OperacionTracking.MODIFICACION);
-				tmp.setFecha(new Date());
+				tmp.setFecha(DateUtils.now());
 				
 				Usuario user = new Usuario();
 				user.setId(1L);

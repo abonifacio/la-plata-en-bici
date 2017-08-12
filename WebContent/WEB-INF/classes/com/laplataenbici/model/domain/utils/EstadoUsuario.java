@@ -2,7 +2,7 @@ package com.laplataenbici.model.domain.utils;
 
 public enum EstadoUsuario {
 	
-	HABILITADO("Habilitado"),SUSPENDIO("Inhabilitado temporalmente"),BANEADO("Inhabilitado definitivamente");
+	HABILITADO("Habilitado"),SUSPENDIDO("Inhabilitado temporalmente"),BANEADO("Inhabilitado definitivamente");
 	
 	private final String value;
 	

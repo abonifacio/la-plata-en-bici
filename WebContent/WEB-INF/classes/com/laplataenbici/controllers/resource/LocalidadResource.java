@@ -15,14 +15,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.laplataenbici.controllers.resource.utils.ApiConstants;
+import com.laplataenbici.controllers.resource.utils.AppConstants.QUERY;
+import com.laplataenbici.controllers.resource.utils.AppConstants.URI;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.Localidad;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.utils.Pageable;
 import com.laplataenbici.model.services.LocalidadService;
 
-@Path(ApiConstants.LOCALIDAD_URI)
+@Path(URI.LOCALIDAD)
 @Produces(MediaType.APPLICATION_JSON)
 public class LocalidadResource {
 	
@@ -36,10 +37,10 @@ public class LocalidadResource {
 
 	@GET
 	public Response getAll(
-			@QueryParam("page") @DefaultValue("0") Integer page,
-			@QueryParam("size") @DefaultValue("25") Integer size,
-			@QueryParam("sort") @DefaultValue("id") String sort,
-			@QueryParam("ascending") @DefaultValue("false") Boolean ascending) throws LPBException {
+			@QueryParam(QUERY.PAGE) @DefaultValue("0") Integer page,
+			@QueryParam(QUERY.COUNT) @DefaultValue("25") Integer size,
+			@QueryParam(QUERY.SORT) @DefaultValue("id") String sort,
+			@QueryParam(QUERY.ASC) @DefaultValue("false") Boolean ascending) throws LPBException {
 		return LPBResponse.ok(service.findAll(new Pageable(page, size,sort,ascending)));
 	}
 	

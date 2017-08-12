@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.laplataenbici.model.domain.AbstractEntity;
 import com.laplataenbici.model.domain.exceptions.DBException;
@@ -33,7 +34,9 @@ public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements 
 		Field[] fields = entidad.getDeclaredFields();
 		this.allowedFields = new HashMap<String,Class<?>>();
 		for(Field f : fields){
-			this.allowedFields.put(f.getName(),f.getClass());
+			if(!f.isAnnotationPresent(Transient.class)){
+				this.allowedFields.put(f.getName(),f.getClass());				
+			}
 		}
 	}
 	
@@ -54,8 +57,8 @@ public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements 
 	@Override
 	public Page<T> findAll(Pageable pageable) throws DBException{
 		
-		FindAllHelper<T> fh = new FindAllHelper<>(pageable, tabla,allowedFields);
-		return fh.go();
+		FindAllHelper<T> fh = new FindAllHelper<>(tabla,allowedFields);
+		return fh.go(pageable);
  	}
 	
 	@Override
@@ -79,28 +82,22 @@ public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements 
 	
 	@Override
 	public Long delete(final Long id) throws DBException{
-		final Optional<T> entity = this.findOneById(id);
-		if(entity.isPresent()){
+		TransactionWrapper<Long> tw = new TransactionWrapper<Long>(){
 			
-			TransactionWrapper<Long> tw = new TransactionWrapper<Long>(){
-				
-				@Override
-				public Long prepare(EntityManager em) {
-					em.createQuery("delete from "+tabla+" e where e.id = :id").setParameter("id", id).executeUpdate();
-					return id;
-				}
-				
-			};
+			@Override
+			public Long prepare(EntityManager em) {
+				em.createQuery("delete from "+tabla+" e where e.id = :id").setParameter("id", id).executeUpdate();
+				return id;
+			}
 			
-			return tw.go();
-			
-		}else{
-			throw new DBException("No se encontron el id a borrar -> "+id);
-		}
+		};
+		
+		return tw.go();
 	}
 	
 	@Override
 	public List<T> findAll() throws DBException{
+		
 
 		TransactionWrapper<List<T>> tw = new TransactionWrapper<List<T>>(){
 			
@@ -115,5 +112,17 @@ public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements 
 		return tw.go();
 
 	}
+
+
+	public String getTabla() {
+		return tabla;
+	}
+
+
+	public Map<String, Class<?>> getAllowedFields() {
+		return allowedFields;
+	}
+	
+	
 
 }

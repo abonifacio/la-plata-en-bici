@@ -1,5 +1,6 @@
 package com.laplataenbici.model.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.laplataenbici.model.domain.AbstractEntity;
@@ -22,7 +23,6 @@ public abstract class AbstractEntityService <T extends AbstractEntity>{
 	
 	public T update(T entity) throws LPBException{
 		this.get(entity.getId());
-		
 		return this.getRepo().save(entity);
 	}
 	
@@ -38,8 +38,13 @@ public abstract class AbstractEntityService <T extends AbstractEntity>{
 		return this.getRepo().findAll(pageable);
 	}
 	
+	public List<T> findAll() throws DBException{
+		return this.getRepo().findAll();
+	}
+	
 	public void delete(Long id) throws LPBException{
+		this.get(id);
 		this.getRepo().delete(id);
 	}
-
+	
 }

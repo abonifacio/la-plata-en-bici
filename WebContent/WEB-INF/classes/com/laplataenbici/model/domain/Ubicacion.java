@@ -38,7 +38,10 @@ public class Ubicacion extends AbstractEntity {
 		this.latitud = latitud;
 	}
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Ubicacion && super.equals(obj);
+	}
 	
 	
 }

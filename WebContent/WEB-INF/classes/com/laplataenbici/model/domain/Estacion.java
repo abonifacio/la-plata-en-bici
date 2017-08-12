@@ -12,7 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.laplataenbici.model.domain.utils.EstadoEstacion;
 
 @Entity
@@ -26,11 +31,16 @@ public class Estacion extends AbstractTrackable {
 	@JoinColumn(name="ubicacion_id")
 	private Ubicacion ubicacion;
 	
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="id")
-	private List<Bicicleta> bicilcetas;
+	@OneToMany(mappedBy="id",fetch=FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
+	@JsonBackReference
+	private List<Bicicleta> bicicletas;
 	
 	@Column
 	private Integer capacidad;
+	
+	@Transient
+	private Integer ocupacion;
 	
 	@Column
 	@Enumerated(EnumType.STRING)
@@ -38,8 +48,15 @@ public class Estacion extends AbstractTrackable {
 	
 	@Column
 	private String direccion;
+
 	
 
+	public Estacion() {
+		super();
+	}
+	public Estacion(Long id) {
+		super(id);
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -52,11 +69,11 @@ public class Estacion extends AbstractTrackable {
 	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
 	}
-	public List<Bicicleta> getBicilcetas() {
-		return bicilcetas;
+	public List<Bicicleta> getBicicletas() {
+		return bicicletas;
 	}
-	public void setBicilcetas(List<Bicicleta> bicilcetas) {
-		this.bicilcetas = bicilcetas;
+	public void setBicicletas(List<Bicicleta> bicilcetas) {
+		this.bicicletas = bicilcetas;
 	}
 	public Integer getCapacidad() {
 		return capacidad;
@@ -77,12 +94,21 @@ public class Estacion extends AbstractTrackable {
 		this.direccion = direccion;
 	}
 	
+	public Integer getOcupacion() {
+		return ocupacion;
+	}
+	public void setOcupacion(Integer ocupacion) {
+		this.ocupacion = ocupacion;
+	}
 	@Override
 	public String toString(){
 		return "{ id: "+this.id+", nombre: "+this.nombre+", estado: "+this.estado.getValue()+" }";
 	}
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Estacion && super.equals(obj);
+	}
 	
 	
 }

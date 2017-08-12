@@ -1,6 +1,6 @@
 package com.laplataenbici.model.domain;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.domain.utils.Sexo;
@@ -40,7 +40,7 @@ public class Usuario extends AbstractTrackable {
 	private Localidad localidad; 
 	
 	@Column(name="fecha_nac")
-	private Date fechaNacimiento;
+	private Timestamp fechaNacimiento;
 	
 	@Column
 	@Enumerated(EnumType.STRING)
@@ -64,9 +64,17 @@ public class Usuario extends AbstractTrackable {
 	private Rol rol;
 	
 	@OneToOne(mappedBy="usuario")
-	@JsonManagedReference
+	@JsonBackReference
 	private Bicicleta bicicleta;
 
+	public Usuario(){
+		super();
+	}
+	
+	public Usuario(Long id){
+		super();
+		this.id = id;
+	}
 
 	public Integer getDNI() {
 		return DNI;
@@ -104,10 +112,10 @@ public class Usuario extends AbstractTrackable {
 	public void setLocalidad(Localidad localidad) {
 		this.localidad = localidad;
 	}
-	public Date getFechaNacimiento() {
+	public Timestamp getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(Timestamp fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	public EstadoUsuario getEstado() {
@@ -159,7 +167,10 @@ public class Usuario extends AbstractTrackable {
 		return "{ id: "+this.id+", nombre: "+this.nombre+", apellido: "+this.apellido+", estado: "+this.estado.getValue()+" }";
 	}
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Usuario && super.equals(obj);
+	}
 	
 	
 	

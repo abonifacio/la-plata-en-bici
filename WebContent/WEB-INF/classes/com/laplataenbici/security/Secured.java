@@ -10,5 +10,5 @@ import com.laplataenbici.model.domain.utils.Rol;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Secured {
-	Rol[] value();
+	Rol[] value() default {Rol.ADMIN,Rol.USER};
 }

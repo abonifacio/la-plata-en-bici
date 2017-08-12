@@ -11,14 +11,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.laplataenbici.controllers.resource.utils.ApiConstants;
+import com.laplataenbici.controllers.resource.utils.AppConstants.URI;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.Usuario;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.services.UsuarioService;
 import com.laplataenbici.security.SecurityUtils;
 
-@Path(ApiConstants.ACCOUNT_URI)
+@Path(URI.ACCOUNT)
 @Produces(MediaType.APPLICATION_JSON)
 public class AccountResource {
 

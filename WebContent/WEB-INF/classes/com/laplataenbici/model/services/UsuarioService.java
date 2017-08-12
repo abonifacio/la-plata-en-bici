@@ -32,6 +32,7 @@ public class UsuarioService extends AbstractTrackableService<Usuario, TrackingUs
 		if(entity.getLocalidad()==null || entity.getLocalidad().getId()==null){
 			throw new BusinessException("El usuario debe tener asociada una localidad");
 		}
+		entity.setPassword(String.valueOf(entity.getUsername().hashCode()).substring(0, 6));
 		entity.setRol(Rol.USER);
 		return super.create(entity);
 	}

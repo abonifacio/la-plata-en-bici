@@ -14,7 +14,6 @@ public abstract class AbstractEntity {
 	@Column
 	protected Long id;
 	
-	
 	public Long getId(){
 		return id;
 	}
@@ -22,4 +21,19 @@ public abstract class AbstractEntity {
 	public void setId(Long id){
 		this.id = id;
 	}
+	
+	public AbstractEntity(){
+		
+	}
+
+	public AbstractEntity(Long id) {
+		this.id = id;
+	}
+	
+	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof AbstractEntity && ((AbstractEntity)obj).getId().equals(id);
+	}
+	
 }

@@ -16,7 +16,16 @@ public class SecurityUtils {
 		return true;
 	}
 	
-	public static boolean isUserInRole(Rol[] rol){
+	public static boolean isUserInRole(Rol[] roles){
+		for(Rol r : roles){
+			if(isUserInRole(r)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isUserInRole(Rol rol){
 		return true;
 	}
 	

@@ -1,4 +1,4 @@
-package com.laplataenbici.security;
+package com.laplataenbici.config;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -8,8 +8,10 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.FeatureContext;
 
 import com.laplataenbici.model.domain.utils.Rol;
+import com.laplataenbici.security.Secured;
+import com.laplataenbici.security.SecurityFilter;
 
-public class SecurityBinding implements DynamicFeature	{
+public class FilterBinding implements DynamicFeature	{
 	
 	
 	@Override
@@ -22,6 +24,7 @@ public class SecurityBinding implements DynamicFeature	{
 			context.register(new SecurityFilter(roles));
 
 		}
+		
     }
 
 }

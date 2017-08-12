@@ -33,4 +33,9 @@ public class Localidad extends AbstractEntity {
 		return "{ id: "+this.id+", nombre: "+this.nombre+", codigo postal: "+this.codigoPostal+" }";
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Localidad && super.equals(obj);
+	}
+	
 }
