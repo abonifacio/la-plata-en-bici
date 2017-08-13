@@ -1,16 +1,17 @@
+import { QueryDataSource, TrackingDataSource } from './datasources';
 import { Observable } from 'rxjs/Rx';
 import { Page, Pageable } from '../../entities/common';
 import { CrudService } from '../../services/crud.service';
 import { Injectable } from '@angular/core';
-import { DataSource } from '@angular/cdk';
 import { Sort,PageEvent } from '@angular/material';
 
 @Injectable()
 export class TablaService {
 
   service:CrudService<any>;
-  private dataSource:TableDataSource;
+  private dataSource:QueryDataSource;
   private pageable: Pageable = new Pageable();
+  private query :any = {};
   constructor() {
 
   }
@@ -21,7 +22,11 @@ export class TablaService {
   }
 
   refreshTable(){
-    this.dataSource = new TableDataSource(this.service,this.pageable);
+    if(this.service instanceof CrudService){
+      this.dataSource = new QueryDataSource(this.service,this.pageable,this.query);
+    }else{
+      this.dataSource = new TrackingDataSource(this.service,this.pageable,this.query);
+    }
   }
 
   sortData(sort:Sort){
@@ -32,44 +37,15 @@ export class TablaService {
     this.refreshTable();
   }
 
-  render(col,row){
-    return col.parse(row[col.name],row) || '';
+  updateQuery(query:any){
+    this.query = query;
+    this.refreshTable();
   }
 
   pageChange(page:PageEvent){
     this.pageable.count = page.pageSize;
     this.pageable.page = page.pageIndex;
     this.refreshTable();
-  }
-
-}
-
-class TableDataSource extends DataSource<any>{
-
-  private numItems:Number;
-
-  constructor(private service: CrudService<any>,private pageable:Pageable){
-    super();
-  }
-
-  connect():Observable<any[]>{
-    return this.service.query(this.pageable).map((page:Page<any>)=> {
-      this.numItems = page.totalItems;
-      this.pageable.page = page.currentPage;
-      return page.items;
-    });
-  }
-
-  currentPage():Number{
-    return this.pageable.page;
-  }
-
-  totalItems(){
-    return this.numItems;
-  }
-  
-  disconnect(){
-
   }
 
 }

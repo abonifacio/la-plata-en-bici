@@ -5,13 +5,13 @@ import { Localidad } from './entities/localidad';
 import { AppHttp,HttpRequestSubscriber } from './services/app-http.service';
 import { httpFactory } from './services/http-factory';
 import { AccountService } from './services/account.service';
-import { LocalidadService } from './services/localidad.service';
+import { LocalidadService } from './components/localidades/localidad.service';
 import { Http,RequestOptions,HttpModule, XHRBackend } from '@angular/http';
 import { UsuarioService } from './usuarios/usuario.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule,ReactiveFormsModule }   from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {AppMaterialModule } from './material-module';
 import { AppRoutingModule } from './app-routing.module';
@@ -33,11 +33,12 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { HasAuthorityDirective } from './directives/has-authority.directive';
 import { EstacionesDetalleComponent } from './estaciones/estaciones-detalle.component';
 import { BicicletasDetalleComponent } from './bicicletas/bicicletas-detalle.component';
 import { PaginatorComponent } from './components/tabla/paginator.component';
+import { LocalidadesComponent } from './components/localidades/localidades.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { PaginatorComponent } from './components/tabla/paginator.component';
     HasAuthorityDirective,
     EstacionesDetalleComponent,
     BicicletasDetalleComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    LocalidadesComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ import { PaginatorComponent } from './components/tabla/paginator.component';
     AppMaterialModule,
     FormsModule,
     HttpModule,
-    FlexLayoutModule
+    ReactiveFormsModule
+    // FlexLayoutModule
   ],
   providers: [
     HttpRequestSubscriber,

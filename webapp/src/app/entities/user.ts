@@ -7,6 +7,7 @@ export class Usuario extends Entity{
     DNI: Number;
     nombre: String;
     apellido: String;
+    email:String;
     calle: String;
     numero: String;
     localidad:Localidad;

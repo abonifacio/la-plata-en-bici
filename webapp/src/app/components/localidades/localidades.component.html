@@ -1,0 +1,27 @@
+<div class="row m-t-20">
+  <div class="col-xs">
+    <md-select [disabled]="disabled" placeholder="Localidad" name="localidad" [(ngModel)]="seleccionada" required="true">
+      <md-option *ngFor="let loc of localidades" [value]="loc">{{ loc.nombre }}</md-option>
+    </md-select>
+  </div>
+</div>
+<div *ngIf="showAgregar" class="row m-t-10 between-xs middle-xs">
+  <div class="col-xs-5">
+    <md-input-container fxFlex="40%">
+      <input mdInput [(ngModel)]="nueva.nombre" name="nombre" placeholder="Nombre" required="true">
+    </md-input-container>
+  </div>
+  <div class="col-xs-5">
+    <md-input-container fxFlex="40%">
+      <input type="number" [(ngModel)]="nueva.codigoPostal" name="codigoPostal" mdInput placeholder="Codigo Postal" required="true">
+    </md-input-container>
+  </div>
+</div>
+<div class="row m-t-10" hasAuthority="ADMIN">
+  <div class="col-xs">
+    <button type="button" (click)="agregar()" [disabled]="showAgregar && (!nueva.nombre || !nueva.codigoPostal)" md-raised-button>Agregar</button>
+  </div>
+  <div class="col-xs-1">
+    <md-icon *ngIf="showAgregar" class="pointer text-center" (click)="hide()">keyboard_arrow_up</md-icon>
+  </div>
+</div>
