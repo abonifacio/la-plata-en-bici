@@ -47,4 +47,12 @@ public abstract class AbstractEntityService <T extends AbstractEntity>{
 		this.getRepo().delete(id);
 	}
 	
+	public Long countByEstado(Enum<?> estado) throws DBException{
+		return this.getRepo().countByEstado(estado);
+	}
+	
+	public Long count() throws DBException{
+		return this.getRepo().count();
+	}
+	
 }

@@ -19,4 +19,8 @@ public interface EntityRepository<T> {
 	
 	List<T> findAll() throws DBException;
 	
+	public Long countByEstado(Enum<?> estado) throws DBException;
+	
+	public Long count() throws DBException;
+	
 }

@@ -112,6 +112,33 @@ public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements 
 		return tw.go();
 
 	}
+	
+	@Override
+	public Long countByEstado(Enum<?> estado) throws DBException {
+		TransactionWrapper<Long> tw = new TransactionWrapper<Long>() {
+
+			@Override
+			public Long prepare(EntityManager em) {
+				return (Long) em.createQuery("select count(e) from "+tabla+" e where estado = :estado")
+						.setParameter("estado", estado).getSingleResult();
+			}
+			
+		};
+		return tw.go();
+	}
+	
+	@Override
+	public Long count() throws DBException {
+		TransactionWrapper<Long> tw = new TransactionWrapper<Long>() {
+
+			@Override
+			public Long prepare(EntityManager em) {
+				return (Long) em.createQuery("select count(e) from "+tabla).getSingleResult();
+			}
+			
+		};
+		return tw.go();
+	}
 
 
 	public String getTabla() {

@@ -17,7 +17,7 @@ import com.laplataenbici.model.domain.utils.EstadoBicicleta;
 
 @Entity
 @Table(name="Bicicleta")
-public class Bicicleta extends AbstractTrackable{
+public class Bicicleta extends AbstractEntity{
 	
 	@Column(name="fecha_ingreso")
 	private Timestamp fechaIngreso;
@@ -38,7 +38,7 @@ public class Bicicleta extends AbstractTrackable{
 	@JoinColumn(name="estacion_id")
 	@JsonManagedReference
 	private Estacion estacion;
-	
+
 	@Column
 	private String detalle;
 

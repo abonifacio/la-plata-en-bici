@@ -1,5 +1,6 @@
 package com.laplataenbici.controllers.resource;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -24,6 +25,7 @@ import com.laplataenbici.model.domain.utils.Pageable;
 import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.services.BicicletaService;
 import com.laplataenbici.security.Secured;
+import com.laplataenbici.security.SecurityUtils;
 
 @Path(URI.BICICLETA)
 @Produces(MediaType.APPLICATION_JSON)
@@ -67,16 +69,16 @@ public class BicicletaResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("retirar")
 	@Secured
-	public Response retirar(Bicicleta entity) throws LPBException{
-		return LPBResponse.ok(service.retirar(entity),"Bicicleta retirada");
+	public Response retirar(Bicicleta entity,@Context HttpServletRequest request) throws LPBException{
+		return LPBResponse.ok(service.retirar(entity,SecurityUtils.getCurrentUser(request)),"Bicicleta retirada");
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("devolver")
 	@Secured
-	public Response devolver(Bicicleta entity) throws LPBException{
-		return LPBResponse.ok(service.devolver(entity),"Bicicleta regresada");
+	public Response devolver(Bicicleta entity,@Context HttpServletRequest request) throws LPBException{
+		return LPBResponse.ok(service.devolver(entity,SecurityUtils.getCurrentUser(request)),"Bicicleta regresada");
 	}
 	
 	@DELETE

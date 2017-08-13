@@ -5,6 +5,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -32,7 +33,7 @@ public class AccountResource {
 	
 	@GET
 	public Response getCurrentUser(@Context HttpServletRequest request) throws LPBException {
-		return LPBResponse.ok(SecurityUtils.getCurrentUser());
+		return LPBResponse.ok(SecurityUtils.getCurrentUser(request));
 	}
 	
 	@PUT
@@ -40,5 +41,17 @@ public class AccountResource {
 		Usuario tmp = service.login(entity);
 		SecurityUtils.setCurrentUser(request,tmp);
 		return LPBResponse.ok(tmp);
+	}
+	
+	@GET
+	@Path("check/username/{username}")
+	public Response checkUsername(@PathParam("username") String username) throws LPBException{
+		return LPBResponse.ok(service.isUsernameAvailable(username));
+	}
+	
+	@GET
+	@Path("check/email/{email}")
+	public Response checkEmail(@PathParam("email") String email) throws LPBException{
+		return LPBResponse.ok(service.isEmailAvailable(email));
 	}
 }

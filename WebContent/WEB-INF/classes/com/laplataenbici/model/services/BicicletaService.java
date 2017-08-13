@@ -2,25 +2,23 @@ package com.laplataenbici.model.services;
 
 import com.laplataenbici.model.domain.Bicicleta;
 import com.laplataenbici.model.domain.Estacion;
+import com.laplataenbici.model.domain.HistorialBicicleta;
+import com.laplataenbici.model.domain.Usuario;
 import com.laplataenbici.model.domain.exceptions.BusinessException;
+import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
-import com.laplataenbici.model.domain.tracking.TrackingBicicleta;
 import com.laplataenbici.model.domain.utils.DateUtils;
 import com.laplataenbici.model.domain.utils.EstadoBicicleta;
 import com.laplataenbici.model.repository.BicicletaRepository;
 import com.laplataenbici.model.repository.EntityRepository;
 import com.laplataenbici.model.repository.impl.BicicletaRepositoryImpl;
-import com.laplataenbici.model.services.tracking.AbstractTrackableService;
-import com.laplataenbici.model.services.tracking.AbstractTrackingService;
-import com.laplataenbici.model.services.tracking.TrackingBicicletaService;
-import com.laplataenbici.security.SecurityUtils;
 
-public class BicicletaService extends AbstractTrackableService<Bicicleta,TrackingBicicleta>{
+public class BicicletaService extends AbstractEntityService<Bicicleta>{
 
 	
 	private BicicletaRepository repo = new BicicletaRepositoryImpl();
 	
-	private TrackingBicicletaService trackingService = new TrackingBicicletaService();
+	private HistorialBicicletaService historial = new HistorialBicicletaService();
 	
 	
 	@Override
@@ -32,20 +30,10 @@ public class BicicletaService extends AbstractTrackableService<Bicicleta,Trackin
 	protected EntityRepository<Bicicleta> getRepo() {
 		return repo;
 	}
-
-	@Override
-	public TrackingBicicleta createTracking() {
-		return new TrackingBicicleta();
-	}
-
-	@Override
-	public AbstractTrackingService<TrackingBicicleta> getTrackingService() {
-		return trackingService;
-	}
 	
-	public Bicicleta devolver(Bicicleta entity) throws LPBException {
+	public Bicicleta devolver(Bicicleta entity,Usuario cUser) throws LPBException {
 		Bicicleta b = this.get(entity.getId());
-		if(!SecurityUtils.getCurrentUser().equals(b.getUsuario())){
+		if(!cUser.equals(b.getUsuario())){
 			throw new BusinessException("El usuario no tiene esta bicicleta alquilada");
 		}
 		Estacion est = entity.getEstacion();
@@ -55,10 +43,17 @@ public class BicicletaService extends AbstractTrackableService<Bicicleta,Trackin
 		entity.setFechaDevolucion(null);
 		entity.setUsuario(null);
 		entity.setFechaIngreso(DateUtils.now());
+		
+		HistorialBicicleta h = new HistorialBicicleta();
+		h.setBicicleta(entity);
+		h.setEstado(entity.getEstado());
+		h.setDetalle(entity.getDetalle());
+		h.setFecha(DateUtils.now());
+		historial.create(h);
 		return super.update(entity);
 	}
 
-	public Bicicleta retirar(Bicicleta entity) throws LPBException {
+	public Bicicleta retirar(Bicicleta entity,Usuario cUser) throws LPBException {
 		Bicicleta b = this.get(entity.getId());
 		if(b.getUsuario()!=null){
 			throw new BusinessException("Esta bicicleta ya esta alquilada");
@@ -69,8 +64,21 @@ public class BicicletaService extends AbstractTrackableService<Bicicleta,Trackin
 		entity.setFechaDevolucion(DateUtils.endOfDay());
 		entity.setFechaIngreso(DateUtils.now());
 		entity.setEstacion(null);
-		entity.setUsuario(SecurityUtils.getCurrentUser());
+		entity.setUsuario(cUser);
+		
+		HistorialBicicleta h = new HistorialBicicleta();
+		h.setBicicleta(entity);
+		h.setEstado(entity.getEstado());
+		h.setDetalle(entity.getDetalle());
+		h.setFecha(DateUtils.now());
+		h.setAlquiladaPor(cUser);
+		historial.create(h);
+		
 		return super.update(entity);
+	}
+	
+	public Long countAlquiladas() throws DBException{
+		return repo.countAlquiladas();
 	}
 
 }

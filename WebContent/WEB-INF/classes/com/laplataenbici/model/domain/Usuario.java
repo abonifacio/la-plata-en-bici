@@ -18,7 +18,7 @@ import com.laplataenbici.model.domain.utils.Sexo;
 
 @Entity
 @Table(name="Usuario")
-public class Usuario extends AbstractTrackable {
+public class Usuario extends AbstractEntity{
 	
 	@Column
 	private Integer DNI;

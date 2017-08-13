@@ -12,12 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.laplataenbici.model.domain.Bicicleta;
 import com.laplataenbici.model.domain.Estacion;
 import com.laplataenbici.model.domain.Localidad;
-import com.laplataenbici.model.domain.Ubicacion;
 import com.laplataenbici.model.domain.Usuario;
-import com.laplataenbici.model.domain.tracking.OperacionTracking;
-import com.laplataenbici.model.domain.tracking.TrackingBicicleta;
-import com.laplataenbici.model.domain.tracking.TrackingEstacion;
-import com.laplataenbici.model.domain.tracking.TrackingUsuario;
 import com.laplataenbici.model.domain.utils.DateUtils;
 import com.laplataenbici.model.domain.utils.EstadoBicicleta;
 import com.laplataenbici.model.domain.utils.EstadoEstacion;
@@ -28,9 +23,6 @@ import com.laplataenbici.model.repository.impl.BicicletaRepositoryImpl;
 import com.laplataenbici.model.repository.impl.EstacionRepositoryImpl;
 import com.laplataenbici.model.repository.impl.LocalidadRepositoryImpl;
 import com.laplataenbici.model.repository.impl.UsuarioRepositoryImpl;
-import com.laplataenbici.model.repository.impl.tracking.TrackingBicicletaRepositoryImpl;
-import com.laplataenbici.model.repository.impl.tracking.TrackingEstacionRepositoryImpl;
-import com.laplataenbici.model.repository.impl.tracking.TrackingUsuarioRepositoryImpl;
 
 /**
  * Servlet implementation class TestsServlet
@@ -60,9 +52,6 @@ public class TestsServlet extends HttpServlet {
 		this.testEstaciones(pw);
 		this.testUsuarios(pw);
 		this.testBicicletas(pw);
-		this.testTrackingBicicletas(pw);
-		this.testTrackingEstacions(pw);
-		this.testTrackingUsuarios(pw);
 		
 	
 	}
@@ -117,7 +106,8 @@ public class TestsServlet extends HttpServlet {
 				tmp.setEstado(EstadoEstacion.OPERATIVA);
 				tmp.setDireccion("7 y 54");
 				tmp.setNombre("Pza San Martin");
-				tmp.setUbicacion(new Ubicacion(123D,123D));
+				tmp.setLongitud(123D);
+				tmp.setLatitud(123D);
 				return tmp;
 			}
 		};
@@ -191,119 +181,6 @@ public class TestsServlet extends HttpServlet {
 				Estacion est = new Estacion();
 				est.setId(1L);
 				tmp.setEstacion(est);
-				return tmp;
-			}
-		};
-		
-		test.run();
-		
-		pw.println(">");
-		pw.println(">");
-	}
-	
-	private void testTrackingBicicletas(PrintWriter pw){
-		
-		pw.println("--------------------------------------------------");
-		pw.println("----- Tests de TrackingBicicletas");
-		pw.println("--------------------------------------------------");
-		
-		TestsUtils<TrackingBicicleta> test = new TestsUtils<TrackingBicicleta>(pw,new TrackingBicicletaRepositoryImpl()) {
-			
-			@Override
-			protected TrackingBicicleta modificarRegistro(TrackingBicicleta entity) {
-				return entity;
-			}
-
-			@Override
-			protected TrackingBicicleta nuevoRegistro() {
-				TrackingBicicleta tmp = new TrackingBicicleta();
-				
-				Bicicleta bici = new Bicicleta();
-				bici.setId(1L);
-				tmp.setEntity(bici);
-				
-				tmp.setOperacion(OperacionTracking.MODIFICACION);
-				tmp.setFecha(DateUtils.now());
-				
-				Usuario user = new Usuario();
-				user.setId(1L);
-				tmp.setModificadorPor(user);
-				
-				return tmp;
-			}
-		};
-		
-		test.run();
-		
-		pw.println(">");
-		pw.println(">");
-	}
-
-	
-	private void testTrackingUsuarios(PrintWriter pw){
-		
-		pw.println("--------------------------------------------------");
-		pw.println("----- Tests de TrackingUsuarios");
-		pw.println("--------------------------------------------------");
-		
-		TestsUtils<TrackingUsuario> test = new TestsUtils<TrackingUsuario>(pw,new TrackingUsuarioRepositoryImpl()) {
-			
-			@Override
-			protected TrackingUsuario modificarRegistro(TrackingUsuario entity) {
-				return entity;
-			}
-
-			@Override
-			protected TrackingUsuario nuevoRegistro() {
-				TrackingUsuario tmp = new TrackingUsuario();
-				
-				Usuario user = new Usuario();
-				user.setId(1L);
-				tmp.setEntity(user);
-				tmp.setModificadorPor(user);
-				
-				tmp.setOperacion(OperacionTracking.ALTA);
-				tmp.setFecha(DateUtils.now());
-				
-				return tmp;
-			}
-		};
-		
-		test.run();
-		
-		pw.println(">");
-		pw.println(">");
-	}
-
-	
-	private void testTrackingEstacions(PrintWriter pw){
-		
-		pw.println("--------------------------------------------------");
-		pw.println("----- Tests de TrackingEstacions");
-		pw.println("--------------------------------------------------");
-		
-		TestsUtils<TrackingEstacion> test = new TestsUtils<TrackingEstacion>(pw,new TrackingEstacionRepositoryImpl()) {
-			
-			@Override
-			protected TrackingEstacion modificarRegistro(TrackingEstacion entity) {
-				return entity;
-			}
-
-			@Override
-			protected TrackingEstacion nuevoRegistro() {
-				TrackingEstacion tmp = new TrackingEstacion();
-				
-				Estacion estacion = new Estacion();
-				estacion.setId(1L);
-				tmp.setEntity(estacion);
-				
-				tmp.setOperacion(OperacionTracking.MODIFICACION);
-				tmp.setFecha(DateUtils.now());
-				
-				Usuario user = new Usuario();
-				user.setId(1L);
-				tmp.setModificadorPor(user);
-				
 				return tmp;
 			}
 		};

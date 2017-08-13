@@ -11,6 +11,7 @@ public class AppConstants {
 		public static final String ACCOUNT = "/account";
 		public static final String LOCALIDAD = "/localidades";
 		public static final String TRACKING = "/tracking";
+		public static final String ESTADISTICAS = "/estadisticas";
 	}
 	
 	public class QUERY{

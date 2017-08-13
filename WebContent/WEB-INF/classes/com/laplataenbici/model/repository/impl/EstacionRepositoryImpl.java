@@ -26,5 +26,4 @@ public class EstacionRepositoryImpl extends EntityRepositoryImpl<Estacion> imple
 		};
 		return tw.go();
 	}
-
 }
