@@ -1,28 +1,66 @@
-<div *ngIf="user">
-
-<h3>Usuario</h3>
-{{user.username}}
-<br>
-<h3>Nombre y Apellido</h3>
-{{user.nombre}} {{user.apellido}}
-<br>
-<h3>  Domicilio</h3>
-{{user.calle}} N° {{user.numero}} - {{user.localidad.nombre}}
-<br>
-<h3>Fecha de nacimiento</h3>
-{{user.fechaNacimiento | date: 'dd/MM/yyyy'}}
-<br>
-<h3>Estado</h3>
-{{user.estado}}
-<br>
-<h3>Sexo</h3>
-{{user.sexo}}
-<br>
-<br>
-<hr>
-<br>
-<br>
-<a md-raised-button class="success" (click)="setEstado('HABILITADO')">Habilitar</a>
-<a md-raised-button class="warning" (click)="setEstado('SUSPENDIO')">Suspender</a>
-<a md-raised-button class="danger" (click)="setEstado('BANEADO')">Banear</a>
+<div *ngIf="user" class="row between-xs">
+    <div class="col-xs-6">
+        <h2>Datos de portal</h2>
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>Usuario</h3>
+                {{user.username}}
+            </div>
+            <div class="col-xs-6">
+                <h3>Mail</h3>
+                {{user.email}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>Estado</h3>
+                <md-chip-list>
+                </md-chip-list>
+                <md-chip>
+                    {{user.estado}}
+                </md-chip>
+            </div>
+            <div class="col-xs-6">
+                <h3>Rol</h3>
+                <md-chip>
+                    {{user.rol}}
+                </md-chip>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <h2>Datos personales</h2>
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>Nombre</h3>
+                {{user.nombre}}
+            </div>
+            <div class="col-xs-6">
+                <h3>Apellido</h3>
+                {{user.apellido}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>DNI</h3>
+                {{user.dni}}
+            </div>
+            <div class="col-xs-6">
+                <h3>Sexo</h3>
+                {{user.sexo}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>Domicilio</h3>
+                {{user.calle}} N° {{user.numero}} - {{user.localidad.nombre}}
+            </div>
+            <div class="col-xs-6">
+                <h3>Fecha de nacimiento</h3>
+                {{user.fechaNacimiento | date: 'dd/MM/yyyy'}}
+            </div>
+        </div>
+        <div class="row">
+        </div>
+    </div>
 </div>

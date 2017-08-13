@@ -1,3 +1,4 @@
+import { TablaService } from '../components/tabla/tabla.service';
 import { Bicicleta } from '../entities/bicicleta';
 import { DatePipe } from '@angular/common';
 import { BicicletaService } from './bicicletas.service';
@@ -15,36 +16,9 @@ export class BicicletasListadoComponent {
   columns: Column[];
   vColumns: String[];
 
-  constructor(private service : BicicletaService, private router: Router,private datePipe: DatePipe) {
-    
-    let dateParse = (fecha)=> this.datePipe.transform(fecha,'dd-MM-yyyy HH:mm');
+  constructor(private service : BicicletaService, private router: Router,private tabla: TablaService) {
+    this.tabla.setService(service);
     this.vColumns = ['id','estado','estacion','fechaIngreso','usuario','fechaDevolucion'];
-
-    this.columns = [
-      new Column({name:'id',label:'ID'}),
-      new Column({name:'estado',label:'Estado'}),
-      new Column({
-        name:'estacion',
-        label:'Estacion',
-        parse:(row)=>row['estacion'] && row['estacion'].nombre,
-        sort:''
-      }),
-      new Column({
-        name:'fechaIngreso',
-        label:'Fecha de Ingreso / Egreso',
-        parse: (row)=> dateParse(row['fechaIngreso'])}),
-      new Column({
-        name:'usuario',
-        label:'Alquilada por',
-        parse: (row)=>row['user'] && row['user'].username,
-        sort:''
-      }),
-      new Column({
-        name:'fechaDevolucion',
-        label:'Fecha de Devolución',
-        parse: (row)=> dateParse(row['fechaIngreso'])
-      })
-    ];
 
   }
 

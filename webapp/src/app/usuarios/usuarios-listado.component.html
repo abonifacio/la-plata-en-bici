@@ -1,54 +1,43 @@
-<md-table [dataSource]="tabla.dataSource" mdSort (mdSortChange)="sortData($event)">
+<md-table [dataSource]="tabla.dataSource" mdSort (mdSortChange)="tabla.sortData($event)">
 
   <ng-container cdkColumnDef="id">
-    <ng-container>
-      <md-header-cell *cdkHeaderCellDef md-sort-header> ID </md-header-cell>
-    </ng-container>
+    <md-header-cell *cdkHeaderCellDef md-sort-header> ID </md-header-cell>
     <md-cell *cdkCellDef="let row">
         {{row.id}}
     </md-cell>
   </ng-container>
 
   <ng-container cdkColumnDef="nombre">
-    <ng-container>
-      <md-header-cell *cdkHeaderCellDef md-sort-header> Nombre </md-header-cell>
-    </ng-container>
+    <md-header-cell *cdkHeaderCellDef md-sort-header> Nombre </md-header-cell>
     <md-cell *cdkCellDef="let row">
         {{row.nombre}}
     </md-cell>
   </ng-container>
 
   <ng-container cdkColumnDef="apellido">
-    <ng-container>
-      <md-header-cell *cdkHeaderCellDef md-sort-header> apellido </md-header-cell>
-    </ng-container>
+    <md-header-cell *cdkHeaderCellDef md-sort-header> Apellido </md-header-cell>
     <md-cell *cdkCellDef="let row">
         {{row.apellido}}
     </md-cell>
   </ng-container>
 
   <ng-container cdkColumnDef="username">
-    <ng-container>
-      <md-header-cell *cdkHeaderCellDef md-sort-header> username </md-header-cell>
-    </ng-container>
+    <md-header-cell *cdkHeaderCellDef md-sort-header> Username </md-header-cell>
     <md-cell *cdkCellDef="let row">
         {{row.username}}
     </md-cell>
   </ng-container>
 
-  <ng-container cdkColumnDef="id">
-    <ng-container>
-      <md-header-cell *cdkHeaderCellDef md-sort-header> ID </md-header-cell>
-    </ng-container>
+  <ng-container cdkColumnDef="estado">
+    <md-header-cell *cdkHeaderCellDef md-sort-header> Estado </md-header-cell>
     <md-cell *cdkCellDef="let row">
-        <md-progress-bar style="width:80%;" [color]="row.ocupacion>70? 'warn':'primary'" [value]="col.parse(row)" *ngIf="col.type=='bar'"></md-progress-bar>
-        {{row.id}}
+        <md-chip-list>
+            <md-chip class="pointer" (click)="estado(row,'HABILITADO')" [selected]="row.estado=='HABILITADO'">Hab</md-chip>
+            <md-chip class="pointer" (click)="estado(row,'SUSPENDIDO')" [selected]="row.estado=='SUSPENDIDO'" color="yellow">Susp</md-chip>
+            <md-chip class="pointer" (click)="estado(row,'BANEADO')" [selected]="row.estado=='BANEADO'" color="warn">Ban</md-chip>
+        </md-chip-list>
     </md-cell>
   </ng-container>
-
-
-<!--<a md-button routerLink="{{render(col,row).url}}" *ngIf="render(col,row).type=='link'">{{ render(col,row).text }}</a>-->
-<!--<span *ngIf="col.type=='text'">{{col.parse(row) || '-'}}</span>-->
 
   <ng-container cdkColumnDef="ver">
     <md-header-cell *cdkHeaderCellDef > Ver </md-header-cell>
@@ -60,4 +49,4 @@
     
 </md-table>
 
-<app-paginator [tabla]=""></app-paginator>
+<app-paginator [tabla]="tabla"></app-paginator>

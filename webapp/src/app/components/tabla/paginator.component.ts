@@ -1,4 +1,4 @@
-import { TablaService } from '../../services/tabla.service';
+import { TablaService } from '../tabla/tabla.service';
 import { Component, OnInit,Input } from '@angular/core';
 
 @Component({

@@ -1,20 +1,44 @@
-<md-table [dataSource]="tabla.dataSource" mdSort (mdSortChange)="sortData($event)">
+<md-table [dataSource]="tabla.dataSource" mdSort (mdSortChange)="tabla.sortData($event)">
 
   <ng-container cdkColumnDef="id">
-    <ng-container>
       <md-header-cell *cdkHeaderCellDef md-sort-header> ID </md-header-cell>
-    </ng-container>
     <md-cell *cdkCellDef="let row">
         {{row.id}}
     </md-cell>
   </ng-container>
 
-  <ng-container cdkColumnDef="id">
-    <ng-container>
-      <md-header-cell *cdkHeaderCellDef> ocupacion </md-header-cell>
-    </ng-container>
+  <ng-container cdkColumnDef="estado">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Estado </md-header-cell>
     <md-cell *cdkCellDef="let row">
-        <md-progress-bar style="width:80%;" [color]="row.ocupacion>70? 'warn':'primary'" [value]="row.ocupacion"></md-progress-bar>
+        {{row.estado}}
+    </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="estacion">
+      <md-header-cell *cdkHeaderCellDef> Estacion </md-header-cell>
+    <md-cell *cdkCellDef="let row">
+        {{row.estacion && row.estacion.nombre}}
+    </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="fechaIngreso">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Fecha de Ingreso </md-header-cell>
+    <md-cell *cdkCellDef="let row">
+        {{row.fechaIngreso | date:'dd-MM-yyyy HH:mm'}}
+    </md-cell>
+  </ng-container>
+  
+  <ng-container cdkColumnDef="usuario">
+      <md-header-cell *cdkHeaderCellDef> Alquilada por </md-header-cell>
+    <md-cell *cdkCellDef="let row">
+        {{row.usuario && row.usuario.username}}
+    </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="fechaDevolucion">
+      <md-header-cell *cdkHeaderCellDef md-sort-header> Fecha de Devolucion </md-header-cell>
+    <md-cell *cdkCellDef="let row">
+        {{row.fechaDevolucion | date:'dd-MM-yyyy HH:mm'}}
     </md-cell>
   </ng-container>
 
@@ -28,4 +52,4 @@
     
 </md-table>
 
-<app-paginator [tabla]=""></app-paginator>
+<app-paginator [tabla]="tabla"></app-paginator>

@@ -1,66 +1,107 @@
-<div class="form-container">
-  <form method="POST" (ngSubmit)="doRegister()" #RegF="ngForm">
-      <fieldset [disabled]="registrado">
-      <div fxLayout="row" class="row" fxLayoutGap="50px" fxLayoutAlign="space-between center" >
-          <md-input-container>
-            <input mdInput [(ngModel)]="user.email" name="email" type="email" placeholder="Mail" required="true" pattern="^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$">
-          </md-input-container>
-          <md-input-container>
-            <input mdInput [(ngModel)]="user.username" name="username" type="text" placeholder="Usuario" required="true">
-          </md-input-container>
-      </div>
-
-      <div fxLayout="row" class="row" fxLayoutGap="50px" fxLayoutAlign="space-between center" >
-          <md-input-container>
-            <input mdInput [(ngModel)]="user.apellido" name="apellido" type="text" placeholder="Apellido" required="true">
-          </md-input-container>
-
-          <md-input-container>
-            <input mdInput [(ngModel)]="user.nombre" name="nombre" type="text" placeholder="Nombre" required="true">
-          </md-input-container>
-      </div>
-
-      <div fxLayout="row" class="row" fxLayoutGap="50px" fxLayoutAlign="space-between center" >
-          <md-input-container>
-            <input mdInput [(ngModel)]="user.calle" name="calle" type="text" placeholder="Calle" required="true">
-          </md-input-container>
-          <md-input-container>
-            <input mdInput [(ngModel)]="user.numero" name="nro" type="text" placeholder="N°" required="true">
-          </md-input-container>
-      </div>
-
-      <div fxLayout="row" class="row" fxLayoutGap="50px" fxLayoutAlign="space-between center" >
-        <md-select placeholder="Localidad" name="localidad" [(ngModel)]="user.localidad" fxFlexFill required="true">
-          <md-option *ngFor="let loc of localidades" [value]="loc">{{ loc.nombre }}</md-option>
-        </md-select>
-      </div>
-
-      <div fxLayout="row" class="row" fxLayoutGap="50px" fxLayoutAlign="space-between center">
-        <md-input-container>
-          <input mdInput [mdDatepicker]="picker" [(ngModel)]="user.fechaNacimiento" [max]="maxDate" placeholder="Fecha de nacimiento" name="fechaNacInput" required="true">
-          <button mdSuffix [mdDatepickerToggle]="picker"></button>
-        </md-input-container>
-        <md-datepicker #picker startView="year" name="fechaNac" [startAt]="startDate" ngDefaultControl></md-datepicker>
-        <md-radio-group name="sexo" [(ngModel)]="user.sexo" required="true">
-          <div fxLayout="column">
-            <md-radio-button value="M">Masculino</md-radio-button>
+<div class="row">
+  <div class="col-xs-4">
+    <h2>Datos del portal</h2>
+    <form [formGroup]="checkForm" (ngSubmit)="doNext()">
+        <fieldset [disabled]="stage>0">
+          <div class="row around-xs">
+            <div class="col-xs-4">
+              <md-input-container>
+                <input mdInput [(ngModel)]="user.username" formControlName="username" name="username" type="text" placeholder="Usuario">
+                <md-error *ngIf="checkForm.controls.username.hasError('min')">
+                  El nombre de ususario debe tener al menos 3 letras
+                </md-error>
+                <md-error *ngIf="checkForm.controls.username.hasError('valid')">
+                  El nombre de usuario ya está en uso
+                </md-error>
+              </md-input-container>
+            </div>
+            <div class="col-xs-4">
+              <md-input-container>
+                <input mdInput [(ngModel)]="user.email" formControlName="email" name="email" type="email" placeholder="Mail">
+                <md-error *ngIf="checkForm.controls.email.hasError('pattern')">
+                  El email es inválido
+                </md-error>
+                <md-error *ngIf="checkForm.controls.email.hasError('valid')">
+                  El email ya está en uso
+                </md-error>
+              </md-input-container>
+            </div>
           </div>
-          <div fxLayout="column">
-            <md-radio-button value="F">Femenino</md-radio-button>
+          <div class="row center-xs">
+            <div class="col-xs">
+              <button [disabled]="checkForm.invalid || checkForm.pending" md-raised-button type="submit" [color]="'primary'" >Siguiente</button>
+            </div>
           </div>
-        </md-radio-group>
-        
-      </div>
-      <div fxLayout="row" class="row" fxLayoutGap="50px" fxLayoutAlign="center center">
-        <button [disabled]="RegF.invalid" md-raised-button type="submit" [color]="'primary'" >Registrarse</button>
-      </div>
+        </fieldset>
+    </form>  
+  </div>
+  <div class="col-xs-4">
+    <h2 [ngClass]="{'opacity' : stage<1 }">Datos Personales</h2>
+    <form *ngIf="stage>0" (ngSubmit)="doRegister()" #regF="ngForm">
+      <fieldset [disabled]="stage>1">
+        <div class="row around-xs">
+          <div class="col-xs-4">
+              <md-input-container>
+                <input mdInput [(ngModel)]="user.nombre" name="nombre" type="text" placeholder="Nombre" required="true">
+              </md-input-container>
+          </div>
+          <div class="col-xs-4">
+              <md-input-container>
+                <input mdInput [(ngModel)]="user.apellido" name="apellido" type="text" placeholder="Apellido" required="true">
+              </md-input-container>
+          </div>
+        </div>
+        <div class="row around-xs">
+          <div class="col-xs-4">
+          </div>
+          <div class="col-xs-4">
+              <md-radio-group name="sexo" [(ngModel)]="user.sexo" required="true">
+                <div class="col-xs-12">
+                    <md-radio-button value="M">Masculino</md-radio-button>
+                </div>
+                <div class="col-xs-12">
+                    <md-radio-button value="F">Femenino</md-radio-button>
+                </div>
+              </md-radio-group>
+          </div>
+        </div>
+        <div class="row around-xs">
+          <div class="col-xs-4">
+                <md-input-container>
+                  <input mdInput [mdDatepicker]="picker" [(ngModel)]="user.fechaNacimiento" [max]="maxDate" placeholder="Fecha de nacimiento" name="fechaNacInput" required="true">
+                  <button mdSuffix [mdDatepickerToggle]="picker"></button>
+                </md-input-container>
+                <md-datepicker #picker startView="year" name="fechaNac" [startAt]="startDate" ngDefaultControl></md-datepicker>
+          </div>
+          <div class="col-xs-4">
+          </div>
+        </div>
+        <div class="row around-xs">
+          <div class="col-xs-4">
+            <md-input-container>
+              <input mdInput [(ngModel)]="user.calle" name="calle" type="text" placeholder="Calle" required="true">
+            </md-input-container>
+          </div>
+          <div class="col-xs-4">
+            <md-input-container>
+              <input mdInput [(ngModel)]="user.numero" name="nro" type="text" placeholder="N°" required="true">
+            </md-input-container>
+          </div>
+          <div class="col-xs-4">
+            <app-localidades [disabled]="stage>1" [(seleccionada)]="user.localidad"></app-localidades>
+          </div>
+        </div>
+        <div class="row center-xs">
+          <div class="col-xs">
+            <button [disabled]="regF.invalid" md-raised-button type="submit" [color]="'primary'" >Registrarse</button>
+            <button type="button" md-button (click)="reset()" >Volver</button>
+          </div>
+        </div>
       </fieldset>
-
-
     </form>
-
-</div>
-<div *ngIf="registrado">
-  <h2>Registrado</h2>
-  <p>Su usuario y contrseña son {{ user.username }}, {{user.password}}</p>
+  </div>
+  <div class="col-xs-4">
+    <h2 [ngClass]="{'opacity' : stage<2 }">Registrado</h2>
+    <p *ngIf="stage==2">Su usuario y contrseña son {{ user.username }}, {{user.password}}</p>
+  </div>
 </div>

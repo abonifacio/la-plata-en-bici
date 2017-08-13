@@ -13,9 +13,13 @@ export class CrudService<T extends Entity> {
 
     }
 
-    query(pageable?:Pageable):Observable<Page<T>>{
+    query(pageable?:Pageable,query?:any):Observable<Page<T>>{
+        if(!query) query = {};
+        for(let key in pageable){
+            query[key] = pageable[key];
+        }
         let options = {
-            search : pageable
+            search : query
         }
         return this.http.get(this.URI,options);
     }

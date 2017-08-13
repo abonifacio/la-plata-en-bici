@@ -24,8 +24,15 @@ export class AccountService{
       return this.http.put(this.URI,user).map(this.catchUser);
   }
 
+  checkUsername(username:String){
+      return this.http.get(this.URI+'/check/username/'+username);
+  }
+  checkEmail(email:String){
+      return this.http.get(this.URI+'/check/email/'+email);
+  }
+
   isCurrentUserInRole(roles:Rol[]):Boolean{
-    return true;
+    return roles.includes(Rol.USER);
     // return this.cUser && roles.includes(this.cUser.rol);
   }
 
