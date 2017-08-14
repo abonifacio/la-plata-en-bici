@@ -51,6 +51,12 @@ public class UsuarioService extends AbstractEntityService<Usuario>{
 		return super.update(tmp);
 	}
 	
+	public Usuario setRol(Long id, Rol rol) throws LPBException{
+		Usuario tmp = this.get(id);
+		tmp.setRol(rol);
+		return super.update(tmp);
+	}
+	
 	public boolean isUsernameAvailable(String username) throws DBException{
 		return !repo.findOneByUsername(username).isPresent();
 	}

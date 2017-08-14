@@ -1,6 +1,7 @@
 package com.laplataenbici.model.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,16 +9,19 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.domain.utils.Sexo;
 
 @Entity
 @Table(name="Usuario")
+@JsonInclude(Include.NON_NULL)
 public class Usuario extends AbstractEntity{
 	
 	@Column
@@ -63,9 +67,9 @@ public class Usuario extends AbstractEntity{
 	@Enumerated(EnumType.STRING)
 	private Rol rol;
 	
-	@OneToOne(mappedBy="usuario")
-	@JsonBackReference
-	private Bicicleta bicicleta;
+	@OneToMany(mappedBy="usuario")
+	@JsonBackReference("OMbiciRef")
+	private List<Bicicleta> bicicletas;
 
 	public Usuario(){
 		super();
@@ -154,14 +158,15 @@ public class Usuario extends AbstractEntity{
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
-	public Bicicleta getBicicleta() {
-		return bicicleta;
-	}
-	public void setBicicleta(Bicicleta bicicleta) {
-		this.bicicleta = bicicleta;
+	
+	public List<Bicicleta> getBicicletas() {
+		return bicicletas;
 	}
 
-	
+	public void setBicicletas(List<Bicicleta> bicicletas) {
+		this.bicicletas = bicicletas;
+	}
+
 	@Override
 	public String toString(){
 		return "{ id: "+this.id+", nombre: "+this.nombre+", apellido: "+this.apellido+", estado: "+this.estado.getValue()+" }";

@@ -20,7 +20,7 @@ public class UsuarioRepositoryImpl extends EntityRepositoryImpl<Usuario> impleme
 			@Override
 			public Usuario prepare(EntityManager em) {
 				try{							
-					return (Usuario) em.createQuery("from Usuario u where u.username = :user and u.password :pass")
+					return (Usuario) em.createQuery("from Usuario u where u.username = :user and u.password = :pass")
 							.setParameter("user", username).setParameter("pass", password).getSingleResult();
 				}catch(NoResultException e){
 					return null;

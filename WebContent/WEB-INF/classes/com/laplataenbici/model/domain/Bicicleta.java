@@ -9,10 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.laplataenbici.model.domain.utils.EstadoBicicleta;
 
 @Entity
@@ -29,14 +27,12 @@ public class Bicicleta extends AbstractEntity{
 	@Enumerated(EnumType.STRING)
 	private EstadoBicicleta estado;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="usuario_id")
-	@JsonManagedReference
 	private Usuario usuario;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="estacion_id")
-	@JsonManagedReference
 	private Estacion estacion;
 
 	@Column

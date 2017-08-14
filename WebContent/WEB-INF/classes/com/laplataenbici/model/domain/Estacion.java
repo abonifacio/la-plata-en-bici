@@ -32,7 +32,7 @@ public class Estacion extends AbstractEntity {
 
 	@OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
-	@JsonBackReference
+	@JsonBackReference(value="MOestacionRef")
 	private List<Bicicleta> bicicletas;
 
 	@Column

@@ -1,5 +1,7 @@
 package com.laplataenbici.security;
 
+import java.security.SecureRandom;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
 
@@ -12,11 +14,12 @@ import com.laplataenbici.model.services.UsuarioService;
 public class SecurityUtils {
 
 	private static final String SESSION_ID = "user_id";
+	public static final String AUTH_HEADER = "Auhtorization";
 	
 	private static final UsuarioService usuarios = new UsuarioService();
 	
 	public static boolean isUserLoggedIn(HttpServletRequest req){
-		return req.getAttribute(SESSION_ID)!=null;
+		return req.getSession(true).getAttribute(SESSION_ID)!=null;
 	}
 	
 	public static boolean isUserLoggedIn(ContainerRequestContext ctx){
@@ -42,12 +45,27 @@ public class SecurityUtils {
 		if(!isUserLoggedIn(req)){
 			throw new BusinessException("El usuario no está loggeado");
 		}
-		Long id = (Long) req.getAttribute(SESSION_ID);
+		Long id = (Long) req.getSession(true).getAttribute(SESSION_ID);
 		return usuarios.get(id);
+	}
+	
+	public static Long getCurrentUserId(HttpServletRequest req) throws LPBException{
+		if(!isUserLoggedIn(req)){
+			throw new BusinessException("El usuario no está loggeado");
+		}
+		return (Long) req.getSession(true).getAttribute(SESSION_ID);
+		
 	}
 
 	public static void setCurrentUser(HttpServletRequest request, Usuario tmp) {
-		request.setAttribute(SESSION_ID, tmp.getId());
+		request.getSession(true).setAttribute(SESSION_ID, tmp.getId());
+	}
+	
+	public static String generateToken(){
+		SecureRandom random = new SecureRandom();
+		byte bytes[] = new byte[20];
+		random.nextBytes(bytes);
+		return bytes.toString();
 	}
 
 }
