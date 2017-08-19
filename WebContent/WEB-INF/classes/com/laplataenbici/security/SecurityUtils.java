@@ -13,8 +13,8 @@ import com.laplataenbici.model.services.UsuarioService;
 
 public class SecurityUtils {
 
-	private static final String SESSION_ID = "user_id";
-	public static final String AUTH_HEADER = "Auhtorization";
+	public static final String SESSION_ID = "user_id";
+	public static final String SESSION_PROPERTY = "Session";
 	
 	private static final UsuarioService usuarios = new UsuarioService();
 	
@@ -23,11 +23,11 @@ public class SecurityUtils {
 	}
 	
 	public static boolean isUserLoggedIn(ContainerRequestContext ctx){
-		return ctx.getProperty(SESSION_ID)!=null;
+		return ctx.getProperty(SESSION_PROPERTY)!=null;
 	}
 	
 	public static boolean isUserInRole(Rol[] roles,ContainerRequestContext ctx) throws LPBException{
-		Usuario u = usuarios.get((Long) ctx.getProperty(SESSION_ID));
+		Usuario u = usuarios.get((Long) (ctx.getProperty(SESSION_PROPERTY)));
 		for(Rol r : roles){
 			if(isUserInRole(r,u)){
 				return true;

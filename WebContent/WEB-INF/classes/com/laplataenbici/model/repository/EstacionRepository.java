@@ -10,4 +10,6 @@ public interface EstacionRepository extends EntityRepository<Estacion>{
 	
 	List<Estacion> findAllByEstado(EstadoEstacion estado) throws DBException;
 	
+	List<Estacion> findAvailables() throws DBException;
+	
 }

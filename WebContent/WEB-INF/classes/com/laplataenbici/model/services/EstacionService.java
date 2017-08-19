@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.laplataenbici.model.domain.Estacion;
 import com.laplataenbici.model.domain.exceptions.DBException;
-import com.laplataenbici.model.domain.utils.EstadoEstacion;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
 import com.laplataenbici.model.repository.EntityRepository;
@@ -31,11 +30,7 @@ public class EstacionService extends AbstractEntityService<Estacion>{
 	}
 
 	public List<Estacion> getAvailables() throws DBException {
-		List<Estacion> estaciones = repo.findAllByEstado(EstadoEstacion.OPERATIVA);
-//		estaciones.removeIf((e)->{
-//			e.getBicicletas().removeIf((b)-> !EstadoBicicleta.APTA.equals(b.getEstado()));
-//			return e.getBicicletas().size()==0;
-//		});
+		List<Estacion> estaciones = repo.findAvailables();
 		return estaciones;
 	}
 	

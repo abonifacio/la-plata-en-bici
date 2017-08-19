@@ -98,7 +98,7 @@ VALUES(38845681,'Camila','Casas','44','190',3,TIMESTAMP('1995-07-09'),'HABILITAD
 INSERT INTO Usuario (DNI,nombre,apellido,calle,numero,localidad_id,fecha_nac,estado,sexo,email,username,password,rol)
 VALUES(00000001,'Ad','Min','1','2',1,TIMESTAMP('1990-07-09'),'HABILITADO','M','admin@admin.com','admin','admin','ADMIN');
 
---- --------------------------------------------------
+-- ---------------------------------------------------
 -- - Estaciones
 -- ---------------------------------------------------
 INSERT INTO Estacion (nombre,capacidad,estado,direccion,longitud,latitud)

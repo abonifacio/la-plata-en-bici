@@ -1,12 +1,15 @@
 La BD está configurada para user = root y password = 1234
 
+La app angular está en la carpeta webapp dentro del proyecto de eclipse
+
 1) Agregar los jars que faltan en WEB-CONTENT/WEB-INF/lib
 
 2) Correr el script schema.sql que crea las tablas y datos de ejemplo
 
-3) Levantar el server
+3) Levantar el server desde eclipse
 
-4) Correr los test de postman LPB.postman_collection.json
+4) Correr npm install dentro de webapp
 
-Aclaración:
-Los errores en el uso de la api (ej: pasar un id inválido) se identifican por el codigo del response http y el header LPB-Message que tiene el mensaje detallado
+5) Dar npm start -> corre ng serve con la configuración para apuntar al backend en localhost:8080 (proxy.conf.json)
+
+

@@ -1,10 +1,8 @@
 package com.laplataenbici.security;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.core.Context;
 
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.exceptions.LPBException;
@@ -14,16 +12,12 @@ public class SecurityFilter implements ContainerRequestFilter{
 	
 	private Rol[] roles;
 	
-	@Context
-    HttpServletRequest webRequest;
-	
 	public SecurityFilter(Rol[] roles){
 		this.roles = roles;
 	}
 
 	@Override
 	public void filter(ContainerRequestContext ctx) {
-		
 		
 		if(!SecurityUtils.isUserLoggedIn(ctx)){
 			throw new WebApplicationException(LPBResponse.unauthorized());			
