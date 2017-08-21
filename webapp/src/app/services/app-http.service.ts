@@ -15,7 +15,7 @@ export class AppHttp extends Http{
   }
 
   get(url: string, options?: RequestOptionsArgs): Observable<any> {
-      return this.intercept(super.get(this.API+url, options));
+      return this.intercept(super.get(this.API+url, this.addToken(options)));
   }
 
   post(url: string, body: any, options?: RequestOptionsArgs): Observable<any> {
@@ -27,26 +27,35 @@ export class AppHttp extends Http{
   }
 
   delete(url: string, options?: RequestOptionsArgs): Observable<any> {
-      return this.intercept(super.delete(this.API+url, options));
+      return this.intercept(super.delete(this.API+url, this.addToken(options)));
   }
 
   private addJsonHeader(opt:RequestOptionsArgs):RequestOptionsArgs{
+    opt = this.addToken(opt);
+    opt.headers.append('Content-Type','application/json');
+    return opt;
+  }
+
+  private addToken(opt:RequestOptionsArgs):RequestOptionsArgs{
     if(!opt){
       opt = new RequestOptions();
     }
     if(!opt.headers){
       opt.headers = new Headers();
     }
-    opt.headers.append('Content-Type','application/json');
+    let token = localStorage.getItem('authToken');
+    opt.headers.append('Authorization',token);
     return opt;
   }
 
   private intercept(obs:Observable<any>):Observable<any>{
     this.reqSub.request.next('req');
 
-    return obs.map((res)=>{
+    return obs.map((res:Response)=>{
       let ret = res.json();
       this.reqSub.response.next(res);
+      let authToken = res.headers.get('Authorization');
+      localStorage.setItem('authToken',authToken);
       return ret;
     })
     .catch((res :Response, obs : Observable<any>)=>{

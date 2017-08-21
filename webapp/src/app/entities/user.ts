@@ -12,22 +12,10 @@ export class Usuario extends Entity{
     numero: String;
     localidad:Localidad;
     fechaNacimiento:Date;
-    estado: EstadoUsuario;
-    sexo: Sexo;
+    estado: String;
+    sexo: String;
     username: String;
     password:String;
-    rol: Rol;
+    rol: String;
     
-}
-
-export enum EstadoUsuario{
-    HABILITADO,SUSPENDIO,BANEADO
-}
-
-export enum Sexo{
-    F,M
-}
-
-export enum Rol{
-    ADMIN,USER
 }

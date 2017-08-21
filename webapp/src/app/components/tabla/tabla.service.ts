@@ -1,4 +1,4 @@
-import { QueryDataSource, TrackingDataSource } from './datasources';
+import { TableDataSource, QueryDataSource,HistorialDataSource } from './datasources';
 import { Observable } from 'rxjs/Rx';
 import { Page, Pageable } from '../../entities/common';
 import { CrudService } from '../../services/crud.service';
@@ -8,24 +8,31 @@ import { Sort,PageEvent } from '@angular/material';
 @Injectable()
 export class TablaService {
 
-  service:CrudService<any>;
-  private dataSource:QueryDataSource;
+  service:any;
+  private dataSource:TableDataSource;
   private pageable: Pageable = new Pageable();
   private query :any = {};
+  private type: String;
+  private params:any;
   constructor() {
 
   }
 
-  setService(service:CrudService<any>){
+  setService(service:CrudService<any>,type?:String,params?:any){
     this.service = service;
+    this.type = type || 'listado';
+    this.params = params;
     this.refreshTable();
   }
 
   refreshTable(){
-    if(this.service instanceof CrudService){
-      this.dataSource = new QueryDataSource(this.service,this.pageable,this.query);
-    }else{
-      this.dataSource = new TrackingDataSource(this.service,this.pageable,this.query);
+    switch(this.type){
+      case 'listado':
+        this.dataSource = new QueryDataSource(this.service,this.pageable,this.query);
+      break;
+      case 'historial':
+        this.dataSource = new HistorialDataSource(this.service,this.params,this.pageable,this.query);
+      break;
     }
   }
 

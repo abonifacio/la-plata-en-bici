@@ -1,6 +1,6 @@
 import { CrudService } from '../services/crud.service';
 import { AppHttp } from '../services/app-http.service';
-import { EstadoUsuario, Usuario } from '../entities/user';
+import { Usuario } from '../entities/user';
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 
@@ -11,8 +11,12 @@ export class UsuarioService extends CrudService<Usuario>{
     super(http,'usuarios');
   }
 
-  setActivo(id:Number,estado : EstadoUsuario):Observable<Usuario>{
+  setActivo(id:Number,estado : String):Observable<Usuario>{
       return this.http.put(this.URI+'/activar/'+id,estado);
+  }
+
+  setRol(id:Number,rol : String):Observable<Usuario>{
+      return this.http.put(this.URI+'/rol/'+id,rol);
   }
 
 }

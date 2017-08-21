@@ -1,3 +1,95 @@
-<p>
-  bicicletas-detalle works!
-</p>
+<div class="row between-xs">
+    <div *ngIf="bici" class="col-sm-4">
+        <h2>Bicicleta #{{bici.id}}</h2>
+        <div class="row" *ngIf="isAlquilada(bici)">
+            <div class="col-xs-6">
+                <h3>Alquilada por </h3>
+                {{bici.usuario.username}}
+            </div>
+            <div class="col-xs-6">
+                <h3>Fecha de Devolución</h3>
+                <span [returnDate]="bici.fechaDevolucion"></span>
+            </div>
+        </div>
+        <div class="row" *ngIf="!isAlquilada(bici)">
+            <div class="col-xs-6">
+                <h3>Estacionada en</h3>
+                {{bici.estacion && bici.estacion.nombre}}
+            </div>
+            <div class="col-xs-6">
+                <h3>Ingresada</h3>
+                {{bici.fechaIngreso | cDate}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <h3>Estado</h3>
+                <md-chip-list>
+                  <md-chip>
+                      {{bici.estado}}
+                  </md-chip>
+                </md-chip-list>
+            </div>
+            <div class="col-sm" *ngIf="bici.estado=='DENUNCIADA'">
+              <h3>Detalle</h3>
+              <p>{{bici.detalle}}</p>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <a md-raised-button [routerLink]="['/bicicletas/editar',bici.id]">EDITAR</a>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+      <h2>Historial</h2>
+      <md-table [dataSource]="tabla.dataSource" mdSort (mdSortChange)="tabla.sortData($event)">
+
+        <ng-container cdkColumnDef="fechaIngreso">
+          <md-header-cell *cdkHeaderCellDef md-sort-header>Ingreso / Retiro</md-header-cell>
+          <md-cell *cdkCellDef="let row">
+              {{row.fechaIngreso | cDate}}
+          </md-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="fechaDevolucion">
+          <md-header-cell *cdkHeaderCellDef md-sort-header>Devolución </md-header-cell>
+          <md-cell *cdkCellDef="let row">
+              {{row.fechaDevolucion | cDate}}
+          </md-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="estado">
+          <md-header-cell *cdkHeaderCellDef md-sort-header> Estado </md-header-cell>
+          <md-cell *cdkCellDef="let row">
+              {{row.estado}}
+          </md-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="tipo">
+          <md-header-cell *cdkHeaderCellDef md-sort-header> Evento </md-header-cell>
+          <md-cell *cdkCellDef="let row">
+              {{row.tipo}}
+          </md-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="alquiladaPor">
+          <md-header-cell *cdkHeaderCellDef md-sort-header> Alquilada por </md-header-cell>
+          <md-cell *cdkCellDef="let row">
+              {{row.alquiladaPor && row.alquiladaPor.username}}
+          </md-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="ver">
+          <md-header-cell *cdkHeaderCellDef > Ver </md-header-cell>
+          <md-cell *cdkCellDef="let row"> <md-icon class="pointer" (click)="irDetalle(row)">remove_red_eye</md-icon> </md-cell>
+        </ng-container>
+
+        <md-header-row *cdkHeaderRowDef="vColumns"></md-header-row>
+        <md-row *cdkRowDef="let row; columns: vColumns;"></md-row>
+          
+      </md-table>
+
+      <app-paginator [tabla]="tabla"></app-paginator>
+    </div>
+</div>

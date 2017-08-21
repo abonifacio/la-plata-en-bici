@@ -1,3 +1,6 @@
+import { AdminAllowed,UserAllowed,LoggedAllowed } from './services/router-security';
+import { ReturnDateDirective } from './directives/return-date.directive';
+import { CustomDatePipe } from './directives/cdate.pipe';
 import { TablaService } from './components/tabla/tabla.service';
 import { BicicletaService } from './bicicletas/bicicletas.service';
 import { EstacionService } from './estaciones/estacion.service';
@@ -25,7 +28,6 @@ import { BicicletasListadoComponent } from './bicicletas/bicicletas-listado.comp
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuariosListadoComponent } from './usuarios/usuarios-listado.component';
 import { BicicletasRetirarComponent } from './bicicletas/bicicletas-retirar.component';
-import { BicicletasEstacionarComponent } from './bicicletas/bicicletas-estacionar.component';
 import { BicicletasAltaComponent } from './bicicletas/bicicletas-alta.component';
 import { UsuariosDetalleComponent } from './usuarios/usuarios-detalle.component';
 import { TablaComponent } from './components/tabla/tabla.component';
@@ -33,12 +35,12 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-// import { FlexLayoutModule } from '@angular/flex-layout';
 import { HasAuthorityDirective } from './directives/has-authority.directive';
 import { EstacionesDetalleComponent } from './estaciones/estaciones-detalle.component';
 import { BicicletasDetalleComponent } from './bicicletas/bicicletas-detalle.component';
 import { PaginatorComponent } from './components/tabla/paginator.component';
 import { LocalidadesComponent } from './components/localidades/localidades.component';
+import { MisBicicletasComponent } from './bicicletas/mis-bicicletas.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,6 @@ import { LocalidadesComponent } from './components/localidades/localidades.compo
     UsuariosComponent,
     UsuariosListadoComponent,
     BicicletasRetirarComponent,
-    BicicletasEstacionarComponent,
     BicicletasAltaComponent,
     UsuariosDetalleComponent,
     TablaComponent,
@@ -61,10 +62,13 @@ import { LocalidadesComponent } from './components/localidades/localidades.compo
     HomeComponent,
     LoginComponent,
     HasAuthorityDirective,
+    ReturnDateDirective,
     EstacionesDetalleComponent,
     BicicletasDetalleComponent,
     PaginatorComponent,
-    LocalidadesComponent
+    LocalidadesComponent,
+    MisBicicletasComponent,
+    CustomDatePipe
   ],
   imports: [
     BrowserModule,
@@ -74,7 +78,6 @@ import { LocalidadesComponent } from './components/localidades/localidades.compo
     FormsModule,
     HttpModule,
     ReactiveFormsModule
-    // FlexLayoutModule
   ],
   providers: [
     HttpRequestSubscriber,
@@ -83,7 +86,11 @@ import { LocalidadesComponent } from './components/localidades/localidades.compo
         useFactory: httpFactory,
         deps: [XHRBackend, RequestOptions,HttpRequestSubscriber]
     },
+    AdminAllowed,
+    UserAllowed,
+    LoggedAllowed,
     DatePipe,
+    CustomDatePipe,
     TablaService,
     AccountService,
     LocalidadService,

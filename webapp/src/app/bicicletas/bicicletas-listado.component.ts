@@ -18,7 +18,7 @@ export class BicicletasListadoComponent {
 
   constructor(private service : BicicletaService, private router: Router,private tabla: TablaService) {
     this.tabla.setService(service);
-    this.vColumns = ['id','estado','estacion','fechaIngreso','usuario','fechaDevolucion'];
+    this.vColumns = ['id','estado','estacion','fechaIngreso','usuario','fechaDevolucion','ver'];
 
   }
 

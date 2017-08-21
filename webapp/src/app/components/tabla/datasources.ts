@@ -1,13 +1,14 @@
+import { BicicletaService } from '../../bicicletas/bicicletas.service';
 import { Observable } from 'rxjs/Rx';
 import { Page, Pageable } from '../../entities/common';
 import { CrudService } from '../../services/crud.service';
 import { DataSource } from '@angular/cdk';
 
-abstract class TableDataSource extends DataSource<any>{
+export abstract class TableDataSource extends DataSource<any>{
 
   protected numItems:Number;
 
-  constructor(protected service: CrudService<any>,protected pageable:Pageable,protected query:any){
+  constructor(protected pageable:Pageable,protected query:any){
     super();
   }
 
@@ -38,14 +39,22 @@ abstract class TableDataSource extends DataSource<any>{
 
 export class QueryDataSource extends TableDataSource{
 
+    constructor(private service:CrudService<any>,pageable:Pageable,query:any){
+      super(pageable,query);
+    }
      doRequest(): Observable<Page<any>> {
         return this.service.query(this.pageable,this.query);
     }
 }
 
-export class TrackingDataSource extends TableDataSource{
 
-    doRequest(): Observable<Page<any>> {
-        return this.service.query(this.pageable);
+export class HistorialDataSource extends TableDataSource{
+
+    constructor(private service: BicicletaService,private params:any,pageable:Pageable,query:any){
+      super(pageable,query);
+    }
+
+     doRequest(): Observable<Page<any>> {
+       return this.service.historial(this.params.id,this.pageable);
     }
 }

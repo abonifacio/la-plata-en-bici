@@ -24,7 +24,7 @@
   <ng-container cdkColumnDef="fechaIngreso">
       <md-header-cell *cdkHeaderCellDef md-sort-header> Fecha de Ingreso </md-header-cell>
     <md-cell *cdkCellDef="let row">
-        {{row.fechaIngreso | date:'dd-MM-yyyy HH:mm'}}
+        {{row.fechaIngreso | cDate}}
     </md-cell>
   </ng-container>
   
@@ -38,7 +38,7 @@
   <ng-container cdkColumnDef="fechaDevolucion">
       <md-header-cell *cdkHeaderCellDef md-sort-header> Fecha de Devolucion </md-header-cell>
     <md-cell *cdkCellDef="let row">
-        {{row.fechaDevolucion | date:'dd-MM-yyyy HH:mm'}}
+        <span [returnDate]="row.fechaDevolucion"></span>
     </md-cell>
   </ng-container>
 

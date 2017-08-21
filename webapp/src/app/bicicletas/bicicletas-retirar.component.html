@@ -1,15 +1,19 @@
-<div class="form-container">
-  <form method="POST" (ngSubmit)="doRetirar()" #RegF="ngForm">
-      <div fxLayout="row" class="row" fxLayoutGap="50px" fxLayoutAlign="space-between center" >
-          <md-select placeholder="Estacion" [(ngModel)]="selected" name="food">
-            <md-option *ngFor="let est of estaciones" [value]="est.id">
-              <b>{{est.nombre}}</b> - {{est.direccion}}
-            </md-option>
-          </md-select>
+<div class="row center-xs">
+  <div class="col-sm-6">
+    <h2>Seleccione una estación</h2>
+    <form (ngSubmit)="doRetirar()" #RetF="ngForm">
+      <div class="row" >
+          <div class="col-xs-8">
+            <md-select placeholder="Estacion" [(ngModel)]="selected" name="estacionRetirar" required>
+              <md-option *ngFor="let est of estaciones" [value]="est.id">
+                <b>{{est.nombre}}</b> - {{est.direccion}}
+              </md-option>
+            </md-select>
+          </div>
+          <div class="col-xs-4">
+            <button [disabled]="RetF.invalid" md-button type="submit" [color]="'primary'" >RETIRAR</button>
+          </div>
       </div>
-      <div fxLayout="row" class="row" fxLayoutGap="50px" fxLayoutAlign="center center">
-        <button [disabled]="RegF.invalid" md-raised-button type="submit" [color]="'primary'" >Registrarse</button>
-      </div>
-  </form>
-
+    </form>
+  </div>
 </div>

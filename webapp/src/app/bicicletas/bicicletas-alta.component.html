@@ -1,3 +1,43 @@
-<p>
-  bicicletas-alta works!
-</p>
+<div *ngIf="bici && !bici.usuario" class="row center-xs">
+  <div class="col-sm-8">
+    <form (ngSubmit)="doAlta()" #altaF="ngForm">
+      <div class="row">
+        <div class="col-xs">
+            <md-select placeholder="Estacion" [(ngModel)]="bici.estacion" name="estacion" required>
+              <md-option *ngFor="let est of estaciones" [value]="est">
+                <b>{{est.nombre}}</b> - {{est.direccion}}
+              </md-option>
+            </md-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+            <md-select placeholder="Estado" [(ngModel)]="bici.estado" name="estado" required>
+              <md-option *ngFor="let est of estados" [value]="est">
+                {{est}}
+              </md-option>
+            </md-select>
+        </div>
+      </div>
+      <div class="row" *ngIf="bici.estado=='DENUNCIADA'">
+        <div class="col-xs">
+          <md-input-container>
+              <textarea mdInput name="motivoDenuncia" placeholder="Comentarios" [(ngModel)]="bici.detalle" required></textarea>
+            </md-input-container>
+        </div>
+      </div>
+      
+      <div class="row center-xs">
+        <div class="col-xs">
+          <button [disabled]="altaF.invalid" md-raised-button type="submit" color="primary" >GUARDAR</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row" *ngIf="bici && bici.usuario">
+  <div class="col-xs">
+    <h2>La bicicleta no se puede editar porque se encuentra alquilada</h2>
+    <button md-raised-button [routerLink]="['/bicicletas/detalle',bici.id]" >VOLVER</button>
+  </div>
+</div>

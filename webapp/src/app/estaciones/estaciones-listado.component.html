@@ -37,7 +37,7 @@
     <ng-container cdkColumnDef="ocupacion">
         <md-header-cell *cdkHeaderCellDef> Ocupacion </md-header-cell>
         <md-cell *cdkCellDef="let row">
-            <md-progress-bar style="width:80%;" [color]="calcOcupacion(row)>70? 'warn':'primary'" [value]="calcOcupacion(row)"></md-progress-bar>
+            <md-progress-bar mdTooltip="{{row.ocupacion}}" mdTooltipPosition="left" style="width:80%;height: 10px;" [color]="calcOcupacion(row)>70? 'warn':'primary'" [value]="calcOcupacion(row)"></md-progress-bar>
         </md-cell>
     </ng-container>
 
