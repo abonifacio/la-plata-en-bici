@@ -37,7 +37,7 @@ public class Bicicleta extends AbstractEntity{
 
 	@Column
 	private String detalle;
-
+	
 	public Bicicleta() {
 		super();
 	}

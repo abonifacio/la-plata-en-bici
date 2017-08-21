@@ -5,7 +5,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class LPBResourceConfig extends ResourceConfig{
 	
 	public LPBResourceConfig() {
-		super(FilterBinding.class);
+		super(SecurityBinding.class);
 	}
 
 }

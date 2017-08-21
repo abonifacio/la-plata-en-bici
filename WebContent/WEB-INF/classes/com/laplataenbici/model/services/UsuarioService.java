@@ -5,7 +5,6 @@ import java.util.Optional;
 import com.laplataenbici.model.domain.Usuario;
 import com.laplataenbici.model.domain.exceptions.BusinessException;
 import com.laplataenbici.model.domain.exceptions.DBException;
-import com.laplataenbici.model.domain.exceptions.FordibbenException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.Rol;
@@ -42,7 +41,7 @@ public class UsuarioService extends AbstractEntityService<Usuario>{
 		if(tmp.isPresent()){
 			return tmp.get();
 		}
-		throw new FordibbenException("Combinación de usuario/contraseña incorrecta");
+		throw new BusinessException("Combinación de usuario/contraseña incorrecta");
 	}
 	
 	public Usuario setActivo(Long id, EstadoUsuario estado) throws LPBException{

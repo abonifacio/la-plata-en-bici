@@ -12,4 +12,5 @@ public interface EstacionRepository extends EntityRepository<Estacion>{
 	
 	List<Estacion> findAvailables() throws DBException;
 	
+	List<Estacion> findConCapacidad() throws DBException;
 }

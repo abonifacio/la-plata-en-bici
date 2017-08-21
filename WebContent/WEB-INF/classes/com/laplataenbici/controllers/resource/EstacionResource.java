@@ -15,13 +15,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.laplataenbici.controllers.resource.utils.AppConstants.QUERY;
-import com.laplataenbici.controllers.resource.utils.AppConstants.URI;
+import com.laplataenbici.config.AppConstants.QUERY;
+import com.laplataenbici.config.AppConstants.URI;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.Estacion;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.utils.Pageable;
+import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.services.EstacionService;
+import com.laplataenbici.security.Secured;
 
 @Path(URI.ESTACION)
 @Produces(MediaType.APPLICATION_JSON)
@@ -31,12 +33,14 @@ public class EstacionResource {
 	
 	
 	@POST
+	@Secured(Rol.ADMIN)
 	public Response create(Estacion entity,@Context UriInfo uriInfo) throws LPBException{
 		
 		return LPBResponse.created(service.create(entity),uriInfo, "Estación creada");
 	}
 
 	@GET
+	@Secured
 	public Response getAll(
 			@QueryParam(QUERY.PAGE) @DefaultValue("0") Integer page,
 			@QueryParam(QUERY.COUNT) @DefaultValue("25") Integer size,
@@ -47,24 +51,35 @@ public class EstacionResource {
 	
 	@GET
 	@Path("{id}")
+	@Secured
 	public Response get(@PathParam("id") Long id) throws LPBException {
 		return LPBResponse.ok(service.get(id));
 	}
 	
 	@GET
 	@Path("disponibles")
-	public Response get() throws LPBException {
+	@Secured
+	public Response getAvailables() throws LPBException {
 		return LPBResponse.ok(service.getAvailables());
+	}
+	
+	@GET
+	@Path("con-capacidad")
+	@Secured
+	public Response getCapaces() throws LPBException {
+		return LPBResponse.ok(service.getConCapacidad());
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Secured(Rol.ADMIN)
 	public Response update(Estacion entity) throws LPBException{
 		return LPBResponse.ok(service.update(entity),"Estación actualizada");
 	}
 	
 	@DELETE
 	@Path("{id}")
+	@Secured(Rol.ADMIN)
 	public Response delete(@PathParam("id") Long id) throws LPBException{
 		service.delete(id);
 		return LPBResponse.ok(null, "Estación borrada");

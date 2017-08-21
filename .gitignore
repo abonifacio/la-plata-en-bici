@@ -6,3 +6,5 @@ build/
 /bin/
 
 node_modules/*
+
+/WEB-INF/classes/META-INF/persistence.xml

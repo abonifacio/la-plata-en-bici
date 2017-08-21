@@ -1,33 +1,27 @@
 package com.laplataenbici.security;
 
-import java.security.SecureRandom;
-
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.container.ContainerRequestContext;
 
 import com.laplataenbici.model.domain.Usuario;
-import com.laplataenbici.model.domain.exceptions.BusinessException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
+import com.laplataenbici.model.domain.exceptions.UnauthorizedException;
 import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.services.UsuarioService;
 
 public class SecurityUtils {
 
-	public static final String SESSION_ID = "user_id";
-	public static final String SESSION_PROPERTY = "Session";
-	
+	public static final String AUTHORIZATION_HEADER = "Authorization";
+	public static final String TOKEN_PREFIX = "Bearer ";
+
 	private static final UsuarioService usuarios = new UsuarioService();
 	
-	public static boolean isUserLoggedIn(HttpServletRequest req){
-		return req.getSession(true).getAttribute(SESSION_ID)!=null;
-	}
-	
 	public static boolean isUserLoggedIn(ContainerRequestContext ctx){
-		return ctx.getProperty(SESSION_PROPERTY)!=null;
+		return ctx.getHeaderString(AUTHORIZATION_HEADER)!=null;
 	}
 	
 	public static boolean isUserInRole(Rol[] roles,ContainerRequestContext ctx) throws LPBException{
-		Usuario u = usuarios.get((Long) (ctx.getProperty(SESSION_PROPERTY)));
+		Usuario u = usuarios.get(getCurrentUserId(ctx));
 		for(Rol r : roles){
 			if(isUserInRole(r,u)){
 				return true;
@@ -40,32 +34,26 @@ public class SecurityUtils {
 		return rol.equals(u.getRol());
 	}
 	
-	
-	public static Usuario getCurrentUser(HttpServletRequest req) throws LPBException{
-		if(!isUserLoggedIn(req)){
-			throw new BusinessException("El usuario no está loggeado");
-		}
-		Long id = (Long) req.getSession(true).getAttribute(SESSION_ID);
-		return usuarios.get(id);
+	public static Usuario getCurrentUser(ContainerRequestContext ctx) throws LPBException{
+		return usuarios.get(getCurrentUserId(ctx));
 	}
 	
-	public static Long getCurrentUserId(HttpServletRequest req) throws LPBException{
-		if(!isUserLoggedIn(req)){
-			throw new BusinessException("El usuario no está loggeado");
+	private static Long getCurrentUserId(ContainerRequestContext ctx) throws LPBException{
+		String token = ctx.getHeaderString(AUTHORIZATION_HEADER);
+		Long id = CryptoUtils.getInstance().getUserId(token.substring(TOKEN_PREFIX.length()));
+		if(id==null){
+			throw new UnauthorizedException();
 		}
-		return (Long) req.getSession(true).getAttribute(SESSION_ID);
-		
+		return id;
 	}
 
-	public static void setCurrentUser(HttpServletRequest request, Usuario tmp) {
-		request.getSession(true).setAttribute(SESSION_ID, tmp.getId());
+	
+	public static boolean isCurrentUser(ContainerRequestContext ctx,Usuario user) throws LPBException{
+		return getCurrentUserId(ctx).equals(user.getId());
 	}
 	
-	public static String generateToken(){
-		SecureRandom random = new SecureRandom();
-		byte bytes[] = new byte[20];
-		random.nextBytes(bytes);
-		return bytes.toString();
+	public static void sendToken(HttpServletResponse res,Usuario u){
+		res.addHeader(AUTHORIZATION_HEADER, TOKEN_PREFIX + CryptoUtils.getInstance().generateToken(u));
 	}
 
 }

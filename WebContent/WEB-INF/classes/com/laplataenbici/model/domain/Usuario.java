@@ -1,7 +1,6 @@
 package com.laplataenbici.model.domain;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,10 +8,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
@@ -66,10 +63,6 @@ public class Usuario extends AbstractEntity{
 	@Column
 	@Enumerated(EnumType.STRING)
 	private Rol rol;
-	
-	@OneToMany(mappedBy="usuario")
-	@JsonBackReference("OMbiciRef")
-	private List<Bicicleta> bicicletas;
 
 	public Usuario(){
 		super();
@@ -157,14 +150,6 @@ public class Usuario extends AbstractEntity{
 	}
 	public void setRol(Rol rol) {
 		this.rol = rol;
-	}
-	
-	public List<Bicicleta> getBicicletas() {
-		return bicicletas;
-	}
-
-	public void setBicicletas(List<Bicicleta> bicicletas) {
-		this.bicicletas = bicicletas;
 	}
 
 	@Override

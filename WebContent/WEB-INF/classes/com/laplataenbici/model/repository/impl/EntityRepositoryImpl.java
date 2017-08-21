@@ -22,8 +22,8 @@ import com.laplataenbici.model.repository.utils.TransactionWrapper;
 public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements EntityRepository<T>{
 
 	private final Class<T> entidad;
-	private final String tabla;
-	private final Map<String,Class<?>> allowedFields;
+	protected final String tabla;
+	protected final Map<String,Class<?>> allowedFields;
 	
 
 	@SuppressWarnings("unchecked")
@@ -47,7 +47,7 @@ public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements 
 
 			@Override
 			public T prepare(EntityManager em) {
-				return (T) em.find(entidad, id);
+				return manage((T) em.find(entidad, id));
 			}
 			
 		};
@@ -57,7 +57,14 @@ public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements 
 	@Override
 	public Page<T> findAll(Pageable pageable) throws DBException{
 		
-		FindAllHelper<T> fh = new FindAllHelper<>(tabla,allowedFields);
+		FindAllHelper<T> fh = new FindAllHelper<T>(tabla,allowedFields){
+
+			@Override
+			protected List<T> afterResult(List<T> list) {
+				return manage(list);
+			}
+			
+		};
 		return fh.go(pageable);
  	}
 	
@@ -148,6 +155,14 @@ public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements 
 
 	public Map<String, Class<?>> getAllowedFields() {
 		return allowedFields;
+	}
+	
+	protected T manage(T entity){
+		return entity;
+	}
+	
+	protected List<T> manage(List<T> list){
+		return list;
 	}
 	
 	
