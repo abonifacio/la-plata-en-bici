@@ -66,6 +66,9 @@ public class UsuarioService extends AbstractEntityService<Usuario>{
 		return !repo.findOneByEmail(email).isPresent();
 	}
 
-	
+	@Override
+	public void checkDelete(Usuario e) throws LPBException {
+		throw new BusinessException("Lo usuarios no se pueden borrar");
+	}
 	
 }

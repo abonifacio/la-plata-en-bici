@@ -1,7 +1,6 @@
 package com.laplataenbici.controllers.resource;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -73,14 +72,6 @@ public class UsuarioResource {
 			throw new BusinessException("El usuario no puede cambiar su propio rol");
 		}
 		return LPBResponse.ok(service.setRol(id, rol),"El usuario tiene ahora rol "+rol.name());
-	}
-	
-	@DELETE
-	@Path("{id}")
-	@Secured(Rol.ADMIN)
-	public Response delete(@PathParam("id") Long id) throws LPBException{
-		service.delete(id);
-		return LPBResponse.ok(null, "Usuario borrado");
 	}
 	
 }
