@@ -1,6 +1,5 @@
 package com.laplataenbici.controllers.resource;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -10,13 +9,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.laplataenbici.controllers.resource.utils.AppConstants.QUERY;
-import com.laplataenbici.controllers.resource.utils.AppConstants.URI;
+import com.laplataenbici.config.AppConstants.QUERY;
+import com.laplataenbici.config.AppConstants.URI;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
+import com.laplataenbici.model.domain.Usuario;
 import com.laplataenbici.model.domain.exceptions.BusinessException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.utils.EstadoUsuario;
@@ -53,13 +54,7 @@ public class UsuarioResource {
 		return LPBResponse.ok(service.get(id));
 	}
 	
-//	@PUT
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Secured(Rol.ADMIN)
-//	public Response update(Usuario entity) throws LPBException{
-//		return LPBResponse.ok(service.update(entity),"Usuario actualizado");
-//	}
-	
+
 	@PUT
 	@Path("activar/{id}")
 	@Secured(Rol.ADMIN)
@@ -72,8 +67,9 @@ public class UsuarioResource {
 	@Path("rol/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Secured(Rol.ADMIN)
-	public Response setRol(Rol rol,@PathParam("id") Long id, @Context HttpServletRequest req) throws LPBException{
-		if(SecurityUtils.getCurrentUserId(req).equals(id)){
+	public Response setRol(Rol rol,@PathParam("id") Long id, @Context ContainerRequestContext ctx) throws LPBException{
+		Usuario u = new Usuario(id);
+		if(SecurityUtils.isCurrentUser(ctx, u)){
 			throw new BusinessException("El usuario no puede cambiar su propio rol");
 		}
 		return LPBResponse.ok(service.setRol(id, rol),"El usuario tiene ahora rol "+rol.name());

@@ -11,10 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.laplataenbici.model.domain.utils.EstadoEstacion;
 
 @Entity
@@ -30,9 +27,8 @@ public class Estacion extends AbstractEntity {
 	@Column
 	private Double latitud;
 
-	@OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SUBSELECT)
-	@JsonBackReference(value="MOestacionRef")
+	@OneToMany(mappedBy = "estacion", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Bicicleta> bicicletas;
 
 	@Column

@@ -11,7 +11,7 @@ import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.security.Secured;
 import com.laplataenbici.security.SecurityFilter;
 
-public class FilterBinding implements DynamicFeature	{
+public class SecurityBinding implements DynamicFeature	{
 	
 	
 	@Override

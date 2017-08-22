@@ -1,4 +1,4 @@
-package com.laplataenbici.controllers.resource.utils;
+package com.laplataenbici.config;
 
 public class AppConstants {
 

@@ -30,12 +30,12 @@ public class EstacionRepositoryImpl extends EntityRepositoryImpl<Estacion> imple
 
 	@Override
 	public List<Estacion> findAvailables() throws DBException {
-			TransactionWrapper<List<Estacion>> tw = new TransactionWrapper<List<Estacion>>(){
+		TransactionWrapper<List<Estacion>> tw = new TransactionWrapper<List<Estacion>>(){
 			
 			@SuppressWarnings("unchecked")
 			@Override
 			public List<Estacion> prepare(EntityManager em) {
-				return (List<Estacion>) em.createQuery("select e from Estacion e join e.bicicletas b where e.estado = :estadoE and b.estado = :estadoB")
+				return (List<Estacion>) em.createQuery("select distinct e from Estacion e join e.bicicletas b where e.estado = :estadoE and b.estado = :estadoB and b.usuario = null")
 						.setParameter("estadoE", EstadoEstacion.OPERATIVA)
 						.setParameter("estadoB", EstadoBicicleta.APTA)
 				.getResultList();
@@ -44,4 +44,38 @@ public class EstacionRepositoryImpl extends EntityRepositoryImpl<Estacion> imple
 		};
 		return tw.go();
 	}
+	
+	@Override
+	public List<Estacion> findConCapacidad() throws DBException {
+		TransactionWrapper<List<Estacion>> tw = new TransactionWrapper<List<Estacion>>(){
+			
+			@SuppressWarnings("unchecked")
+			@Override
+			public List<Estacion> prepare(EntityManager em) {
+				return (List<Estacion>) em.createQuery("select distinct e from Estacion e where e.estado = :estadoE and e.capacidad > size(e.bicicletas)")
+						.setParameter("estadoE", EstadoEstacion.OPERATIVA)
+				.getResultList();
+			}
+			
+		};
+		return tw.go();
+	}
+	
+	@Override
+	protected Estacion manage(Estacion e) {
+		e.setOcupacion(e.getBicicletas().size());
+		return e;
+	}
+	
+	@Override
+	protected List<Estacion> manage(List<Estacion> list) {
+		for(Estacion e : list){
+			e.setOcupacion(e.getBicicletas().size());
+		}
+		return list;
+	}
+	
+	
+
+	
 }

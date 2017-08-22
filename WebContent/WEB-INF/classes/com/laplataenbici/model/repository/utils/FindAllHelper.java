@@ -12,10 +12,11 @@ import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
 
-public class FindAllHelper<T extends AbstractEntity>{
+public abstract class FindAllHelper<T extends AbstractEntity>{
 
 	private final String tabla;
 	private final Map<String,Class<?>> allowedFields;
+	
 	
 	public FindAllHelper(String tabla,Map<String,Class<?>> allowedFields){
 		this.tabla = tabla;
@@ -64,9 +65,11 @@ public class FindAllHelper<T extends AbstractEntity>{
 					String direction = page.isAscending() ? "ASC ": "DESC";
 					query = query + " order by e."+page.getSort()+" "+direction;
 				}
-				return (List<T>) parse(em.createQuery(query),params)
+				return afterResult(
+						(List<T>) parse(em.createQuery(query),params)
 						.setFirstResult(page.getPage()*page.getCount())
-						.setMaxResults(page.getCount()).getResultList();
+						.setMaxResults(page.getCount()).getResultList()
+						);
 			}
 			
 		};
@@ -80,6 +83,8 @@ public class FindAllHelper<T extends AbstractEntity>{
 		}
 		return q;
 	}
+	
+	protected abstract List<T> afterResult(List<T> list);
 	
 
 }

@@ -20,8 +20,10 @@ CREATE TABLE IF NOT EXISTS `Bicicleta` (
 DROP TABLE IF EXISTS `HistorialBicicleta`;
 CREATE TABLE IF NOT EXISTS `HistorialBicicleta` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`fecha` TIMESTAMP NULL,
+	`fecha_ingreso` TIMESTAMP NULL,
+	`fecha_devolucion` TIMESTAMP NULL,
 	`estado` VARCHAR(45) NULL,
+	`tipo` VARCHAR(45) NULL,
 	`detalle` VARCHAR(255) NULL,
 	`bicicleta_id` INT NOT NULL,
 	`usuario_id` INT NULL,
@@ -102,10 +104,10 @@ VALUES(00000001,'Ad','Min','1','2',1,TIMESTAMP('1990-07-09'),'HABILITADO','M','a
 -- - Estaciones
 -- ---------------------------------------------------
 INSERT INTO Estacion (nombre,capacidad,estado,direccion,longitud,latitud)
-	VALUES ('Plaza Moreno',1230,'OPERATIVA','13 y 54',-34.921005, -57.954710);
+	VALUES ('Plaza Moreno',1230,'OPERATIVA','13 y 54', -57.954710,-34.921005);
 
 INSERT INTO Estacion (nombre,capacidad,estado,direccion,longitud,latitud)
-	VALUES ('Plaza Paso',800,'OPERATIVA','13 y 44',-34.916598, -57.961125);
+	VALUES ('Plaza Paso',800,'OPERATIVA','13 y 44', -57.961402,-34.916433);
 
 
 -- ---------------------------------------------------
@@ -113,9 +115,9 @@ INSERT INTO Estacion (nombre,capacidad,estado,direccion,longitud,latitud)
 -- ---------------------------------------------------
 
 -- biciletas alquiladas
-INSERT INTO Bicicleta (fecha_ingreso,estado,usuario_id) VALUES (NOW(),'APTA',1);
-INSERT INTO Bicicleta (fecha_ingreso,estado,usuario_id) VALUES (NOW(),'APTA',2);
-INSERT INTO Bicicleta (fecha_ingreso,estado,usuario_id) VALUES (NOW(),'APTA',3);
+INSERT INTO Bicicleta (fecha_ingreso,fecha_devolucion,estado,usuario_id) VALUES (NOW(),DATE_ADD(NOW(), INTERVAL 2 HOUR),'APTA',1);
+INSERT INTO Bicicleta (fecha_ingreso,fecha_devolucion,estado,usuario_id) VALUES (NOW(),DATE_ADD(NOW(), INTERVAL 2 HOUR),'APTA',2);
+INSERT INTO Bicicleta (fecha_ingreso,fecha_devolucion,estado,usuario_id) VALUES (NOW(),DATE_ADD(NOW(), INTERVAL 2 HOUR),'APTA',3);
 
 -- bicicletas en estacion
 

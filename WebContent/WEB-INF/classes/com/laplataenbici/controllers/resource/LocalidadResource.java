@@ -15,8 +15,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.laplataenbici.controllers.resource.utils.AppConstants.QUERY;
-import com.laplataenbici.controllers.resource.utils.AppConstants.URI;
+import com.laplataenbici.config.AppConstants.QUERY;
+import com.laplataenbici.config.AppConstants.URI;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.Localidad;
 import com.laplataenbici.model.domain.exceptions.LPBException;
