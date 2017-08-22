@@ -1,6 +1,6 @@
 {
   "/rest": {
-    "target": "http://localhost:8090/LaPlataEnBici",
+    "target": "http://192.168.0.209:8090/LaPlataEnBici",
     "secure": false
   }
 }

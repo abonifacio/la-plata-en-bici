@@ -5,6 +5,9 @@
   <a md-tab-link routerLinkActive #rla="routerLinkActive" [active]="rla.isActive" routerLink="/estaciones/mapa">
     Mapa
   </a>
+  <a md-tab-link hasRole="ADMIN" routerLinkActive #rla3="routerLinkActive" [active]="rla3.isActive" routerLink="/estaciones/alta">
+    Alta
+  </a>
 </nav>
 
 <router-outlet></router-outlet>

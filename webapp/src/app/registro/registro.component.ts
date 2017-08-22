@@ -40,28 +40,6 @@ export class RegistroComponent implements OnInit {
         [this.checkEmail()]
       )
     });
-    console.log(this.checkForm);
-
-    // this.usernameFormControl.valueChanges
-    // .debounceTime(300)
-    // .switchMap(val=>this.service.checkUsername(val))
-    // .subscribe((valid)=>{
-    //   if(valid){
-    //     this.usernameFormControl.setErrors(null);
-    //   }else{
-    //     this.usernameFormControl.setErrors({valid:true});
-    //   }
-    // })
-    // this.emailFormControl.valueChanges
-    // .debounceTime(300)
-    // .switchMap(val=>this.service.checkUsername(val))
-    // .subscribe((valid)=>{
-    //   if(valid){
-    //     this.emailFormControl.setErrors(null);
-    //   }else{
-    //     this.emailFormControl.setErrors({valid:true});
-    //   }
-    // })
   }
 
   private checkUsername():AsyncValidatorFn{
@@ -101,7 +79,6 @@ export class RegistroComponent implements OnInit {
   }
 
   doNext(){
-    console.log(this.user);
     this.stage++;
   }
 
@@ -111,11 +88,10 @@ export class RegistroComponent implements OnInit {
   }
 
   doRegister(){
-    /*this.service.register(this.user).subscribe((user)=>{
+    this.service.register(this.user).subscribe((user)=>{
       this.user = user;
       this.stage++;
-    });*/
-    this.stage++;
+    });
   }
 
 

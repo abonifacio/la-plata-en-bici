@@ -1,3 +1,38 @@
-<p>
-  estaciones-detalle works!
-</p>
+<div *ngIf="est" class="row between-xs">
+    <div class="col-sm-4">
+        <h2>Estacion {{est.nombre}}</h2>
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>Direccion</h3>
+                {{est.direccion}}
+            </div>
+            <div class="col-xs-6">
+                <h3>Estado</h3>
+                <md-chip-list>
+                  <md-chip>{{est.estado | estado}}</md-chip>
+                </md-chip-list>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>Capacidad</h3>
+                {{est.capacidad}}
+            </div>
+            <div class="col-xs-6">
+                <h3>Bicicletas</h3>
+                {{est.ocupacion}}
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <a md-raised-button hasRole="ADMIN" [routerLink]="['/estaciones/editar',est.id]">EDITAR</a>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+      <h2>Mapa</h2>
+      <agm-map class="map" [zoom]="16" [latitude]="est.latitud" [longitude]="est.longitud">
+        <agm-marker [latitude]="est.latitud" [longitude]="est.longitud"></agm-marker>
+      </agm-map>
+    </div>
+</div>

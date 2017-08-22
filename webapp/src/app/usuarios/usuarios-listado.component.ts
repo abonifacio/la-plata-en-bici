@@ -1,6 +1,6 @@
 import { TablaService } from '../components/tabla/tabla.service';
 import { Router } from '@angular/router';
-import { EstadoUsuario, Usuario } from '../entities/user';
+import { Usuario } from '../entities/user';
 import { UsuarioService } from './usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { Column } from '../entities/common';
@@ -26,7 +26,7 @@ export class UsuariosListadoComponent implements OnInit {
     this.router.navigateByUrl('/usuarios/detalle/'+entity.id);
   }
 
-  estado(row:Usuario,estado:EstadoUsuario){
+  estado(row:Usuario,estado:String){
     if(row.estado!=estado){
       this.service.setActivo(row.id,estado).subscribe(usuario=>{
         row.estado = usuario.estado;

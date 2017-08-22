@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-sm-4">
+    <h2>Datos</h2>
+    <form (ngSubmit)="doAlta()" #altaF="ngForm">
+      <div class="row">
+        <div class="col-xs">
+          <md-input-container>
+            <input mdInput [(ngModel)]="est.nombre" name="nombre" type="text" placeholder="Nombre" required="true">
+          </md-input-container>
+        </div>
+        <div class="col-xs">
+          <md-input-container>
+            <input mdInput [(ngModel)]="est.capacidad" name="capacidad" type="number" placeholder="Capacidad" required="true">
+          </md-input-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+          <md-select placeholder="Estado" [(ngModel)]="est.estado" name="estado" required>
+            <md-option *ngFor="let est of estados" [value]="est">
+              {{est | estado}}
+            </md-option>
+          </md-select>
+        </div>
+        <div class="col-xs">
+          <md-input-container>
+            <input mdInput [(ngModel)]="est.direccion" name="direccion" type="text" placeholder="Dirección" required="true">
+          </md-input-container>
+        </div>
+      </div>
+      <div class="row center-xs">
+        <div class="col-xs">
+          <button [disabled]="altaF.invalid" md-raised-button type="submit" color="primary" >GUARDAR</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-sm-7">
+    <h2>Ubicación</h2>
+    <agm-map class="map" [zoom]="16" [latitude]="est.latitud" [longitude]="est.longitud">
+        <agm-marker (dragEnd)="updateCoords($event)" [markerDraggable]="true" [latitude]="est.latitud" [longitude]="est.longitud"></agm-marker>
+      </agm-map>
+  </div>
+</div>

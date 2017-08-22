@@ -1,18 +1,23 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <md-toolbar color="primary">
   
 
   <a md-button routerLink="/">Inicio</a>
-  <a md-button routerLink="/estaciones/listado">Estaciones</a>
-  <a md-button routerLink="/bicicletas/listado">Bicicletas</a>
-  <a md-button routerLink="/usuarios/listado">Usuarios</a>
+  <a md-button hasRole routerLink="/estaciones/listado">Estaciones</a>
+  <a md-button hasRole="USER" routerLink="/bicicletas/mis-bicicletas">Bicicletas</a>
+  <a md-button hasRole="ADMIN" routerLink="/bicicletas/listado">Bicicletas</a>
+  <a md-button hasRole="ADMIN" routerLink="/usuarios/listado">Usuarios</a>
+  <a md-button hasRole="ADMIN" routerLink="/estadisticas">Estadísticas</a>
 
   <span class="fill-remaining-space"></span>
 
-
-  <a md-button routerLink="registro">
+  <a md-button hasRole [mdMenuTriggerFor]="accMenu">
     <md-icon>account_circle</md-icon>
   </a>
+
+  <md-menu #accMenu="mdMenu">
+    <button md-menu-item class="f-12" routerLink="/perfil">PERFIL </button>
+    <button md-menu-item class="f-12" (click)="logout()"> CERRAR SESIÓN </button>
+  </md-menu>
 
 </md-toolbar>
 

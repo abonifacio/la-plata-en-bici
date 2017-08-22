@@ -1,3 +1,9 @@
+import { EstadisticasService } from './estadisticas/estadisticas.service';
+import { AgmCoreModule } from '@agm/core';
+import { AdminAllowed,UserAllowed,LoggedAllowed,NotLoggedAllowed } from './services/router-security';
+import { ReturnDateDirective } from './directives/return-date.directive';
+import { CustomDatePipe } from './directives/cdate.pipe';
+import { EstadoPipe } from './directives/estado.pipe';
 import { TablaService } from './components/tabla/tabla.service';
 import { BicicletaService } from './bicicletas/bicicletas.service';
 import { EstacionService } from './estaciones/estacion.service';
@@ -25,7 +31,6 @@ import { BicicletasListadoComponent } from './bicicletas/bicicletas-listado.comp
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuariosListadoComponent } from './usuarios/usuarios-listado.component';
 import { BicicletasRetirarComponent } from './bicicletas/bicicletas-retirar.component';
-import { BicicletasEstacionarComponent } from './bicicletas/bicicletas-estacionar.component';
 import { BicicletasAltaComponent } from './bicicletas/bicicletas-alta.component';
 import { UsuariosDetalleComponent } from './usuarios/usuarios-detalle.component';
 import { TablaComponent } from './components/tabla/tabla.component';
@@ -33,12 +38,15 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-// import { FlexLayoutModule } from '@angular/flex-layout';
-import { HasAuthorityDirective } from './directives/has-authority.directive';
+import { HasAuthorityDirective,NotLoggedDirective } from './directives/has-authority.directive';
 import { EstacionesDetalleComponent } from './estaciones/estaciones-detalle.component';
 import { BicicletasDetalleComponent } from './bicicletas/bicicletas-detalle.component';
 import { PaginatorComponent } from './components/tabla/paginator.component';
 import { LocalidadesComponent } from './components/localidades/localidades.component';
+import { MisBicicletasComponent } from './bicicletas/mis-bicicletas.component';
+import { EstacionesAltaComponent } from './estaciones/estaciones-alta.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { ChartComponent } from './estadisticas/chart.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +60,6 @@ import { LocalidadesComponent } from './components/localidades/localidades.compo
     UsuariosComponent,
     UsuariosListadoComponent,
     BicicletasRetirarComponent,
-    BicicletasEstacionarComponent,
     BicicletasAltaComponent,
     UsuariosDetalleComponent,
     TablaComponent,
@@ -61,10 +68,18 @@ import { LocalidadesComponent } from './components/localidades/localidades.compo
     HomeComponent,
     LoginComponent,
     HasAuthorityDirective,
+    NotLoggedDirective,
+    ReturnDateDirective,
     EstacionesDetalleComponent,
     BicicletasDetalleComponent,
     PaginatorComponent,
-    LocalidadesComponent
+    LocalidadesComponent,
+    MisBicicletasComponent,
+    CustomDatePipe,
+    EstadoPipe,
+    EstacionesAltaComponent,
+    EstadisticasComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -73,8 +88,10 @@ import { LocalidadesComponent } from './components/localidades/localidades.compo
     AppMaterialModule,
     FormsModule,
     HttpModule,
-    ReactiveFormsModule
-    // FlexLayoutModule
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyD0gkRgsbHzGU59CspTjFr4g9k_QEGb78E'
+    })
   ],
   providers: [
     HttpRequestSubscriber,
@@ -83,13 +100,19 @@ import { LocalidadesComponent } from './components/localidades/localidades.compo
         useFactory: httpFactory,
         deps: [XHRBackend, RequestOptions,HttpRequestSubscriber]
     },
+    AdminAllowed,
+    UserAllowed,
+    LoggedAllowed,
+    NotLoggedAllowed,
     DatePipe,
+    CustomDatePipe,
     TablaService,
     AccountService,
     LocalidadService,
     UsuarioService,
     BicicletaService,
-    EstacionService
+    EstacionService,
+    EstadisticasService
   ],
   bootstrap: [AppComponent]
 })

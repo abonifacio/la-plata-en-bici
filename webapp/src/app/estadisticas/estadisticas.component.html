@@ -1,0 +1,42 @@
+<div class="row bottom-xs">
+    <div class="col-xs">
+        <h2>Bicicletas</h2>
+        <app-chart *ngIf="bicicletas.length>0" [values]="bicicletas"></app-chart>
+    </div>
+    <div class="col-xs-2 text-center">
+        <h3>Total Bicicletas</h3>
+        {{total.bicicletas}}
+    </div>
+    <div class="col-xs-2 text-center">
+        <h3>Bicicletas alquiladas</h3>
+        {{total.bicicletasAlquiladas}} - ({{pct(total.bicicletasAlquiladas,total.bicicletas) | number:'1.2-2'}}%)
+    </div>
+</div>
+<div class="row bottom-xs">
+    <div class="col-xs">
+        <h2>Usuarios</h2>
+        <app-chart *ngIf="usuarios.length>0" [values]="usuarios"></app-chart>
+    </div>
+    <div class="col-xs-2 text-center">
+        <h3>Total Usuarios</h3>
+        {{total.usuarios}}
+    </div>
+    <div class="col-xs-2 text-center">
+        <h3>Bicicletas por usuario</h3>
+        {{avg(total.bicicletas,total.usuarios) | number:'1.2-2'}}
+    </div>
+</div>
+<div class="row bottom-xs" *ngIf="total">
+    <div class="col-xs">
+        <h2>Estaciones</h2>
+        <app-chart *ngIf="estaciones.length>0" [values]="estaciones"></app-chart>
+    </div>
+    <div class="col-xs-2 text-center">
+        <h3>Total Estaciones</h3>
+        {{total.estaciones}}
+    </div>
+    <div class="col-xs-2 text-center">
+        <h3>Bicicletas por estación</h3>
+        {{avg(total.bicicletas, total.estaciones) | number:'1.2-2'}}
+    </div>
+</div>

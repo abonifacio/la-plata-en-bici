@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-sm-6">
+    <h2>Mis bicicletas</h2>
+    <md-list>
+      <md-list-item *ngFor="let b of alquiladas">
+        <div md-line>
+          <div class="row">
+            <div class="col-xs-8">
+              <b>Bicicleta #{{b.id}}</b> 
+            </div>
+            <div class="col-xs-4">
+              <button md-button color="primary" (click)="preDevolver(b)">DEVOLVER</button>
+            </div>
+          </div>
+        </div>
+        <p md-line>
+          Devolver antes de <span [returnDate]="b.fechaDevolucion"></span>
+        </p>
+        </md-list-item>
+    </md-list>
+    <h3 *ngIf="alquiladas && alquiladas.length==0">Actualmente no tiene bicicletas alquiladas</h3>
+  </div>
+  <div class="col-sm-6">
+    <div class="box" *ngIf="porDevolver">
+      <h2>Devolver Bicicleta #{{porDevolver.id}}</h2>
+      <form (ngSubmit)="doDevolver()" #DevF="ngForm">
+        <div class="row">
+            <div class="col-xs-6">
+              <md-select placeholder="Estacion" [(ngModel)]="porDevolver.estacion" name="estacionDevolver" required>
+                <md-option *ngFor="let est of conCapacidad" [value]="est.id">
+                  <b>{{est.nombre}}</b> - {{est.direccion}}
+                </md-option>
+              </md-select>
+            </div>
+            <div class="col-xs-4">
+              <button [disabled]="DevF.invalid" md-button type="submit" >DEVOLVER</button>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-xs">
+            <md-checkbox (change)="setDenuncia($event)">Denunciar</md-checkbox>
+          </div>
+        </div>
+        <div class="row" *ngIf="porDevolver.estado=='DENUNCIADA'">
+          <div class="col-xs-6">
+            <md-input-container>
+              <textarea mdInput name="motivoDenuncia" placeholder="Comentarios" [(ngModel)]="porDevolver.detalle" required></textarea>
+            </md-input-container>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

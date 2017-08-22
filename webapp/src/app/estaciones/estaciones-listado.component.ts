@@ -1,3 +1,4 @@
+import { AccountService } from '../services/account.service';
 import { TablaService } from '../components/tabla/tabla.service';
 import { Estacion } from '../entities/estacion';
 import { EstacionService } from './estacion.service';
@@ -14,10 +15,14 @@ import { Component, OnInit } from '@angular/core';
 export class EstacionesListadoComponent implements OnInit {
   vColumns: String[];
 
-  constructor(private service : EstacionService, private router: Router,private tabla:TablaService) {
+  constructor(private service : EstacionService, private router: Router,
+  private tabla:TablaService,private account:AccountService) {
     this.tabla.setService(service);
-    this.vColumns = ['id','nombre','direccion','estado','capacidad','ocupacion'];
-
+    if(account.isCurrentUserInRole(['ADMIN'])){
+      this.vColumns = ['id','nombre','direccion','estado','capacidad','ocupacion','ver'];
+    }else{
+      this.vColumns = ['nombre','direccion','estado','disponibles','ver'];
+    }
   }
 
   irDetalle(est:Estacion){

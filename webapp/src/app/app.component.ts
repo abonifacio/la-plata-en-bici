@@ -1,3 +1,4 @@
+import { AccountService } from './services/account.service';
 import { Observable } from 'rxjs/Rx';
 import { NavigationEnd,ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Component } from '@angular/core';
@@ -11,13 +12,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent{
   
-  private title:Observable<String>;;
+  private title:Observable<String>;
 
-  constructor(private router:Router){
+  constructor(private router:Router,private account:AccountService){
     this.title = this.router.events
     .filter((event)=> event instanceof NavigationEnd)
     .map(()=> this.getTitle(this.router.routerState.snapshot.root));
-    
   }
 
   private getTitle(routeSnapshot: ActivatedRouteSnapshot) {
@@ -26,6 +26,11 @@ export class AppComponent{
       title = this.getTitle(routeSnapshot.firstChild) || title;
     }
     return title;
+  }
+
+  logout(){
+    this.account.logout();
+    this.router.navigate(['/']);
   }
   
 

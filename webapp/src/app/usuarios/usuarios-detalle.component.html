@@ -14,17 +14,24 @@
         <div class="row">
             <div class="col-xs-6">
                 <h3>Estado</h3>
-                <md-chip-list>
+                <md-chip-list *ngIf="!lockEdit">
+                    <md-chip class="pointer" (click)="estado('HABILITADO')" [selected]="user.estado=='HABILITADO'">Hab</md-chip>
+                    <md-chip class="pointer" (click)="estado('SUSPENDIDO')" [selected]="user.estado=='SUSPENDIDO'" color="yellow">Susp</md-chip>
+                    <md-chip class="pointer" (click)="estado('BANEADO')" [selected]="user.estado=='BANEADO'" color="warn">Ban</md-chip>
                 </md-chip-list>
-                <md-chip>
-                    {{user.estado}}
-                </md-chip>
+                <md-chip-list *ngIf="lockEdit">
+                    <md-chip>{{user.estado | estado}}</md-chip>
+                </md-chip-list>
             </div>
             <div class="col-xs-6">
                 <h3>Rol</h3>
-                <md-chip>
-                    {{user.rol}}
-                </md-chip>
+                <md-chip-list *ngIf="!lockEdit">
+                    <md-chip class="pointer" (click)="rol('USER')" [selected]="user.rol=='USER'">Usuario</md-chip>
+                    <md-chip class="pointer" (click)="rol('ADMIN')" [selected]="user.rol=='ADMIN'" color="warn">Admin</md-chip>
+                </md-chip-list>
+                <md-chip-list *ngIf="lockEdit">
+                    <md-chip>{{user.rol}}</md-chip>
+                </md-chip-list>
             </div>
         </div>
     </div>
@@ -57,7 +64,7 @@
             </div>
             <div class="col-xs-6">
                 <h3>Fecha de nacimiento</h3>
-                {{user.fechaNacimiento | date: 'dd/MM/yyyy'}}
+                {{user.fechaNacimiento | cDate}}
             </div>
         </div>
         <div class="row">

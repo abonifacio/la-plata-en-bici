@@ -11,8 +11,16 @@ export class EstacionService extends CrudService<Estacion>{
     super(http,'estaciones');
   }
 
-  retirables(){
+  retirables():Observable<Estacion[]>{
       return this.http.get(this.URI+'/disponibles');
+  }
+
+  conCapacidad():Observable<Estacion[]>{
+    return this.http.get(this.URI+'/con-capacidad');
+  }
+
+  estados():String[]{
+    return ['OPERATIVA','CERRADA','CONSTRUCCION'];
   }
 
 }

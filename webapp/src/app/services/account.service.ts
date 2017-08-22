@@ -1,19 +1,23 @@
 import { Observable } from 'rxjs/Rx';
-import { Rol, Usuario } from '../entities/user';
+import { Usuario } from '../entities/user';
 import { AppHttp } from './app-http.service';
 import { CrudService } from './crud.service';
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter } from '@angular/core';
 
 @Injectable()
 export class AccountService{
 
   private URI = 'account';
   private cUser:Usuario = undefined;
+
+  onAuthSucess:EventEmitter<Usuario> = new EventEmitter<Usuario>();
+
+  
   constructor(private http: AppHttp) {
   }
 
   get():Observable<Usuario>{
-    return this.http.get(this.URI).map(this.catchUser);
+    return this.http.get(this.URI).map(this.catchUser.bind(this));
   }
 
   register(user:Usuario):Observable<Usuario>{
@@ -21,7 +25,7 @@ export class AccountService{
   }
 
   login(user:Usuario){
-      return this.http.put(this.URI,user).map(this.catchUser);
+      return this.http.put(this.URI,user).map(this.catchUser.bind(this));
   }
 
   checkUsername(username:String){
@@ -31,14 +35,29 @@ export class AccountService{
       return this.http.get(this.URI+'/check/email/'+email);
   }
 
-  isCurrentUserInRole(roles:Rol[]):Boolean{
-    return roles.includes(Rol.USER);
-    // return this.cUser && roles.includes(this.cUser.rol);
+  isCurrentUserInRole(roles:String[]):Boolean{
+    return this.getCurrentUser() && roles.includes(this.cUser.rol);
   }
 
   private catchUser(user):Usuario{
     this.cUser = user;
+    localStorage.setItem('cUser',JSON.stringify(user));
+    this.onAuthSucess.next(user);
     return user;
+  }
+
+  logout(){
+    this.cUser = undefined;
+    localStorage.removeItem('cUser');
+    localStorage.removeItem('authToken');
+    this.onAuthSucess.next(null);
+  }
+
+  getCurrentUser():Usuario{
+    if(!this.cUser){
+      this.cUser = JSON.parse(localStorage.getItem('cUser'));
+    }
+    return this.cUser;
   }
 
 }

@@ -1,3 +1,26 @@
-<p>
-  login works!
-</p>
+<div class="row center-xs">
+  <div class="col-xs">
+    <form (ngSubmit)="doLogin()" #logF="ngForm">
+      <div class="row around-xs">
+        <div class="col-xs">
+            <md-input-container>
+              <input mdInput [(ngModel)]="user.username" name="username" type="text" placeholder="Usuario" required="true">
+            </md-input-container>
+        </div>
+      </div>
+      <div class="row around-xs">
+        <div class="col-xs">
+            <md-input-container>
+              <input mdInput [(ngModel)]="user.password" name="password" type="password" placeholder="Contraseña" required="true">
+            </md-input-container>
+        </div>
+      </div>
+      
+      <div class="row center-xs">
+        <div class="col-xs">
+          <button [disabled]="logF.invalid" md-raised-button type="submit" [color]="'primary'" >Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
