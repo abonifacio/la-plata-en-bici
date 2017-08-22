@@ -1,6 +1,9 @@
-import { AdminAllowed,UserAllowed,LoggedAllowed } from './services/router-security';
+import { EstadisticasService } from './estadisticas/estadisticas.service';
+import { AgmCoreModule } from '@agm/core';
+import { AdminAllowed,UserAllowed,LoggedAllowed,NotLoggedAllowed } from './services/router-security';
 import { ReturnDateDirective } from './directives/return-date.directive';
 import { CustomDatePipe } from './directives/cdate.pipe';
+import { EstadoPipe } from './directives/estado.pipe';
 import { TablaService } from './components/tabla/tabla.service';
 import { BicicletaService } from './bicicletas/bicicletas.service';
 import { EstacionService } from './estaciones/estacion.service';
@@ -35,12 +38,15 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { HasAuthorityDirective } from './directives/has-authority.directive';
+import { HasAuthorityDirective,NotLoggedDirective } from './directives/has-authority.directive';
 import { EstacionesDetalleComponent } from './estaciones/estaciones-detalle.component';
 import { BicicletasDetalleComponent } from './bicicletas/bicicletas-detalle.component';
 import { PaginatorComponent } from './components/tabla/paginator.component';
 import { LocalidadesComponent } from './components/localidades/localidades.component';
 import { MisBicicletasComponent } from './bicicletas/mis-bicicletas.component';
+import { EstacionesAltaComponent } from './estaciones/estaciones-alta.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { ChartComponent } from './estadisticas/chart.component';
 
 @NgModule({
   declarations: [
@@ -62,13 +68,18 @@ import { MisBicicletasComponent } from './bicicletas/mis-bicicletas.component';
     HomeComponent,
     LoginComponent,
     HasAuthorityDirective,
+    NotLoggedDirective,
     ReturnDateDirective,
     EstacionesDetalleComponent,
     BicicletasDetalleComponent,
     PaginatorComponent,
     LocalidadesComponent,
     MisBicicletasComponent,
-    CustomDatePipe
+    CustomDatePipe,
+    EstadoPipe,
+    EstacionesAltaComponent,
+    EstadisticasComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +88,10 @@ import { MisBicicletasComponent } from './bicicletas/mis-bicicletas.component';
     AppMaterialModule,
     FormsModule,
     HttpModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyD0gkRgsbHzGU59CspTjFr4g9k_QEGb78E'
+    })
   ],
   providers: [
     HttpRequestSubscriber,
@@ -89,6 +103,7 @@ import { MisBicicletasComponent } from './bicicletas/mis-bicicletas.component';
     AdminAllowed,
     UserAllowed,
     LoggedAllowed,
+    NotLoggedAllowed,
     DatePipe,
     CustomDatePipe,
     TablaService,
@@ -96,7 +111,8 @@ import { MisBicicletasComponent } from './bicicletas/mis-bicicletas.component';
     LocalidadService,
     UsuarioService,
     BicicletaService,
-    EstacionService
+    EstacionService,
+    EstadisticasService
   ],
   bootstrap: [AppComponent]
 })

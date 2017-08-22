@@ -32,3 +32,31 @@ export class HasAuthorityDirective implements OnInit{
   }
 
 }
+
+@Directive({
+  selector: '[notLogged]'
+})
+export class NotLoggedDirective implements OnInit{
+
+
+  constructor(private el:ElementRef,private renderer:Renderer2,private account:AccountService) {
+  }
+
+  ngOnInit(){
+
+    this.check();
+    this.account.onAuthSucess.subscribe((user)=>{
+      this.check();
+    });
+
+  }
+
+  private check(){
+      if(this.account.getCurrentUser()){
+        this.renderer.addClass(this.el.nativeElement,'hide');
+      }else{
+        this.renderer.removeClass(this.el.nativeElement,'hide');
+      }
+  }
+
+}

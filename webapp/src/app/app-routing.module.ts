@@ -1,8 +1,9 @@
-import { AdminAllowed,UserAllowed,LoggedAllowed } from './services/router-security';
+import { AdminAllowed,UserAllowed,LoggedAllowed,NotLoggedAllowed } from './services/router-security';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {EstacionesComponent} from './estaciones/estaciones.component';
+import {EstacionesAltaComponent} from './estaciones/estaciones-alta.component';
 import {EstacionesListadoComponent} from './estaciones/estaciones-listado.component';
 import {EstacionesMapaComponent} from './estaciones/estaciones-mapa.component';
 import {RegistroComponent} from './registro/registro.component';
@@ -17,6 +18,7 @@ import {HomeComponent } from './home/home.component';
 import {EstacionesDetalleComponent} from './estaciones/estaciones-detalle.component';
 import {BicicletasDetalleComponent} from './bicicletas/bicicletas-detalle.component';
 import {MisBicicletasComponent} from './bicicletas/mis-bicicletas.component';
+import {EstadisticasComponent} from './estadisticas/estadisticas.component';
 
 const routes: Routes = [
   {
@@ -27,16 +29,32 @@ const routes: Routes = [
     children: [
       {
         path:'listado',
+        canActivate: [LoggedAllowed],
         component: EstacionesListadoComponent,
       },
       {
         path:'mapa',
+        data: {title: 'Mapa de estaciones'},
+        canActivate: [LoggedAllowed],
         component: EstacionesMapaComponent,
       },
       {
         path: 'detalle/:id',
+        canActivate: [LoggedAllowed],
         data: {title: 'Detalle de estacion'},
         component: EstacionesDetalleComponent
+      },
+      {
+        path: 'editar/:id',
+        canActivate: [AdminAllowed],
+        data: {title: 'Editar estación'},
+        component: EstacionesAltaComponent
+      },
+      {
+        path: 'alta',
+        canActivate: [AdminAllowed],
+        data: {title: 'Nueva estación'},
+        component: EstacionesAltaComponent
       }
     ],
   },
@@ -53,26 +71,31 @@ const routes: Routes = [
       },
       {
         path:'mis-bicicletas',
+        data: {title: 'Bicicletas alquiladas por mi'},
         canActivate: [UserAllowed],
         component: MisBicicletasComponent
       },
       {
         path: 'retirar',
         canActivate: [UserAllowed],
+        data: {title: 'Retirar bicicleta disponible'},
         component: BicicletasRetirarComponent
       },
       {
         path: 'alta',
         canActivate: [AdminAllowed],
+        data: {title: 'Nueva bicicleta'},
         component: BicicletasAltaComponent
       },
       {
         path: 'detalle/:id',
         data: {title: 'Detalle de bicicleta'},
+        canActivate: [AdminAllowed],
         component: BicicletasDetalleComponent
       },
       {
         path: 'editar/:id',
+        canActivate: [AdminAllowed],
         data: {title: 'Editar bicicleta'},
         component: BicicletasAltaComponent
       }
@@ -97,17 +120,26 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'estadisticas',
+    component: EstadisticasComponent,
+    data: {title: 'Estadísticas'},
+    canActivate: [AdminAllowed]
+  },
+  {
     path: 'perfil',
     component: UsuariosDetalleComponent,
+    canActivate: [LoggedAllowed],
     data: {title: 'Su perfil'}
   },
   {
     path: 'registro',
     component: RegistroComponent,
+    canActivate: [NotLoggedAllowed],
     data: { title: 'Registro'}
   },
   {
     path:'login',
+    canActivate: [NotLoggedAllowed],
     component: LoginComponent,
     data: {title: 'Login'}
   },

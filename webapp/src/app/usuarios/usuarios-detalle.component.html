@@ -20,7 +20,7 @@
                     <md-chip class="pointer" (click)="estado('BANEADO')" [selected]="user.estado=='BANEADO'" color="warn">Ban</md-chip>
                 </md-chip-list>
                 <md-chip-list *ngIf="lockEdit">
-                    <md-chip>{{user.estado}}</md-chip>
+                    <md-chip>{{user.estado | estado}}</md-chip>
                 </md-chip-list>
             </div>
             <div class="col-xs-6">

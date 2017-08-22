@@ -23,7 +23,7 @@
     <ng-container cdkColumnDef="estado">
         <md-header-cell *cdkHeaderCellDef md-sort-header> Estado </md-header-cell>
         <md-cell *cdkCellDef="let row">
-            {{row.estado}}
+            {{row.estado | estado}}
         </md-cell>
     </ng-container>
 
@@ -38,6 +38,13 @@
         <md-header-cell *cdkHeaderCellDef> Ocupacion </md-header-cell>
         <md-cell *cdkCellDef="let row">
             <md-progress-bar mdTooltip="{{row.ocupacion}}" mdTooltipPosition="left" style="width:80%;height: 10px;" [color]="calcOcupacion(row)>70? 'warn':'primary'" [value]="calcOcupacion(row)"></md-progress-bar>
+        </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="disponibles">
+        <md-header-cell *cdkHeaderCellDef> Disponibilidad </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            {{row.ocupacion}}
         </md-cell>
     </ng-container>
 

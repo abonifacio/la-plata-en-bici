@@ -19,4 +19,8 @@ export class EstacionService extends CrudService<Estacion>{
     return this.http.get(this.URI+'/con-capacidad');
   }
 
+  estados():String[]{
+    return ['OPERATIVA','CERRADA','CONSTRUCCION'];
+  }
+
 }

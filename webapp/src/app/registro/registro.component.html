@@ -107,5 +107,6 @@
   <div class="col-xs-4">
     <h2 [ngClass]="{'opacity' : stage<2 }">Registrado</h2>
     <p *ngIf="stage==2">Su usuario y contrseña son {{ user.username }}, {{user.password}}</p>
+    <a md-button color="primary" routerLink="/login" *ngIf="stage==2">LOGIN</a>
   </div>
 </div>

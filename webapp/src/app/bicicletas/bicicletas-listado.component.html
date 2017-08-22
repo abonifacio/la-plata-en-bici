@@ -10,7 +10,7 @@
   <ng-container cdkColumnDef="estado">
       <md-header-cell *cdkHeaderCellDef md-sort-header> Estado </md-header-cell>
     <md-cell *cdkCellDef="let row">
-        {{row.estado}}
+        {{row.estado | estado}}
     </md-cell>
   </ng-container>
 

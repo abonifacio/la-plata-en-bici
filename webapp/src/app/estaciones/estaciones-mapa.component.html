@@ -1,0 +1,3 @@
+<agm-map class="map" [latitude]="initLat" [longitude]="initLong" [zoom]="16">
+    <agm-marker (markerClick)="irDetalle(est)" [title]="est.nombre" *ngFor="let est of estaciones" [latitude]="est.latitud" [longitude]="est.longitud"></agm-marker>
+</agm-map>

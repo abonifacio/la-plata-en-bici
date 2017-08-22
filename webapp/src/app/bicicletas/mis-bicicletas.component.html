@@ -18,6 +18,7 @@
         </p>
         </md-list-item>
     </md-list>
+    <h3 *ngIf="alquiladas && alquiladas.length==0">Actualmente no tiene bicicletas alquiladas</h3>
   </div>
   <div class="col-sm-6">
     <div class="box" *ngIf="porDevolver">

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 
 abstract class RolAllowed {
-  constructor(private router: Router,private account: AccountService) {
+  constructor(private router: Router,protected account: AccountService) {
 
   }
   protected _canActivate(userRole:String[]) {
@@ -35,6 +35,7 @@ export class UserAllowed extends RolAllowed implements CanActivate{
         return this._canActivate(['USER']);
     }
 }
+
 @Injectable()
 export class LoggedAllowed extends RolAllowed implements CanActivate{
     constructor(router: Router,account:AccountService){
@@ -42,5 +43,15 @@ export class LoggedAllowed extends RolAllowed implements CanActivate{
     }
     canActivate(){
         return this._canActivate(['ADMIN','USER']);
+    }
+}
+
+@Injectable()
+export class NotLoggedAllowed extends RolAllowed implements CanActivate{
+    constructor(router: Router,account:AccountService){
+        super(router,account);
+    }
+    canActivate(){
+        return !this.account.getCurrentUser();
     }
 }

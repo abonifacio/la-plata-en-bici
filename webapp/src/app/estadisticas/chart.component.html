@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-xs" *ngFor="let val of values">
+    <div [ngClass]="val.css" class="dot"></div>
+    {{val.label | estado}}
+  </div>
+</div>
+<div class="row">
+  <div class="bar"
+  [ngClass]="val.css" 
+  *ngFor="let val of values"
+  md-tooltip="{{val.value}}"
+  [ngStyle]="{'width': val.pct+'%'}">
+  </div>
+</div>

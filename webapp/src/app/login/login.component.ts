@@ -18,8 +18,12 @@ export class LoginComponent implements OnInit {
   }
 
   doLogin(){
-    this.account.login(this.user).subscribe((user)=>{
-      this.router.navigate(['/']);
+    this.account.login(this.user).subscribe((user:Usuario)=>{
+      if(user.rol=='ADMIN'){
+        this.router.navigate(['/bicicletas/listado']);
+      }else{
+        this.router.navigate(['/bicicletas/mis-bicicletas']);
+      }
     },(error)=>{
       this.user.password = '';      
     });
