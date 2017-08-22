@@ -11,6 +11,7 @@ import com.laplataenbici.model.domain.utils.Rol;
 import com.laplataenbici.model.repository.EntityRepository;
 import com.laplataenbici.model.repository.UsuarioRepository;
 import com.laplataenbici.model.repository.impl.UsuarioRepositoryImpl;
+import com.laplataenbici.security.SecurityUtils;
 
 public class UsuarioService extends AbstractEntityService<Usuario>{
 	
@@ -27,8 +28,9 @@ public class UsuarioService extends AbstractEntityService<Usuario>{
 		if(entity.getLocalidad()==null || entity.getLocalidad().getId()==null){
 			throw new BusinessException("El usuario debe tener asociada una localidad");
 		}
-		entity.setPassword(String.valueOf(entity.getUsername().hashCode()).substring(0, 6));
+		entity.setPassword(SecurityUtils.randomPass());
 		entity.setRol(Rol.USER);
+		entity.setEstado(EstadoUsuario.HABILITADO);
 		return super.create(entity);
 	}
 	

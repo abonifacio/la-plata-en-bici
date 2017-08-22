@@ -72,8 +72,12 @@ public class BicicletaResource {
 	@GET
 	@Path("{id}/historial")
 	@Secured
-	public Response getHistorial(@PathParam("id") Long id) throws LPBException {
-		return LPBResponse.ok(historial.findAllFor(new Bicicleta(id)));
+	public Response getHistorial(@QueryParam(QUERY.PAGE) @DefaultValue("0") Integer page,
+			@QueryParam(QUERY.COUNT) @DefaultValue("25") Integer size,
+			@QueryParam(QUERY.SORT) @DefaultValue("id") String sort,
+			@QueryParam(QUERY.ASC) @DefaultValue("false") Boolean ascending,
+			@PathParam("id") Long id) throws LPBException {
+		return LPBResponse.ok(historial.findAllFor(new Pageable(page, size,sort,ascending),new Bicicleta(id)));
 	}
 	
 	@PUT

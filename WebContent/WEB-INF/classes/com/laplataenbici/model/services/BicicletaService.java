@@ -10,6 +10,7 @@ import com.laplataenbici.model.domain.exceptions.BusinessException;
 import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.utils.DateUtils;
+import com.laplataenbici.model.domain.utils.EstadoUsuario;
 import com.laplataenbici.model.domain.utils.TipoHistorial;
 import com.laplataenbici.model.repository.BicicletaRepository;
 import com.laplataenbici.model.repository.EntityRepository;
@@ -37,17 +38,22 @@ public class BicicletaService extends AbstractEntityService<Bicicleta>{
 		}
 		entity.setFechaIngreso(DateUtils.now());
 		entity.setUsuario(null);
-		entity.setFechaDevolucion(null);		
+		entity.setFechaDevolucion(null);
+		entity = super.create(entity);
+		
 		HistorialBicicleta h = this.getHistorial(entity);
 		h.setTipo(TipoHistorial.CREACION);
 		historial.create(h);
 		
-		return super.create(entity);
+		return entity;
 	}
 	
 	@Override
 	public Bicicleta update(Bicicleta entity) throws LPBException {
 		Bicicleta b = this.get(entity.getId());
+		if(b.getUsuario()!=null){
+			throw new BusinessException("No se puede editar una bicicleta que está alquilada");
+		}
 		if(!b.getEstado().equals(entity.getEstado())){
 			b.setEstado(entity.getEstado());
 			HistorialBicicleta h = this.getHistorial(b);
@@ -77,13 +83,16 @@ public class BicicletaService extends AbstractEntityService<Bicicleta>{
 		b.setUsuario(null);
 		b.setFechaIngreso(DateUtils.now());
 		
-		return super.update(entity);
+		return super.update(b);
 	}
 
 	public Bicicleta retirar(Estacion estacion,Usuario cUser) throws LPBException {
 		Bicicleta b = repo.getRandomBicicleta(estacion);
 		if(b==null){
 			throw new BusinessException("No hay bicicletas disponibles en "+estacion.getNombre());
+		}
+		if(!cUser.getEstado().equals(EstadoUsuario.HABILITADO)){
+			throw new BusinessException("El usuario se encuentra "+cUser.getEstado().getValue());
 		}
 		b.setFechaDevolucion(DateUtils.endOfDay());
 		b.setFechaIngreso(DateUtils.now());

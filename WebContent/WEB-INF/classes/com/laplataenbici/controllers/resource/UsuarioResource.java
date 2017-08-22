@@ -54,13 +54,7 @@ public class UsuarioResource {
 		return LPBResponse.ok(service.get(id));
 	}
 	
-//	@PUT
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Secured(Rol.ADMIN)
-//	public Response update(Usuario entity) throws LPBException{
-//		return LPBResponse.ok(service.update(entity),"Usuario actualizado");
-//	}
-	
+
 	@PUT
 	@Path("activar/{id}")
 	@Secured(Rol.ADMIN)

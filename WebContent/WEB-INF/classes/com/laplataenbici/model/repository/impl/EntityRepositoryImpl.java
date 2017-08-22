@@ -140,7 +140,7 @@ public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements 
 
 			@Override
 			public Long prepare(EntityManager em) {
-				return (Long) em.createQuery("select count(e) from "+tabla).getSingleResult();
+				return (Long) em.createQuery("select count(e) from "+tabla+" e").getSingleResult();
 			}
 			
 		};

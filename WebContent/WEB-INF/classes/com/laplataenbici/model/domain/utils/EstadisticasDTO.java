@@ -1,29 +1,20 @@
 package com.laplataenbici.model.domain.utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EstadisticasDTO {
 	
 	
-	Map<EstadoUsuario,Long> usuariosPorEstado = new HashMap<>();
-	Map<EstadoEstacion,Long> estacionesPorEstado = new HashMap<>();
-	Map<EstadoBicicleta,Long> bicicletasPorEstado = new HashMap<>();
+	List<Cantidad> usuariosPorEstado = new ArrayList<>();
+	List<Cantidad> estacionesPorEstado = new ArrayList<>();
+	List<Cantidad> bicicletasPorEstado = new ArrayList<>();
 	
 	Long bicicletas = 0L;
 	Long estaciones = 0L;
 	Long usuarios = 0L;
 	Long bicicletasAlquiladas = 0L;
 	
-	public Map<EstadoUsuario, Long> getUsuariosPorEstado() {
-		return usuariosPorEstado;
-	}
-	public Map<EstadoEstacion, Long> getEstacionesPorEstado() {
-		return estacionesPorEstado;
-	}
-	public Map<EstadoBicicleta, Long> getBicicletasPorEstado() {
-		return bicicletasPorEstado;
-	}
 	public Long getBicicletasAlquiladas() {
 		return bicicletasAlquiladas;
 	}
@@ -32,13 +23,23 @@ public class EstadisticasDTO {
 	}
 	
 	public void setCantidadEstado(EstadoBicicleta estado,Long cantidad){
-		this.bicicletasPorEstado.put(estado, cantidad);
+		this.bicicletasPorEstado.add(new Cantidad(estado.name(),cantidad));
 	}
 	public void setCantidadEstado(EstadoUsuario estado,Long cantidad){
-		this.usuariosPorEstado.put(estado, cantidad);
+		this.usuariosPorEstado.add(new Cantidad(estado.name(),cantidad));
 	}
 	public void setCantidadEstado(EstadoEstacion estado,Long cantidad){
-		this.estacionesPorEstado.put(estado, cantidad);
+		this.estacionesPorEstado.add(new Cantidad(estado.name(),cantidad));
+	}
+	
+	public List<Cantidad> getUsuariosPorEstado() {
+		return usuariosPorEstado;
+	}
+	public List<Cantidad> getEstacionesPorEstado() {
+		return estacionesPorEstado;
+	}
+	public List<Cantidad> getBicicletasPorEstado() {
+		return bicicletasPorEstado;
 	}
 	public Long getBicicletas() {
 		return bicicletas;
@@ -59,5 +60,28 @@ public class EstadisticasDTO {
 		this.usuarios = usuarios;
 	}
 	
+	public static class Cantidad{
+		private String label;
+		private Long value;
+		public String getLabel() {
+			return label;
+		}
+		public void setLabel(String label) {
+			this.label = label;
+		}
+		public Long getValue() {
+			return value;
+		}
+		public void setValue(Long value) {
+			this.value = value;
+		}
+		
+		public Cantidad(String label,Long value) {
+			this.label = label;
+			this.value = value;
+		}
+		
+		
+	}
 
 }

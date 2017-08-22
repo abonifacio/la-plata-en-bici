@@ -50,6 +50,13 @@ public class EstacionResource {
 	}
 	
 	@GET
+	@Path("list")
+	@Secured
+	public Response getAll() throws LPBException {
+		return LPBResponse.ok(service.findAll());
+	}
+	
+	@GET
 	@Path("{id}")
 	@Secured
 	public Response get(@PathParam("id") Long id) throws LPBException {

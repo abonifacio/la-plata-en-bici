@@ -104,10 +104,10 @@ VALUES(00000001,'Ad','Min','1','2',1,TIMESTAMP('1990-07-09'),'HABILITADO','M','a
 -- - Estaciones
 -- ---------------------------------------------------
 INSERT INTO Estacion (nombre,capacidad,estado,direccion,longitud,latitud)
-	VALUES ('Plaza Moreno',1230,'OPERATIVA','13 y 54',-34.921005, -57.954710);
+	VALUES ('Plaza Moreno',1230,'OPERATIVA','13 y 54', -57.954710,-34.921005);
 
 INSERT INTO Estacion (nombre,capacidad,estado,direccion,longitud,latitud)
-	VALUES ('Plaza Paso',800,'OPERATIVA','13 y 44',-34.916598, -57.961125);
+	VALUES ('Plaza Paso',800,'OPERATIVA','13 y 44', -57.961402,-34.916433);
 
 
 -- ---------------------------------------------------

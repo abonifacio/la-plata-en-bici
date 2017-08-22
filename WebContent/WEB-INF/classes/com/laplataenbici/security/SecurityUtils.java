@@ -1,5 +1,7 @@
 package com.laplataenbici.security;
 
+import java.util.Random;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.container.ContainerRequestContext;
 
@@ -54,6 +56,17 @@ public class SecurityUtils {
 	
 	public static void sendToken(HttpServletResponse res,Usuario u){
 		res.addHeader(AUTHORIZATION_HEADER, TOKEN_PREFIX + CryptoUtils.getInstance().generateToken(u));
+	}
+	
+	public static String randomPass(){
+		String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		StringBuilder sb = new StringBuilder();
+		Random r = new Random();
+		while(sb.length()<8){
+			int i = (int) (r.nextFloat() * CHARS.length());
+			sb.append(CHARS.charAt(i));
+		}
+		return sb.toString();
 	}
 
 }
