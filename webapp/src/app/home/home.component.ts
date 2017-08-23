@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
     this.usuarios = [
       {username:'admin',password:'admin',rol:'ADMIN'},
       {username:'abonifacio',password:'secreta',rol:'USER'},
-      {username:'pperez',password:'secreta',rol:'USER'}
+      {username:'jperez',password:'secreta',rol:'USER'}
     ]
   }
 

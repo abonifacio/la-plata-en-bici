@@ -11,8 +11,9 @@ import com.laplataenbici.model.domain.AbstractEntity;
 import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
+import com.laplataenbici.model.repository.utils.query.BaseQuery;
 
-public abstract class FindAllHelper<T extends AbstractEntity>{
+public class FindAllHelper<T extends AbstractEntity>{
 
 	private final String tabla;
 	private final Map<String,Class<?>> allowedFields;
@@ -24,19 +25,19 @@ public abstract class FindAllHelper<T extends AbstractEntity>{
 	}
 
 	
-	public Page<T> go(Pageable pageable, String query,Map<String,Object> params) throws DBException {
+	public Page<T> go(BaseQuery pageable, String query,Map<String,Object> params) throws DBException {
 		if(query==null){
 			query="";
 			params = new HashMap<>();
 		}else{
 			query=" where "+query;
 		}
-		Page<T> page = new Page<T>(pageable,this.count(query,params).intValue());
-		page.setItems(this.results(pageable,query,params));
+		Page<T> page = new Page<T>(pageable.getPageable(),this.count(query,params).intValue());
+		page.setItems(this.results(pageable.getPageable(),query,params));
 		return page;
 	}
 	
-	public Page<T> go(Pageable pageable) throws DBException{
+	public Page<T> go(BaseQuery pageable) throws DBException{
 		return this.go(pageable, null, null);
 	}
 		
@@ -84,7 +85,9 @@ public abstract class FindAllHelper<T extends AbstractEntity>{
 		return q;
 	}
 	
-	protected abstract List<T> afterResult(List<T> list);
+	protected List<T> afterResult(List<T> list){
+		return list;
+	};
 	
 
 }

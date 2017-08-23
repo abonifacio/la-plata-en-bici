@@ -2,26 +2,23 @@ package com.laplataenbici.controllers.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.laplataenbici.config.AppConstants.QUERY;
 import com.laplataenbici.config.AppConstants.URI;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.Estacion;
 import com.laplataenbici.model.domain.exceptions.LPBException;
-import com.laplataenbici.model.domain.utils.Pageable;
 import com.laplataenbici.model.domain.utils.Rol;
+import com.laplataenbici.model.repository.utils.query.EstacionQuery;
 import com.laplataenbici.model.services.EstacionService;
 import com.laplataenbici.security.Secured;
 
@@ -41,12 +38,8 @@ public class EstacionResource {
 
 	@GET
 	@Secured
-	public Response getAll(
-			@QueryParam(QUERY.PAGE) @DefaultValue("0") Integer page,
-			@QueryParam(QUERY.COUNT) @DefaultValue("25") Integer size,
-			@QueryParam(QUERY.SORT) @DefaultValue("id") String sort,
-			@QueryParam(QUERY.ASC) @DefaultValue("false") Boolean ascending) throws LPBException {
-		return LPBResponse.ok(service.findAll(new Pageable(page, size,sort,ascending)));
+	public Response getAll(@Context UriInfo uri) throws LPBException {
+		return LPBResponse.ok(service.findAll(new EstacionQuery(uri.getQueryParameters())));
 	}
 	
 	@GET
