@@ -1,4 +1,4 @@
--- CREATE DATABASE  LaPlataEnBici;
+-- CREATE DATABASE LaPlataEnBici;
 
 
 
@@ -30,8 +30,6 @@ CREATE TABLE IF NOT EXISTS `HistorialBicicleta` (
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
-
-
 DROP TABLE IF EXISTS `Estacion`;
 CREATE TABLE IF NOT EXISTS `Estacion` (
 	`id` INT NOT NULL AUTO_INCREMENT,
@@ -51,7 +49,6 @@ CREATE TABLE IF NOT EXISTS `Localidad` (
 	`codigo_postal` INT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
-
 
 DROP TABLE IF EXISTS `Usuario`;
 CREATE TABLE IF NOT EXISTS `Usuario` (
@@ -89,38 +86,29 @@ INSERT INTO Localidad (nombre,codigo_postal) VALUES ('Ensenada',1925);
 -- - Usuarios
 -- ---------------------------------------------------
 INSERT INTO Usuario (DNI,nombre,apellido,calle,numero,localidad_id,fecha_nac,estado,sexo,email,username,password,rol)
-VALUES(38863081,'Augusto','Bonifacio','474','984',1,TIMESTAMP('1995-05-09'),'HABILITADO','M','augusto@bonifacio.com','abonifacio','secreta','USER');
+VALUES(38335081,'Augusto','Bonifacio','Falsa','123',1,TIMESTAMP('1995-05-09'),'HABILITADO','M','augusto@bonifacio.com','abonifacio','secreta','USER');
 
 INSERT INTO Usuario (DNI,nombre,apellido,calle,numero,localidad_id,fecha_nac,estado,sexo,email,username,password,rol)
-VALUES(38812381,'Juan','Perez','494','123',2,TIMESTAMP('1995-06-09'),'HABILITADO','M','juan@perez.com','jperez','secreta','USER');
+VALUES(38812381,'Juan','Perez','Falsa','123',2,TIMESTAMP('1995-06-09'),'HABILITADO','M','juan@perez.com','jperez','secreta','USER');
 
 INSERT INTO Usuario (DNI,nombre,apellido,calle,numero,localidad_id,fecha_nac,estado,sexo,email,username,password,rol)
-VALUES(38845681,'Camila','Casas','44','190',3,TIMESTAMP('1995-07-09'),'HABILITADO','F','camila@casas.com','cacasas','secreta','USER');
-
-INSERT INTO Usuario (DNI,nombre,apellido,calle,numero,localidad_id,fecha_nac,estado,sexo,email,username,password,rol)
-VALUES(00000001,'Ad','Min','1','2',1,TIMESTAMP('1990-07-09'),'HABILITADO','M','admin@admin.com','admin','admin','ADMIN');
+VALUES(00000001,'Admin','istrador','El cielo','7',1,TIMESTAMP('1990-07-09'),'HABILITADO','M','admin@admin.com','admin','admin','ADMIN');
 
 -- ---------------------------------------------------
 -- - Estaciones
 -- ---------------------------------------------------
 INSERT INTO Estacion (nombre,capacidad,estado,direccion,longitud,latitud)
-	VALUES ('Plaza Moreno',1230,'OPERATIVA','13 y 54', -57.954710,-34.921005);
+	VALUES ('Plaza Moreno',6,'OPERATIVA','13 y 54', -57.954710,-34.921005);
 
 INSERT INTO Estacion (nombre,capacidad,estado,direccion,longitud,latitud)
-	VALUES ('Plaza Paso',800,'OPERATIVA','13 y 44', -57.961402,-34.916433);
+	VALUES ('Plaza Paso',3,'OPERATIVA','13 y 44', -57.961402,-34.916433);
 
 
 -- ---------------------------------------------------
 -- - Bicicletas
 -- ---------------------------------------------------
 
--- biciletas alquiladas
-INSERT INTO Bicicleta (fecha_ingreso,fecha_devolucion,estado,usuario_id) VALUES (NOW(),DATE_ADD(NOW(), INTERVAL 2 HOUR),'APTA',1);
-INSERT INTO Bicicleta (fecha_ingreso,fecha_devolucion,estado,usuario_id) VALUES (NOW(),DATE_ADD(NOW(), INTERVAL 2 HOUR),'APTA',2);
-INSERT INTO Bicicleta (fecha_ingreso,fecha_devolucion,estado,usuario_id) VALUES (NOW(),DATE_ADD(NOW(), INTERVAL 2 HOUR),'APTA',3);
-
 -- bicicletas en estacion
-
 INSERT INTO Bicicleta (fecha_ingreso,estado,estacion_id) VALUES (NOW(),'APTA',1);
 INSERT INTO Bicicleta (fecha_ingreso,estado,estacion_id) VALUES (NOW(),'APTA',1);
 INSERT INTO Bicicleta (fecha_ingreso,estado,estacion_id) VALUES (NOW(),'APTA',1);
