@@ -18,6 +18,7 @@ import com.laplataenbici.config.AppConstants.URI;
 import com.laplataenbici.controllers.resource.utils.LPBResponse;
 import com.laplataenbici.model.domain.Usuario;
 import com.laplataenbici.model.domain.exceptions.LPBException;
+import com.laplataenbici.model.domain.utils.PasswordDTO;
 import com.laplataenbici.model.services.UsuarioService;
 import com.laplataenbici.security.Secured;
 import com.laplataenbici.security.SecurityUtils;
@@ -57,5 +58,11 @@ public class AccountResource {
 	@Path("check/email/{email}")
 	public Response checkEmail(@PathParam("email") String email) throws LPBException{
 		return LPBResponse.ok(service.isEmailAvailable(email));
+	}
+	
+	@PUT
+	@Path("change-password")
+	public Response changePassword(PasswordDTO password,@Context ContainerRequestContext ctx) throws LPBException{
+		return LPBResponse.ok(service.changePassword(password,SecurityUtils.getCurrentUser(ctx)),"Se actualizó su contraseña");
 	}
 }
