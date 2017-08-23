@@ -5,10 +5,10 @@ import com.laplataenbici.model.domain.HistorialBicicleta;
 import com.laplataenbici.model.domain.exceptions.BusinessException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.utils.Page;
+import com.laplataenbici.model.domain.utils.Pageable;
 import com.laplataenbici.model.repository.EntityRepository;
 import com.laplataenbici.model.repository.HistorialBicicletaRepository;
 import com.laplataenbici.model.repository.impl.HistorialBicicletaRepositoryImpl;
-import com.laplataenbici.model.repository.utils.query.BaseQuery;
 
 public class HistorialBicicletaService extends AbstractEntityService<HistorialBicicleta> {
 
@@ -19,7 +19,7 @@ public class HistorialBicicletaService extends AbstractEntityService<HistorialBi
 		return repo;
 	}
 	
-	public Page<HistorialBicicleta> findAllFor(BaseQuery pageable,Bicicleta b) throws LPBException{
+	public Page<HistorialBicicleta> findAllFor(Pageable pageable,Bicicleta b) throws LPBException{
 		return repo.findAllFor(pageable,b);
 	}
 	

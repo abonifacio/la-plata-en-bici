@@ -18,12 +18,12 @@ import com.laplataenbici.security.SecurityUtils;
  * Servlet Filter implementation class SessionFilter
  */
 @WebFilter("/*")
-public class TokenFilter implements Filter {
+public class SessionFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public TokenFilter() {
+    public SessionFilter() {
     }
 
 	/**

@@ -8,8 +8,8 @@ import com.laplataenbici.model.domain.exceptions.BusinessException;
 import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.utils.Page;
+import com.laplataenbici.model.domain.utils.Pageable;
 import com.laplataenbici.model.repository.EntityRepository;
-import com.laplataenbici.model.repository.utils.query.BaseQuery;
 
 public abstract class AbstractEntityService <T extends AbstractEntity>{
 	
@@ -34,7 +34,7 @@ public abstract class AbstractEntityService <T extends AbstractEntity>{
 		throw new BusinessException("No se encontró el dato");
 	}
 	
-	public Page<T> findAll(BaseQuery pageable) throws DBException{
+	public Page<T> findAll(Pageable pageable) throws DBException{
 		return this.getRepo().findAll(pageable);
 	}
 	

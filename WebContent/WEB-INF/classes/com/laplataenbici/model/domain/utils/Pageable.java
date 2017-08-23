@@ -1,9 +1,5 @@
 package com.laplataenbici.model.domain.utils;
 
-import javax.ws.rs.core.MultivaluedMap;
-
-import com.laplataenbici.config.AppConstants.QUERY;
-
 public class Pageable {
 	private Integer page;
 	private Integer count;
@@ -18,13 +14,6 @@ public class Pageable {
 		this(page,count);
 		this.sort = sort==null? "id": sort;
 		this.ascending = ascending==null ? false: ascending;
-	}
-	
-	public Pageable(MultivaluedMap<String,String> params){
-		this.page = Integer.valueOf(params.getFirst(QUERY.PAGE));
-		this.count = Integer.valueOf(params.getFirst(QUERY.COUNT));
-		this.sort = params.getFirst(QUERY.SORT);
-		this.ascending = Boolean.valueOf(params.getFirst(QUERY.ASC));
 	}
 	
 	public Integer getPage() {

@@ -14,10 +14,10 @@ import javax.persistence.Transient;
 import com.laplataenbici.model.domain.AbstractEntity;
 import com.laplataenbici.model.domain.exceptions.DBException;
 import com.laplataenbici.model.domain.utils.Page;
+import com.laplataenbici.model.domain.utils.Pageable;
 import com.laplataenbici.model.repository.EntityRepository;
 import com.laplataenbici.model.repository.utils.FindAllHelper;
 import com.laplataenbici.model.repository.utils.TransactionWrapper;
-import com.laplataenbici.model.repository.utils.query.BaseQuery;
 
 public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements EntityRepository<T>{
 
@@ -55,7 +55,7 @@ public abstract class EntityRepositoryImpl<T extends AbstractEntity> implements 
 	}
 
 	@Override
-	public Page<T> findAll(BaseQuery pageable) throws DBException{
+	public Page<T> findAll(Pageable pageable) throws DBException{
 		
 		FindAllHelper<T> fh = new FindAllHelper<T>(tabla,allowedFields){
 
