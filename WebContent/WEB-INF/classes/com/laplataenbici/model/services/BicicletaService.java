@@ -124,5 +124,12 @@ public class BicicletaService extends AbstractEntityService<Bicicleta>{
 		h.setFechaDevolucion(b.getFechaDevolucion());
 		return h;
 	}
+	
+	@Override
+	public void checkDelete(Bicicleta e) throws LPBException {
+		if(e.getUsuario()!=null){
+			throw new BusinessException("La bicicleta no se puede borrar porque está alquilada");
+		}
+	}
 
 }

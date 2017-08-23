@@ -2,6 +2,7 @@ package com.laplataenbici.model.services;
 
 import com.laplataenbici.model.domain.Bicicleta;
 import com.laplataenbici.model.domain.HistorialBicicleta;
+import com.laplataenbici.model.domain.exceptions.BusinessException;
 import com.laplataenbici.model.domain.exceptions.LPBException;
 import com.laplataenbici.model.domain.utils.Page;
 import com.laplataenbici.model.domain.utils.Pageable;
@@ -20,6 +21,11 @@ public class HistorialBicicletaService extends AbstractEntityService<HistorialBi
 	
 	public Page<HistorialBicicleta> findAllFor(Pageable pageable,Bicicleta b) throws LPBException{
 		return repo.findAllFor(pageable,b);
+	}
+	
+	@Override
+	public void checkDelete(HistorialBicicleta e) throws LPBException {
+		throw new BusinessException("El historial no se puede borrar");
 	}
 
 }

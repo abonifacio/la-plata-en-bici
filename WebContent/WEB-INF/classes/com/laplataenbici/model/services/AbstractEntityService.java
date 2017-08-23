@@ -43,7 +43,8 @@ public abstract class AbstractEntityService <T extends AbstractEntity>{
 	}
 	
 	public void delete(Long id) throws LPBException{
-		this.get(id);
+		T tmp = this.get(id);
+		checkDelete(tmp);
 		this.getRepo().delete(id);
 	}
 	
@@ -55,4 +56,5 @@ public abstract class AbstractEntityService <T extends AbstractEntity>{
 		return this.getRepo().count();
 	}
 	
+	public abstract void checkDelete(T e) throws LPBException;
 }
