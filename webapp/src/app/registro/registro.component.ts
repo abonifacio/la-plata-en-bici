@@ -1,3 +1,4 @@
+import { LocalidadService } from '../components/localidades/localidad.service';
 import { FormControl,FormGroup,FormBuilder,AsyncValidatorFn,ValidationErrors,Validators,AbstractControl } from '@angular/forms';
 import { Localidad } from '../entities/localidad';
 import { Page } from '../entities/common';
@@ -19,6 +20,7 @@ export class RegistroComponent implements OnInit {
 
   startDate = new Date(1995,4,9);
   maxDate = new Date();
+  localidades :Localidad[] = [];
 
   valid = {
     username: false,
@@ -29,7 +31,7 @@ export class RegistroComponent implements OnInit {
 
   checkForm : FormGroup;
   
-  constructor(private service:AccountService,private fb : FormBuilder) {
+  constructor(private service:AccountService,private fb : FormBuilder,private locService:LocalidadService) {
     this.checkForm = fb.group({
       username : new FormControl('', 
         [Validators.required,Validators.minLength(3)],
@@ -39,6 +41,9 @@ export class RegistroComponent implements OnInit {
         [Validators.required,Validators.pattern(EMAIL_REGEX)],
         [this.checkEmail()]
       )
+    });
+    this.locService.list().subscribe((data)=>{
+      this.localidades = data;
     });
   }
 

@@ -7,7 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  usuarios:any[] = [];
+  constructor() { 
+    this.usuarios = [
+      {username:'admin',password:'admin',rol:'ADMIN'},
+      {username:'abonifacio',password:'secreta',rol:'USER'},
+      {username:'pperez',password:'secreta',rol:'USER'}
+    ]
+  }
 
   ngOnInit() {
   }

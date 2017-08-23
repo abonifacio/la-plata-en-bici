@@ -33,6 +33,7 @@ import { UsuariosListadoComponent } from './usuarios/usuarios-listado.component'
 import { BicicletasRetirarComponent } from './bicicletas/bicicletas-retirar.component';
 import { BicicletasAltaComponent } from './bicicletas/bicicletas-alta.component';
 import { UsuariosDetalleComponent } from './usuarios/usuarios-detalle.component';
+import { CambiarPassDialog } from './usuarios/cambiar-pass.dialog';
 import { TablaComponent } from './components/tabla/tabla.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { AlertComponent } from './components/alert/alert.component';
@@ -79,7 +80,8 @@ import { ChartComponent } from './estadisticas/chart.component';
     EstadoPipe,
     EstacionesAltaComponent,
     EstadisticasComponent,
-    ChartComponent
+    ChartComponent,
+    CambiarPassDialog
   ],
   imports: [
     BrowserModule,
@@ -92,6 +94,9 @@ import { ChartComponent } from './estadisticas/chart.component';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyD0gkRgsbHzGU59CspTjFr4g9k_QEGb78E'
     })
+  ],
+  entryComponents:[
+    CambiarPassDialog
   ],
   providers: [
     HttpRequestSubscriber,

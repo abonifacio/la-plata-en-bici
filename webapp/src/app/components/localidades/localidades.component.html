@@ -1,27 +1,49 @@
-<div class="row m-t-20">
-  <div class="col-xs">
-    <md-select [disabled]="disabled" placeholder="Localidad" name="localidad" [(ngModel)]="seleccionada" required="true">
-      <md-option *ngFor="let loc of localidades" [value]="loc">{{ loc.nombre }}</md-option>
-    </md-select>
+<div class="row">
+  <div class="col-sm">
+    <h2>Disponibles</h2>
+    <md-list>
+      <md-list-item *ngFor="let loc of localidades">
+        <div md-line> 
+          <div class="row">
+            <div class="col-xs-8">
+              <h3>{{loc.nombre}} </h3> 
+            </div>
+            <div class="col-xs-4">
+              <button md-button color="primary" (click)="editar(loc)">EDITAR</button>
+            </div>
+          </div>
+        </div>
+        <p md-line>
+          <span> {{loc.codigoPostal}} </span>
+        </p>
+      </md-list-item>
+    </md-list>
   </div>
-</div>
-<div *ngIf="showAgregar" class="row m-t-10 between-xs middle-xs">
-  <div class="col-xs-5">
-    <md-input-container fxFlex="40%">
-      <input mdInput [(ngModel)]="nueva.nombre" name="nombre" placeholder="Nombre" required="true">
-    </md-input-container>
-  </div>
-  <div class="col-xs-5">
-    <md-input-container fxFlex="40%">
-      <input type="number" [(ngModel)]="nueva.codigoPostal" name="codigoPostal" mdInput placeholder="Codigo Postal" required="true">
-    </md-input-container>
-  </div>
-</div>
-<div class="row m-t-10" hasRole="ADMIN">
-  <div class="col-xs">
-    <button type="button" (click)="agregar()" [disabled]="showAgregar && (!nueva.nombre || !nueva.codigoPostal)" md-raised-button>Agregar</button>
-  </div>
-  <div class="col-xs-1">
-    <md-icon *ngIf="showAgregar" class="pointer text-center" (click)="hide()">keyboard_arrow_up</md-icon>
+  <div class="col-sm">
+    <h2>{{nueva.id ? 'Editar':'Agregar'}}</h2>
+    <form (ngSubmit)="agregar()" #locF="ngForm">
+      <div class="row">
+        <div class="col-xs">
+          <md-input-container>
+            <input mdInput [(ngModel)]="nueva.nombre" name="nombre" placeholder="Nombre" required="true">
+          </md-input-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+          <md-input-container>
+            <input type="number" [(ngModel)]="nueva.codigoPostal" name="codigoPostal" mdInput placeholder="Codigo Postal" required="true">
+          </md-input-container>
+        </div>
+      </div>
+      <div class="row around-xs">
+        <div class="col-xs-4">
+          <button type="submit" color="primary" [disabled]="locF.invalid" md-button>GUARDAR</button>
+        </div>
+        <div class="col-xs-4">
+          <button type="button" (click)="cancelar()" md-button>CANCELAR</button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

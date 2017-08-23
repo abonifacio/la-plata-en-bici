@@ -1,3 +1,24 @@
-
-<a md-raised-button notLogged routerLink="/login" [color]="'primary'">Login</a>
-<a md-raised-button notLogged routerLink="/registro">Registrarse</a>
+<div class="row">
+    <div class="col-xs">
+        <md-list>
+            <h2 md-subheader>Usuarios</h2>
+            <md-list-item *ngFor="let user of usuarios">
+                <md-icon md-list-icon>supervisor_account</md-icon>
+                <p md-line><b>{{user.username}}</b>:{{user.password}}</p>
+                <h3 md-line> Rol: {{user.rol}} </h3>
+            </md-list-item>
+        </md-list>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4">
+        <div class="row">
+            <div class="col-xs-6">
+                <a md-raised-button notLogged routerLink="/login" [color]="'primary'">Login</a>
+            </div>
+            <div class="col-xs-6">
+                <a md-raised-button notLogged routerLink="/registro">Registrarse</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -47,11 +47,16 @@
                 <input mdInput [(ngModel)]="user.nombre" name="nombre" type="text" placeholder="Nombre" required="true">
               </md-input-container>
           </div>
+          <div class="col-xs">
+              <md-input-container>
+                <input mdInput [(ngModel)]="user.apellido" name="apellido" type="text" placeholder="Apellido" required="true">
+              </md-input-container>
+          </div>
         </div>
         <div class="row">
           <div class="col-xs">
               <md-input-container>
-                <input mdInput [(ngModel)]="user.apellido" name="apellido" type="text" placeholder="Apellido" required="true">
+                <input mdInput [(ngModel)]="user.dni" name="dni" type="number" placeholder="DNI" required="true">
               </md-input-container>
           </div>
         </div>
@@ -92,7 +97,9 @@
             </md-input-container>
           </div>
           <div class="col-xs-4">
-            <app-localidades [disabled]="stage>1" [(seleccionada)]="user.localidad"></app-localidades>
+            <md-select placeholder="Localidad" name="localidad" [(ngModel)]="user.localidad" required="true">
+              <md-option *ngFor="let loc of localidades" [value]="loc">{{ loc.nombre }}</md-option>
+            </md-select>
           </div>
         </div>
         <div class="row center-xs">

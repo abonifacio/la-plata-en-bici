@@ -35,6 +35,10 @@ export class AccountService{
       return this.http.get(this.URI+'/check/email/'+email);
   }
 
+  changePassword(password:{anterior:string,nueva:string,confirmacion:string}){
+    return this.http.put(this.URI+'/change-password',password);
+  }
+
   isCurrentUserInRole(roles:String[]):Boolean{
     return this.getCurrentUser() && roles.includes(this.cUser.rol);
   }

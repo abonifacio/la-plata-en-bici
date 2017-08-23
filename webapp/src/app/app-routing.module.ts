@@ -1,3 +1,4 @@
+import { LocalidadesComponent } from './components/localidades/localidades.component';
 import { AdminAllowed,UserAllowed,LoggedAllowed,NotLoggedAllowed } from './services/router-security';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
@@ -123,6 +124,12 @@ const routes: Routes = [
     path: 'estadisticas',
     component: EstadisticasComponent,
     data: {title: 'Estadísticas'},
+    canActivate: [AdminAllowed]
+  },
+  {
+    path: 'localidades',
+    component: LocalidadesComponent,
+    data: {title: 'Localidades'},
     canActivate: [AdminAllowed]
   },
   {

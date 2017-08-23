@@ -24,29 +24,39 @@ export class LocalidadesComponent implements OnInit {
   ngOnInit() {
   }
 
-  hide(){
-    this.showAgregar = false;
-  }
-
-  get seleccionada(){
-    return this._seleccionada;
-  }
-
-  set seleccionada(val){
-    this._seleccionada = val;
-    this.seleccionadaChange.emit(this._seleccionada);
-  }
 
   agregar(){
-    if(!this.showAgregar){
-      this.showAgregar = true;
-      return;
-    }
-    this.service.save(this.nueva).subscribe((localidad)=>{
-      this.localidades.push(localidad);
-      this.seleccionada = localidad;
-      this.showAgregar = false;
+    let isEdit = this.nueva.id!=undefined;
+    this.service.save(this.nueva).subscribe(loc=>{
+      if(!isEdit){
+        this.localidades.push(loc);
+      }else{
+        this.localidades.filter(l=>l.id==loc.id).map(l=> {
+          l.id = loc.id;
+          l.nombre = loc.nombre;
+          l.codigoPostal = loc.codigoPostal;
+          return l;
+        });
+        console.log(loc);
+      }
+      this.cancelar();
     });
+  }
+
+  editar(loc:Localidad){
+    this.nueva = this.clone(loc);
+  }
+
+  cancelar(){
+    this.nueva = new Localidad();
+  }
+
+  private clone(loc:Localidad):Localidad{
+      let tmp = new Localidad();
+      tmp.id = loc.id;
+      tmp.nombre = loc.nombre;
+      tmp.codigoPostal = loc.codigoPostal;
+      return tmp;
   }
 
 }
