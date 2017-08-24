@@ -5,44 +5,47 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.laplataenbici.config.AppConstants;
-import com.laplataenbici.security.SecurityUtils;
 
 /**
- * Servlet Filter implementation class SessionFilter
+ * Servlet Filter implementation class APIFilter
  */
-@WebFilter(AppConstants.URI.API+"/*")
-public class TokenFilter implements Filter {
+@WebFilter("/*")
+public class APIFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public TokenFilter() {
+    public APIFilter() {
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
+		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
-		String token = req.getHeader(SecurityUtils.AUTHORIZATION_HEADER);
-		if(token!=null && token.startsWith(SecurityUtils.TOKEN_PREFIX))
-			res.setHeader(SecurityUtils.AUTHORIZATION_HEADER, token);
+		// TODO Auto-generated method stub
+		
+		if(!((HttpServletRequest) request).getRequestURI().contains(AppConstants.URI.API+"/")){
+			RequestDispatcher dispatcher= request.getServletContext().getRequestDispatcher(AppConstants.RES.INDEX_URI);
+			dispatcher.forward(request, response);			
+		}
 
+		// pass the request along the filter chain
 		chain.doFilter(request, response);
 	}
 
@@ -50,6 +53,7 @@ public class TokenFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
+		// TODO Auto-generated method stub
 	}
 
 }

@@ -21,4 +21,8 @@ public class AppConstants {
 		public static final String ASC = "ascending";
 	}
 	
+	public class RES{
+		public static final String INDEX_URI = "/WEB-INF/html/index.html";
+	}
+	
 }
