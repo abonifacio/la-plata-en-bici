@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent{
   
-  private title:Observable<String>;
+  title:Observable<String>;
 
   constructor(private router:Router,private account:AccountService){
     this.title = this.router.events
@@ -20,7 +20,7 @@ export class AppComponent{
     .map(()=> this.getTitle(this.router.routerState.snapshot.root));
   }
 
-  private getTitle(routeSnapshot: ActivatedRouteSnapshot) {
+  getTitle(routeSnapshot: ActivatedRouteSnapshot) {
     var title = routeSnapshot.data ? routeSnapshot.data['title'] : '';
     if (routeSnapshot.firstChild) {
       title = this.getTitle(routeSnapshot.firstChild) || title;

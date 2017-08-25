@@ -14,7 +14,7 @@ export class BicicletasDetalleComponent implements OnInit {
   vColumns: String[];
   bici : Bicicleta = new Bicicleta();
   
-  constructor(private service : BicicletaService,route :ActivatedRoute,private router: Router,private tabla : TablaService) {
+  constructor(private service : BicicletaService,route :ActivatedRoute,private router: Router,public tabla : TablaService) {
     this.vColumns = ['fechaIngreso','fechaDevolucion','estado','tipo','alquiladaPor','ver'];
     route.params.subscribe((params)=>{
       if(params['id']){

@@ -14,7 +14,7 @@ export class UsuariosListadoComponent implements OnInit {
 
   vColumns: String[];
 
-  constructor(private service : UsuarioService, private router: Router,private tabla : TablaService) {
+  constructor(private service : UsuarioService, private router: Router,public tabla : TablaService) {
     this.tabla.setService(service);
     this.vColumns = ['id','nombre','apellido','username','estado','ver'];
 

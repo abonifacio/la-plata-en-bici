@@ -16,7 +16,7 @@ export class EstacionesListadoComponent implements OnInit {
   vColumns: String[];
 
   constructor(private service : EstacionService, private router: Router,
-  private tabla:TablaService,private account:AccountService) {
+  public tabla:TablaService,private account:AccountService) {
     this.tabla.setService(service);
     if(account.isCurrentUserInRole(['ADMIN'])){
       this.vColumns = ['id','nombre','direccion','estado','capacidad','ocupacion','ver'];

@@ -34,7 +34,6 @@ import { BicicletasRetirarComponent } from './bicicletas/bicicletas-retirar.comp
 import { BicicletasAltaComponent } from './bicicletas/bicicletas-alta.component';
 import { UsuariosDetalleComponent } from './usuarios/usuarios-detalle.component';
 import { CambiarPassDialog } from './usuarios/cambiar-pass.dialog';
-import { TablaComponent } from './components/tabla/tabla.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './home/home.component';
@@ -63,7 +62,6 @@ import { ChartComponent } from './estadisticas/chart.component';
     BicicletasRetirarComponent,
     BicicletasAltaComponent,
     UsuariosDetalleComponent,
-    TablaComponent,
     LoadingComponent,
     AlertComponent,
     HomeComponent,

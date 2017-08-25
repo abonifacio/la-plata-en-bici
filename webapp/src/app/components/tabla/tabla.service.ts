@@ -9,7 +9,7 @@ import { Sort,PageEvent } from '@angular/material';
 export class TablaService {
 
   service:any;
-  private dataSource:TableDataSource;
+  dataSource:TableDataSource;
   private pageable: Pageable = new Pageable();
   private query :any = {};
   private type: String;
